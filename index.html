@@ -3,128 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulaire de Renée</title>
-    <style>
-        :root {
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --primary: #4a90e2;
-            --secondary: #f39c12;
-            --text: #2d3436;
-        }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        header { text-align: center; margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
-        
-        .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-            border: 2px solid transparent;
-            position: relative;
-        }
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        
-        .french { font-weight: bold; font-size: 1.1em; display: block; margin-bottom: 10px; }
-        .english { color: var(--secondary); font-style: italic; display: none; }
-        
-        .category { font-size: 0.8em; color: #999; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        
-        .link-box { margin-top: 40px; padding: 20px; background: #e1f5fe; border-radius: 10px; text-align: center; }
-        a { color: var(--primary); text-decoration: none; font-weight: bold; }
-    </style>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        // Initialise l'application et ajuste les couleurs selon le thème de l'utilisateur
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand(); // Ouvre l'app en plein écran
-    </script>
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand(); // Force l'application à s'ouvrir sur tout l'écran
-    </script>
+    <title>Cours de Renée</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="container">
     <header>
-        <h1>🇫🇷 Le Vocabulaire de Renée</h1>
-        <p>Clique sur une carte pour révéler la traduction</p>
+        <h1>Archives des Cours</h1>
     </header>
-
-    <div class="grid">
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Action</span>
-            <span class="french">Tu attends ton avion</span>
-            <span class="english">You're waiting for your plane</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Sensation</span>
-            <span class="french">J'ai faim</span>
-            <span class="english">I'm hungry (I have hunger)</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Sentiment</span>
-            <span class="french">Mal à l'aise</span>
-            <span class="english">Not at ease / Uncomfortable</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Verbe</span>
-            <span class="french">Laisser</span>
-            <span class="english">To leave / To let</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Verbe</span>
-            <span class="french">Louer</span>
-            <span class="english">To rent</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Description</span>
-            <span class="french">Sombre / Obscur</span>
-            <span class="english">Dark / Obscure</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Grammaire</span>
-            <span class="french">Le manager m'a pris le bras</span>
-            <span class="english">The manager took my arm (lit: took me THE arm)</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Temps</span>
-            <span class="french">Je devais faire quelque chose</span>
-            <span class="english">I had to do something</span>
-        </div>
-
-        <div class="card" onclick="toggle(this)">
-            <span class="category">Expression</span>
-            <span class="french">Au-delà</span>
-            <span class="english">Beyond</span>
-        </div>
-    </div>
-
-    <div class="link-box">
-        <p>📺 Ressource recommandée :</p>
-        <a href="https://www.youtube.com/@firedupinfrance/videos" target="_blank">Fired Up In France - YouTube</a>
-    </div>
-</div>
-
-<script>
-    function toggle(card) {
-        const english = card.querySelector('.english');
-        english.style.display = (english.style.display === 'block') ? 'none' : 'block';
-    }
-</script>
-
+    <nav class="menu">
+        <a href="mardi-2026-01-27.html" class="btn-date">Séance d'aujourd'hui (27 Janvier)</a>
+        <a href="mardi-2026-01-20.html" class="btn-date secondary">Séance du 20 Janvier</a>
+    </nav>
 </body>
 </html>
