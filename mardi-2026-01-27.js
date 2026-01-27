@@ -1,5 +1,8 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
-// On change la couleur de l'en-tête de Telegram pour ce cours précis
-tg.setHeaderColor('#0088cc');
+
+function toggle(card) {
+    const english = card.querySelector('.english');
+    english.style.display = (english.style.display === 'block') ? 'none' : 'block';
+}

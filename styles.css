@@ -1,37 +1,53 @@
-/* Styles existants conservés */
+:root {
+    --primary: #0088cc;
+    --secondary: #66bb6a;
+    --text: var(--tg-theme-text-color, #222222);
+    --bg: var(--tg-theme-bg-color, #ffffff);
+}
+
 body {
     font-family: -apple-system, sans-serif;
-    background-color: var(--tg-theme-bg-color, #ffffff);
-    color: var(--tg-theme-text-color, #222222);
+    background-color: var(--bg);
+    color: var(--text);
     padding: 20px;
+    line-height: 1.6;
 }
 
-/* Styles des cartes (importés du fichier du 20/01) */
-.container { max-width: 800px; margin: auto; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
 
-.card {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    cursor: pointer;
-    border: 2px solid transparent;
-}
-.card:hover { border-color: #4a90e2; }
-
-.french { font-weight: bold; display: block; margin-bottom: 10px; }
-.english { color: #f39c12; font-style: italic; display: none; }
-.category { font-size: 0.8em; color: #999; text-transform: uppercase; }
-
-/* Styles du menu index.html */
+/* Menu Index */
 .btn-date {
     display: block;
-    background: #0088cc;
+    background: var(--primary);
     color: white;
     padding: 15px;
     text-align: center;
     border-radius: 8px;
     text-decoration: none;
     margin-bottom: 10px;
+    font-weight: bold;
 }
+.btn-date.secondary { background: var(--secondary); }
+
+/* Système de cartes (utilisé dans les deux pages) */
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 15px; 
+    margin-top: 20px; 
+}
+
+.card {
+    background: var(--tg-theme-bg-color, #ffffff);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    border: 1px solid #eee;
+}
+
+.french { font-weight: bold; display: block; color: #0088cc; }
+.english { color: #f39c12; font-style: italic; display: none; margin-top: 10px; }
+.category { font-size: 0.7em; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+
+.video-link { display: inline-block; margin-top: 10px; color: var(--primary); text-decoration: none; font-weight: bold; }

@@ -8,21 +8,58 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <a href="index.html">⬅ Retour au menu</a>
-    <h2>Notes du 27 Janvier 2026</h2>
-    
-    <ul>
-        <li><strong>Ça suffit</strong> : That's enough</li>
-        <li><strong>Protester / Manifester</strong> : To protest / demonstrate</li>
-        <li><strong>J'ai la peau du ventre bien tendue</strong> : I'm full / My stomach skin is tight (fem.)</li>
-        <li><strong>Vendre la mèche</strong> : To spill the beans</li>
-        <li><strong>Vitre vs Fenêtre</strong> : Glass pane vs Window frame</li>
-        <li><strong>Ludique</strong> : Playful</li>
-    </ul>
+    <header>
+        <a href="index.html" style="text-decoration: none;">⬅ Menu</a>
+        <h1>Séance du 27 Janvier</h1>
+    </header>
 
-    <h3>Vidéos du jour</h3>
-    <p><a href="https://youtu.be/w82a1FT5o88">Vidéo 1 : How to Start a Speech</a></p>
-    <p><a href="https://youtu.be/sSLGYvgtXiw">Vidéo 2 : Günter Anders</a></p>
+    <div class="grid">
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Expression</span>
+            <span class="french">Ça suffit</span>
+            <span class="english">That's enough</span>
+        </div>
+
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Vocabulaire</span>
+            <span class="french">Protester / Manifester</span>
+            <span class="english">To protest / To demonstrate (in the street)</span>
+        </div>
+
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Verbe</span>
+            <span class="french">Saisir (comprendre / attraper)</span>
+            <span class="english">To seize / To grasp / To understand</span>
+        </div>
+
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Idiome</span>
+            <span class="french">Vendre la mèche</span>
+            <span class="english">To spill the beans / To let the cat out of the bag</span>
+        </div>
+
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Maison</span>
+            <span class="french">La vitre vs La fenêtre</span>
+            <span class="english">The glass pane vs The window (frame)</span>
+        </div>
+
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Chanson</span>
+            <span class="french">J'ai la peau du ventre bien tendue</span>
+            <span class="english">I am full (My stomach skin is very tight)</span>
+        </div>
+    </div>
+
+    <h3 style="margin-top:40px;">Ressources Vidéo</h3>
+    <div class="card">
+        <span class="french">How to Start a Speech</span>
+        <a class="video-link" href="https://youtu.be/w82a1FT5o88" target="_blank">Regarder sur YouTube 📺</a>
+    </div>
+    <div class="card">
+        <span class="french">Günter Anders - L'obsolescence</span>
+        <a class="video-link" href="https://youtu.be/sSLGYvgtXiw" target="_blank">Regarder sur YouTube 📺</a>
+    </div>
 
     <script src="mardi-2026-01-27.js"></script>
 </body>

@@ -1,4 +1,3 @@
-// Initialisation de la Telegram Web App pour la séance du 20/01
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();

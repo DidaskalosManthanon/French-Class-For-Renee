@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulaire de Renée - 20 Janvier</title>
+    <title>Séance du 20 Janvier</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-
-<div class="container">
     <header>
-        <a href="index.html">⬅ Retour au menu</a>
-        <h1>🇫🇷 Séance du 20 Janvier</h1>
-        <p>Clique sur une carte pour révéler la traduction</p>
+        <a href="index.html" style="text-decoration: none;">⬅ Menu</a>
+        <h1>Séance du 20 Janvier</h1>
     </header>
 
     <div class="grid">
@@ -22,14 +19,43 @@
             <span class="french">Tu attends ton avion</span>
             <span class="english">You're waiting for your plane</span>
         </div>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Lieu</span>
+            <span class="french">Au guichet</span>
+            <span class="english">At the counter</span>
         </div>
-
-    <div class="link-box">
-        <p>📺 Ressource recommandée :</p>
-        <a href="https://www.youtube.com/@firedupinfrance/videos" target="_blank">Fired Up In France - YouTube</a>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Verbe</span>
+            <span class="french">Louer</span>
+            <span class="english">To rent</span>
+        </div>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Description</span>
+            <span class="french">Sombre / Obscur</span>
+            <span class="english">Dark / Obscure</span>
+        </div>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Grammaire</span>
+            <span class="french">Le manager m'a pris le bras</span>
+            <span class="english">The manager took my arm</span>
+        </div>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Temps</span>
+            <span class="french">Je devais faire quelque chose</span>
+            <span class="english">I had to do something</span>
+        </div>
+        <div class="card" onclick="toggle(this)">
+            <span class="category">Expression</span>
+            <span class="french">Au-delà</span>
+            <span class="english">Beyond</span>
+        </div>
     </div>
-</div>
 
-<script src="mardi-2026-01-20.js"></script>
+    <div class="link-box" style="margin-top: 30px; text-align: center;">
+        <p>📺 Ressource recommandée :</p>
+        <a href="https://www.youtube.com/@firedupinfrance/videos" target="_blank" class="video-link">Fired Up In France - YouTube</a>
+    </div>
+
+    <script src="mardi-2026-01-20.js"></script>
 </body>
 </html>
