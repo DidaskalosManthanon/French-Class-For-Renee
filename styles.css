@@ -47,7 +47,12 @@ header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(-
 }
 
 .french { font-weight: bold; display: block; color: #0088cc; }
-.english { color: #f39c12; font-style: italic; display: none; margin-top: 10px; }
+.english { 
+    color: #f39c12; 
+    font-style: italic; 
+    display: none; 
+    margin-top: 10px; 
+}
 .category { font-size: 0.7em; color: #999; text-transform: uppercase; letter-spacing: 1px; }
 
 .video-link { display: inline-block; margin-top: 10px; color: var(--primary); text-decoration: none; font-weight: bold; }
