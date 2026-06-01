@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Racines Latines Cachées</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --container-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --border-color: #e2e8f0;
+            
+            --family-spect: #ecfdf5;
+            --family-spect-border: #10b981;
+            --family-spect-text: #065f46;
+            
+            --family-ject: #eff6ff;
+            --family-ject-border: #3b82f6;
+            --family-ject-text: #1e40af;
+            
+            --family-rect: #fff7ed;
+            --family-rect-border: #f97316;
+            --family-rect-text: #9a3412;
+            
+            --family-sect: #fdf2f8;
+            --family-sect-border: #ec4899;
+            --family-sect-text: #9d174d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .lang-toggle-btn {
+            background-color: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .lang-toggle-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .lang-toggle-btn:active {
+            transform: scale(0.98);
+        }
+
+        .intro-box {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--text-muted);
+        }
+
+        .root-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+        }
+
+        .root-section.spect { border-top: 5px solid var(--family-spect-border); }
+        .root-section.ject { border-top: 5px solid var(--family-ject-border); }
+        .root-section.rect { border-top: 5px solid var(--family-rect-border); }
+        .root-section.sect { border-top: 5px solid var(--family-sect-border); }
+
+        .root-header {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .root-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .root-meta {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .root-desc {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .word-card {
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .word-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .spect .word-card { background-color: var(--family-spect); border-color: rgba(16, 185, 129, 0.2); }
+        .ject .word-card { background-color: var(--family-ject); border-color: rgba(59, 130, 246, 0.2); }
+        .rect .word-card { background-color: var(--family-rect); border-color: rgba(249, 115, 22, 0.2); }
+        .sect .word-card { background-color: var(--family-sect); border-color: rgba(236, 72, 153, 0.2); }
+
+        .word-main {
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .word-etymo {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-family: Georgia, serif;
+        }
+
+        .spect .word-etymo { color: var(--family-spect-text); }
+        .ject .word-etymo { color: var(--family-ject-text); }
+        .rect .word-etymo { color: var(--family-rect-text); }
+        .sect .word-etymo { color: var(--family-sect-text); }
+
+        .word-def {
+            font-size: 0.95rem;
+        }
+
+        .tip-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fef08a;
+            color: #713f12;
+            border-radius: 8px;
+            border-left: 4px solid #eab308;
+            font-size: 0.95rem;
+        }
+
+        .group-header {
+            grid-column: 1 / -1;
+            font-weight: bold;
+            background: #fff5eb;
+            border-left: 4px solid var(--family-rect-border);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .lang-toggle-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Les Racines Latines Cachées</h1>
+                <div class="subtitle">Comprendre le vocabulaire français par son étymologie</div>
+            </div>
+            <a href="Monday-2026-06-01-en.html" class="lang-toggle-btn">Switch to English 🇬🇧</a>
+        </header>
+
+        <!-- INTRO -->
+        <div class="intro-box">
+            <p><strong>Bienvenue !</strong> De nombreux mots français se ressemblent car ils partagent les mêmes ancêtres latins. En apprenant à repérer ces racines, vous pouvez deviner le sens de centaines de mots complexes. Découvrons 4 grandes familles magiques.</p>
+        </div>
+
+        <!-- RACINE 1 : SPECT -->
+        <div class="root-section spect">
+            <div class="root-header">
+                <span class="root-title">1. -SPECT- / -SPIC-</span>
+                <span class="root-meta">Du latin <em>specere / spectare</em> : regarder, observer</span>
+            </div>
+            <p class="root-desc">Tous ces mots contiennent l'idée de vision, de regard ou d'observation, modifiée par un préfixe.</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/aspect/french" target="_blank" rel="noopener noreferrer">Aspect</a></div>
+                    <div class="word-etymo">ad- (vers) + spect</div>
+                    <div class="word-def">La manière dont une chose se présente au regard, son apparence.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/circonspect/french" target="_blank" rel="noopener noreferrer">Circonspect</a></div>
+                    <div class="word-etymo">circum- (autour) + spect</div>
+                    <div class="word-def">Qui regarde tout autour de soi avant d'agir ; prudent.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/inspecter/french" target="_blank" rel="noopener noreferrer">Inspecter</a></div>
+                    <div class="word-etymo">in- (dans) + spect</div>
+                    <div class="word-def">Regarder attentivement à l'intérieur, examiner de près.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/prospecter/french" target="_blank" rel="noopener noreferrer"></a>Prospecter</div>
+                    <div class="word-etymo">pro- (en avant) + spect</div>
+                    <div class="word-def">Regarder vers l'avant, explorer un terrain à la recherche de quelque chose.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/respecter/french" target="_blank" rel="noopener noreferrer">Respecter</a></div>
+                    <div class="word-etymo">re- (en arrière / à nouveau) + spect</div>
+                    <div class="word-def">Regarder en arrière, s'arrêter pour porter de la considération à quelqu'un.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/spectacle/french" target="_blank" rel="noopener noreferrer">Spectacle</a></div>
+                    <div class="word-etymo">spectare + -culum (moyen)</div>
+                    <div class="word-def">Ce qui est présenté aux yeux, ce que l'on regarde.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/suspecter/french" target="_blank" rel="noopener noreferrer">Suspecter</a></div>
+                    <div class="word-etymo">sub- (sous) + spect</div>
+                    <div class="word-def">Regarder par-dessous, considérer avec méfiance.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/r%C3%A9trospective/french" target="_blank" rel="noopener noreferrer">Rétrospective</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">retro- (en arrière) + spect</div>
+                    <div class="word-def">Un regard en arrière sur des événements passés.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Perspicace/french" target="_blank" rel="noopener noreferrer">Perspicace</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">per- (à travers) + spic- (voir)</div>
+                    <div class="word-def">Qui voit clairement à travers les choses ; lucide, sagace.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RACINE 2 : JECT -->
+        <div class="root-section ject">
+            <div class="root-header">
+                <span class="root-title">2. -JECT-</span>
+                <span class="root-meta">Du latin <em>jacere / jactare</em> : jeter, lancer</span>
+            </div>
+            <p class="root-desc">Tous ces mots partagent l'action physique ou figurative de lancer ou pousser quelque chose.</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/abject/french" target="_blank" rel="noopener noreferrer">Abject</a></div>
+                    <div class="word-etymo">ab- (loin de) + ject</div>
+                    <div class="word-def">Jeté loin, rejeté par la société ; méprisable et bas.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/bijection/french" target="_blank" rel="noopener noreferrer">Bijection</a></div>
+                    <div class="word-etymo">bi- (deux) + ject</div>
+                    <div class="word-def">Terme de maths : fait de lier/jeter ensemble un élément A vers un élément B de façon unique.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/d%C3%A9jection/french" target="_blank" rel="noopener noreferrer">Déjection</a></div>
+                    <div class="word-etymo">de- (vers le bas) + ject</div>
+                    <div class="word-def">Ce qui est jeté vers le bas (matières fécales, résidus).</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/%C3%A9jecter/french" target="_blank" rel="noopener noreferrer">Éjecter</a></div>
+                    <div class="word-etymo">ex- (hors de) + ject</div>
+                    <div class="word-def">Jeter dehors, expulser avec force.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/injecter/french" target="_blank" rel="noopener noreferrer">Injecter</a></div>
+                    <div class="word-etymo">in- (dans) + ject</div>
+                    <div class="word-def">Jeter ou introduire un fluide à l'intérieur d'un corps.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/objecter/french" target="_blank" rel="noopener noreferrer">Objecter</a></div>
+                    <div class="word-etymo">ob- (contre) + ject</div>
+                    <div class="word-def">Jeter un argument contre une idée, s'opposer.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/subjectif/french" target="_blank" rel="noopener noreferrer">Subjectif</a></div>
+                    <div class="word-etymo">sub- (sous) + ject</div>
+                    <div class="word-def">Qui dépend du sujet (ce qui est jeté en dessous, soumis à notre propre perception).</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/trajectoire/french" target="_blank" rel="noopener noreferrer">Trajectoire</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">trans- (à travers) + ject</div>
+                    <div class="word-def">La ligne décrite par un objet jeté à travers l'espace.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/projecteur/french" target="_blank" rel="noopener noreferrer">Projecteur</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">pro- (en avant) + ject</div>
+                    <div class="word-def">Un appareil qui jette de la lumière vers l'avant.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RACINE 3 : RECT / LECT / TECT / NECT -->
+        <div class="root-section rect">
+            <div class="root-header">
+                <span class="root-title">3. Le piège du "-ECT"</span>
+                <span class="root-meta">4 verbes différents qui se ressemblent aujourd'hui !</span>
+            </div>
+            <p class="root-desc">Attention ! Ces mots se terminent tous par <em>-ect-</em> ou <em>-ection</em>, mais ils proviennent en réalité de 4 verbes latins totalement distincts :</p>
+            
+            <div class="word-grid">
+                <!-- Regere -->
+                <div class="word-card group-header">
+                    Groupe A : Du latin <em>Regere</em> (Mener droit, gouverner → participe passé : <em>rectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/correction/french" target="_blank" rel="noopener noreferrer">Correction</a></div>
+                    <div class="word-etymo">cum- (avec) + rect</div>
+                    <div class="word-def">Action de redresser ou de remettre "droit" ensemble (une erreur).</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/direction/french" target="_blank" rel="noopener noreferrer">Direction</a></div>
+                    <div class="word-etymo">di- / de- (vers) + rect</div>
+                    <div class="word-def">Le fait de mener en ligne droite vers un but.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/%C3%A9rection/french" target="_blank" rel="noopener noreferrer">Érection</a></div>
+                    <div class="word-etymo">ex- (hors de) + rect</div>
+                    <div class="word-def">Le fait de dresser tout droit vers le haut.</div>
+                </div>
+
+                <!-- Legere -->
+                <div class="word-card group-header">
+                    Groupe B : Du latin <em>Legere</em> (Cueillir, choisir, lire → participe passé : <em>lectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/%C3%A9lection/french" target="_blank" rel="noopener noreferrer">Élection</a></div>
+                    <div class="word-etymo">ex- (hors de) + lect</div>
+                    <div class="word-def">Le fait de choisir une personne hors d'un groupe, faire un tri.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/s%C3%A9lection/french" target="_blank" rel="noopener noreferrer">Sélection</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">se- (séparer) + lect</div>
+                    <div class="word-def">Écarter pour choisir le meilleur, trier.</div>
+                </div>
+
+                <!-- Tegere -->
+                <div class="word-card group-header">
+                    Groupe C : Du latin <em>Tegere</em> (Couvrir, protéger → participe passé : <em>tectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/D%C3%A9tecter/french" target="_blank" rel="noopener noreferrer">Détecter</a></div>
+                    <div class="word-etymo">de- (enlever) + tect</div>
+                    <div class="word-def">Enlever le couvercle / le toit, découvrir ce qui était caché.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Protection/french" target="_blank" rel="noopener noreferrer">Protection</a></div>
+                    <div class="word-etymo">pro- (devant) + tect</div>
+                    <div class="word-def">Placer un abri ou un couvercle devant quelque chose pour le défendre.</div>
+                </div>
+
+                <!-- Nectere -->
+                <div class="word-card group-header">
+                    Groupe D : Du latin <em>Nectere</em> (Attacher, lier)
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Connecter/french" target="_blank" rel="noopener noreferrer">Connecter</a></div>
+                    <div class="word-etymo">cum- (ensemble) + nectere</div>
+                    <div class="word-def">Attacher ou lier plusieurs choses ensemble.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RACINE 4 : SECT -->
+        <div class="root-section sect">
+            <div class="root-header">
+                <span class="root-title">4. -SECT-</span>
+                <span class="root-meta">Du latin <em>secare</em> : couper</span>
+            </div>
+            <p class="root-desc">Cette racine ressemble à <em>-spect</em> mais elle a un sens complètement tranchant !</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Connecter/french" target="_blank" rel="noopener noreferrer">Section</a></div>
+                    <div class="word-etymo">secare + -tion</div>
+                    <div class="word-def">Une coupure, ou une partie distincte coupée d'un tout.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Insecte/french" target="_blank" rel="noopener noreferrer">Insecte</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">in- (dedans) + sect</div>
+                    <div class="word-def">Un petit animal dont le corps est comme "coupé" en trois sections distinctes.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main"><a href="https://youglish.com/pronounce/Dissection/french" target="_blank" rel="noopener noreferrer">Dissection</a> <span style="font-size:0.8rem;color:var(--text-muted);">+ En plus !</span></div>
+                    <div class="word-etymo">dis- (séparément) + sect</div>
+                    <div class="word-def">L'action de couper un organisme pièce par pièce pour l'étudier.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ASTUCE PEDAGOGIQUE -->
+        <div class="tip-box">
+            <strong>💡 Astuce pour votre amie américaine :</strong>
+            <p>L'anglais a emprunté énormément de mots au français et au latin. Presque tous ces mots ont des équivalents exacts en anglais (<em>aspect, inspect, reject, selection, protect...</em>). Comprendre la racine aide à maîtriser les DEUX langues en même temps !</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Latin Roots</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --container-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --border-color: #e2e8f0;
+            
+            --family-spect: #ecfdf5;
+            --family-spect-border: #10b981;
+            --family-spect-text: #065f46;
+            
+            --family-ject: #eff6ff;
+            --family-ject-border: #3b82f6;
+            --family-ject-text: #1e40af;
+            
+            --family-rect: #fff7ed;
+            --family-rect-border: #f97316;
+            --family-rect-text: #9a3412;
+            
+            --family-sect: #fdf2f8;
+            --family-sect-border: #ec4899;
+            --family-sect-text: #9d174d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            position: relative;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .lang-toggle-btn {
+            background-color: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .lang-toggle-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .lang-toggle-btn:active {
+            transform: scale(0.98);
+        }
+
+        .intro-box {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            border-left: 4px solid var(--text-muted);
+        }
+
+        .root-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+        }
+
+        .root-section.spect { border-top: 5px solid var(--family-spect-border); }
+        .root-section.ject { border-top: 5px solid var(--family-ject-border); }
+        .root-section.rect { border-top: 5px solid var(--family-rect-border); }
+        .root-section.sect { border-top: 5px solid var(--family-sect-border); }
+
+        .root-header {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .root-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .root-meta {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        .root-desc {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .word-card {
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .word-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .spect .word-card { background-color: var(--family-spect); border-color: rgba(16, 185, 129, 0.2); }
+        .ject .word-card { background-color: var(--family-ject); border-color: rgba(59, 130, 246, 0.2); }
+        .rect .word-card { background-color: var(--family-rect); border-color: rgba(249, 115, 22, 0.2); }
+        .sect .word-card { background-color: var(--family-sect); border-color: rgba(236, 72, 153, 0.2); }
+
+        .word-main {
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .word-etymo {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-family: Georgia, serif;
+        }
+
+        .spect .word-etymo { color: var(--family-spect-text); }
+        .ject .word-etymo { color: var(--family-ject-text); }
+        .rect .word-etymo { color: var(--family-rect-text); }
+        .sect .word-etymo { color: var(--family-sect-text); }
+
+        .word-def {
+            font-size: 0.95rem;
+        }
+
+        .tip-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fef08a;
+            color: #713f12;
+            border-radius: 8px;
+            border-left: 4px solid #eab308;
+            font-size: 0.95rem;
+        }
+
+        .group-header {
+            grid-column: 1 / -1;
+            font-weight: bold;
+            background: #fff5eb;
+            border-left: 4px solid var(--family-rect-border);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .lang-toggle-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Hidden Latin Roots</h1>
+                <div class="subtitle">Understanding French vocabulary through etymology</div>
+            </div>
+            <a href="lundi-2026-06-01-fr.html" class="lang-toggle-btn">Passer en Français 🇫🇷</a>
+        </header>
+
+        <!-- INTRO -->
+        <div class="intro-box">
+            <p><strong>Welcome!</strong> Many French words look similar because they share the same Latin ancestors. By learning to spot these roots, you can guess the meaning of hundreds of complex words. Let's discover 4 magical families.</p>
+        </div>
+
+        <!-- ROOT 1: SPECT -->
+        <div class="root-section spect">
+            <div class="root-header">
+                <span class="root-title">1. -SPECT- / -SPIC-</span>
+                <span class="root-meta">From Latin <em>specere / spectare</em>: to look, to observe</span>
+            </div>
+            <p class="root-desc">All these words contain the idea of vision, looking, or observing, modified by a prefix.</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main">Aspect</div>
+                    <div class="word-etymo">ad- (toward) + spect</div>
+                    <div class="word-def">The way something presents itself to the eye; its appearance.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Circumspect</div>
+                    <div class="word-etymo">circum- (around) + spect</div>
+                    <div class="word-def">Someone who looks all around before acting; cautious, wary.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Inspect</div>
+                    <div class="word-etymo">in- (into) + spect</div>
+                    <div class="word-def">To look closely inside or examine something very carefully.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Prospect</div>
+                    <div class="word-etymo">pro- (forward) + spect</div>
+                    <div class="word-def">To look forward, to explore an area or market for resources/clients.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Respect</div>
+                    <div class="word-etymo">re- (back / again) + spect</div>
+                    <div class="word-def">To look back at, to stop and show consideration or esteem for someone.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Spectacle</div>
+                    <div class="word-etymo">spectare + -culum (means)</div>
+                    <div class="word-def">What is presented to the eyes; a public show or sight.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Suspect</div>
+                    <div class="word-etymo">sub- (under) + spect</div>
+                    <div class="word-def">To look from underneath; to view someone or something with mistrust.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Retrospective <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">retro- (backward) + spect</div>
+                    <div class="word-def">A look back at a sequence of past events or an artist's life work.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Perspicacious <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">per- (through) + spic- (see)</div>
+                    <div class="word-def">Someone who sees clearly through things; sharp-witted, insightful.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROOT 2: JECT -->
+        <div class="root-section ject">
+            <div class="root-header">
+                <span class="root-title">2. -JECT-</span>
+                <span class="root-meta">From Latin <em>jacere / jactare</em>: to throw, to cast</span>
+            </div>
+            <p class="root-desc">All these words share the physical or figurative action of throwing or pushing something.</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main">Abject</div>
+                    <div class="word-etymo">ab- (away from) + ject</div>
+                    <div class="word-def">Thrown far away, cast off by society; despicable, completely low.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Bijection</div>
+                    <div class="word-etymo">bi- (two) + ject</div>
+                    <div class="word-def">Math term: a matching where elements of two sets are "thrown together" one-to-one.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Dejection</div>
+                    <div class="word-etymo">de- (down) + ject</div>
+                    <div class="word-def">Excrement or waste matter that is cast downward out of the body.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Eject</div>
+                    <div class="word-etymo">ex- (out of) + ject</div>
+                    <div class="word-def">To throw out, to expel or force out with speed.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Inject</div>
+                    <div class="word-etymo">in- (into) + ject</div>
+                    <div class="word-def">To throw or force a fluid inside a body or space.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Object</div>
+                    <div class="word-etymo">ob- (against) + ject</div>
+                    <div class="word-def">To throw an argument against an idea; to oppose or voice disagreement.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Subjective</div>
+                    <div class="word-etymo">sub- (under) + ject</div>
+                    <div class="word-def">Depending on the subject (what is cast underneath, built on one's own perception).</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Trajectory <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">trans- (across) + ject</div>
+                    <div class="word-def">The path followed by a flying object thrown across space.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Projector <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">pro- (forward) + ject</div>
+                    <div class="word-def">A device that throws light forward onto a surface.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROOT 3: RECT / LECT / TECT / NECT -->
+        <div class="root-section rect">
+            <div class="root-header">
+                <span class="root-title">3. The "-ECT" Trap</span>
+                <span class="root-meta">4 different verbs that look identical today!</span>
+            </div>
+            <p class="root-desc">Watch out! These words all end in <em>-ect-</em> or <em>-ection</em>, but they actually stem from 4 completely distinct Latin verbs:</p>
+            
+            <div class="word-grid">
+                <!-- Regere -->
+                <div class="word-card group-header">
+                    Group A: From Latin <em>Regere</em> (To lead straight, rule → past participle: <em>rectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Correction</div>
+                    <div class="word-etymo">cum- (with) + rect</div>
+                    <div class="word-def">The act of straightening out or making something "right" together.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Direction</div>
+                    <div class="word-etymo">di- / de- (toward) + rect</div>
+                    <div class="word-def">The act of guiding in a straight line toward a goal.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Erection</div>
+                    <div class="word-etymo">ex- (out of) + rect</div>
+                    <div class="word-def">The act of raising or building something straight up.</div>
+                </div>
+
+                <!-- Legere -->
+                <div class="word-card group-header">
+                    Group B: From Latin <em>Legere</em> (To gather, choose, read → past participle: <em>lectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Election</div>
+                    <div class="word-etymo">ex- (out of) + lect</div>
+                    <div class="word-def">The act of choosing or picking someone out of a group.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Selection <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">se- (apart) + lect</div>
+                    <div class="word-def">To set apart by choosing the best elements; sorting.</div>
+                </div>
+
+                <!-- Tegere -->
+                <div class="word-card group-header">
+                    Group C: From Latin <em>Tegere</em> (To cover, protect → past participle: <em>tectus</em>)
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Detect</div>
+                    <div class="word-etymo">de- (remove) + tect</div>
+                    <div class="word-def">To remove the cover or roof; to uncover what was hidden.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Protection</div>
+                    <div class="word-etymo">pro- (before) + tect</div>
+                    <div class="word-def">Placing a cover or shield in front of something to defend it.</div>
+                </div>
+
+                <!-- Nectere -->
+                <div class="word-card group-header">
+                    Group D: From Latin <em>Nectere</em> (To bind, tie)
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Connect</div>
+                    <div class="word-etymo">cum- (together) + nectere</div>
+                    <div class="word-def">To bind, link, or tie multiple things together.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROOT 4: SECT -->
+        <div class="root-section sect">
+            <div class="root-header">
+                <span class="root-title">4. -SECT-</span>
+                <span class="root-meta">From Latin <em>secare</em>: to cut</span>
+            </div>
+            <p class="root-desc">This root looks like <em>-spect</em> but has an entirely sharp, cutting meaning!</p>
+            
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word-main">Section</div>
+                    <div class="word-etymo">secare + -tion</div>
+                    <div class="word-def">A cut, or a distinct part that has been separated/cut from a whole.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Insect <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">in- (into) + sect</div>
+                    <div class="word-def">A tiny animal whose body is "cut into" three distinct segments.</div>
+                </div>
+                <div class="word-card">
+                    <div class="word-main">Dissection <span style="font-size:0.8rem;color:var(--text-muted);">+ Bonus!</span></div>
+                    <div class="word-etymo">dis- (apart) + sect</div>
+                    <div class="word-def">The act of cutting an organism apart piece by piece to study it.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIP -->
+        <div class="tip-box">
+            <strong>💡 Tip for English Speakers:</strong>
+            <p>English borrowed tons of vocabulary from French and Latin. Almost all these words have exact cognates in English (<em>aspect, inspect, reject, selection, protect...</em>). Mastering the root unlocks advanced vocabulary in BOTH languages seamlessly!</p>
+        </div>
+    </div>
+
+</body>
+</html>
