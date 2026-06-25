@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georges Brassens - 95 fois sur cent</title>
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #2c2c2c;
+            --accent-color: #8b0000;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Section Vidéos */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Section Paroles */
+        .lyrics-container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .lyrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .lyrics-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .lyrics-column p {
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .lyrics-column.fr {
+            border-right: 1px solid #eee;
+            padding-right: 20px;
+        }
+
+        /* Section Flashcards */
+        .flashcard-section {
+            text-align: center;
+            margin-top: 50px;
+            padding-bottom: 60px;
+        }
+
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 550px;
+            height: 280px;
+            margin: 30px auto;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .card-front {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .card-back {
+            background-color: var(--accent-color);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            font-weight: bold;
+        }
+
+        .card-back .card-header {
+            color: #ffcccc;
+        }
+
+        .card-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+        }
+
+        .audio-btn {
+            background: #e0dcd3;
+            color: var(--text-color);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+            background: #d4cfc3;
+        }
+
+        .card-back .audio-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .card-back .audio-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        button.nav-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        button.nav-btn:hover {
+            background-color: #600000;
+        }
+
+        .progress {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Georges Brassens</h1>
+        <h3>95 fois sur cent (Quatre-vingt-quinze fois sur cent)</h3>
+        <p>Application interactive bilingue avec Audio</p>
+    </header>
+
+    <div class="video-grid">
+        <div class="video-card">
+            <h3>Version Originale (Audio/Voix)</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/HsWKjKwW9Zc" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="video-card">
+            <h3>Version Karaoké / Paroles</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/4pcwoTqhPgw" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <h2>Paroles & Traduction (Lyrics & Translation)</h2>
+    <div class="lyrics-container">
+        <div class="lyrics-grid">
+            <div class="lyrics-column fr">
+                <strong>Français</strong>
+                <hr>
+                <p>La femme qui possède tout en elle<br>Pour donner le goût des fêtes charnelles<br>La femme qui suscite en nous tant de passion brutale</p>
+                <p>La femme est avant tout sentimentale<br>Main dans la main les longues promenades<br>Les fleurs les billets doux les sérénades</p>
+                <p>Les crimes, les folies que pour ses beaux yeux l'on commet<br>La transportent mais quatre vingt quinze fois sur cent<br>La femme s'emmerde en baisant</p>
+                <p>Qu'elle le taise ou le confesse<br>C'est pas tous les jours qu'on lui déride les fesses<br>Les pauvres bougres convaincus du contraire sont des cocus</p>
+                <p>À l'heure de l'œuvre de chair<br>Elle est souvent triste peuchère<br>S'il n'entend le cœur qui bat, le corps non plus ne bronche pas</p>
+                <p>Sauf quand elle aime un homme avec tendresse<br>Toujours sensible alors à ses caresses<br>Toujours bien disposée toujours encline à s'émouvoir</p>
+                <p>Elle s'emmerde sans s'en apercevoir<br>Ou quand elle a des besoins tyranniques<br>Qu'elle souffre de nymphomanie chronique</p>
+                <p>C'est elle qui fait alors passer<br>À ses adorateurs de fichus quarts d'heure</p>
+            </div>
+            <div class="lyrics-column en">
+                <strong>English</strong>
+                <hr>
+                <p>The woman who has everything in her<br>To give a taste for fleshly feasts<br>The woman who arouses in us so much brutal passion</p>
+                <p>Woman is above all sentimental<br>Hand in hand, long walks<br>Flowers, love notes, serenades</p>
+                <p>The crimes, the madness committed just for her beautiful eyes<br>Carry her away, but ninety-five times out of a hundred<br>Woman gets bored while making love</p>
+                <p>Whether she keeps it quiet or confesses it<br>It's not every day that someone makes her smile down there<br>The poor devils convinced of the contrary are cuckolds</p>
+                <p>At the hour of the carnal act<br>She is often sad, poor thing<br>If he doesn't hear the beating heart, the body doesn't budge either</p>
+                <p>Except when she loves a man with tenderness<br>Always sensitive then to his caresses<br>Always well-disposed, always inclined to be moved</p>
+                <p>She gets bored without even noticing it<br>Or when she has tyrannical needs<br>When she suffers from chronic nymphomania</p>
+                <p>It is she who then gives<br>Her admirers a hell of a hard time</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flashcard-section">
+        <h2>Jeu de 20 Flashcards Vocabulaire</h2>
+        <p>Cliquez sur la carte pour la retourner. Utilisez le bouton 🔊 pour écouter la prononciation.</p>
+        
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="card">
+                <div class="card-face card-front">
+                    <div class="card-header">Français</div>
+                    <div class="card-text" id="front-text">Chargement...</div>
+                    <button class="audio-btn" onclick="speakText(event, 'fr')">🔊</button>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-header">English</div>
+                    <div class="card-text" id="back-text">Loading...</div>
+                    <button class="audio-btn" onclick="speakText(event, 'en')">🔊</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="nav-btn" onclick="prevCard(event)">Précédent</button>
+            <button class="nav-btn" onclick="nextCard(event)">Suivant</button>
+            <div class="progress" id="progress-text">1 / 20</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Liste des 20 flashcards (Face A: Français / Face B: Anglais)
+    const flashcardsData = [
+        { fr: "Elle possède un grand talent.", en: "She possesses a great talent." },
+        { fr: "J'ai hâte de faire la fête ce soir !", en: "I can't wait to party tonight!" },
+        { fr: "C'est une personne très sentimentale.", en: "They are a very sentimental person." },
+        { fr: "Marchons main dans la main.", en: "Let's walk hand in hand." },
+        { fr: "Nous faisons de longues promenades le dimanche.", en: "We take long walks on Sundays." },
+        { fr: "Offrir des fleurs fait toujours plaisir.", en: "Giving flowers always makes people happy." },
+        { fr: "Il m'a laissé un petit mot doux sur la table.", en: "He left me a sweet little note on the table." },
+        { fr: "C'est une pure folie d'acheter ça !", en: "It's pure madness to buy that!" },
+        { fr: "Elle a de très beaux yeux.", en: "She has very beautiful eyes." },
+        { fr: "Neuf fois sur dix, il arrive en retard.", en: "Nine times out of ten, he arrives late." },
+        { fr: "Je m'ennuie un peu dans ce cours.", en: "I'm getting a bit bored in this class." },
+        { fr: "Il vaut mieux le taire pour l'instant.", en: "It's better to keep it quiet for now." },
+        { fr: "Je te confesse que je n'en sais rien.", en: "I confess to you that I know nothing about it." },
+        { fr: "Ce n'est pas tous les jours facile.", en: "It's not easy every day." },
+        { fr: "Le pauvre bougre a perdu ses clés.", en: "The poor devil lost his keys." },
+        { fr: "Je suis convaincu qu'il a raison.", en: "I am convinced that he is right." },
+        { fr: "Mon cœur bat très vite après la course.", en: "My heart beats very fast after running." },
+        { fr: "Il me traite toujours avec beaucoup de tendresse.", en: "He always treats me with a lot of tenderness." },
+        { fr: "Elle est très sensible au froid.", en: "She is very sensitive to the cold." },
+        { fr: "Mon boss m'a fait passer un sale quart d'heure.", en: "My boss gave me a hell of a hard time." }
+    ];
+
+    let currentCardIndex = 0;
+    const cardElement = document.getElementById('card');
+    const frontText = document.getElementById('front-text');
+    const backText = document.getElementById('back-text');
+    const progressText = document.getElementById('progress-text');
+
+    function updateCard() {
+        cardElement.classList.remove('is-flipped');
+        
+        // Petit délai pour changer le texte pendant que la carte se remet à plat
+        setTimeout(() => {
+            const currentCard = flashcardsData[currentCardIndex];
+            frontText.textContent = currentCard.fr;
+            backText.textContent = currentCard.en;
+            progressText.textContent = `${currentCardIndex + 1} / ${flashcardsData.length}`;
+        }, 150);
+    }
+
+    function flipCard() {
+        cardElement.classList.toggle('is-flipped');
+    }
+
+    function nextCard(event) {
+        event.stopPropagation(); 
+        currentCardIndex = (currentCardIndex + 1) % flashcardsData.length;
+        updateCard();
+    }
+
+    function prevCard(event) {
+        event.stopPropagation(); 
+        currentCardIndex = (currentCardIndex - 1 + flashcardsData.length) % flashcardsData.length;
+        updateCard();
+    }
+
+    // Fonction de Synthèse Vocale (Audio)
+    function speakText(event, lang) {
+        event.stopPropagation(); // Empêche de retourner la carte en cliquant sur l'icône audio
+        
+        // Stopper les lectures en cours
+        window.speechSynthesis.cancel();
+        
+        const currentCard = flashcardsData[currentCardIndex];
+        const textToSpeak = (lang === 'fr') ? currentCard.fr : currentCard.en;
+        
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        
+        if (lang === 'fr') {
+            utterance.lang = 'fr-FR'; // Voix française
+        } else {
+            utterance.lang = 'en-US'; // Voix américaine/anglaise
+        }
+        
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Initialisation au chargement
+    updateCard();
+</script>
+
+</body>
+</html>
