@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session de Français - Leçon du Jour</title>
+    <style>
+        :root {
+            --primary: #0055A5; /* Bleu France */
+            --secondary: #E75480; 
+            --accent: #EF4135; /* Rouge France */
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Section Story */
+        .story-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Bulles d'aide interactives */
+        .highlight {
+            background-color: #ffe4e6;
+            color: #b91c1c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 2px dashed #b91c1c;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: attr(data-translation);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: #1e293b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .highlight:hover::after, .highlight:focus::after, .highlight:active::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Bouton et bloc Traduction de l'histoire */
+        .translation-toggle {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .translation-toggle:hover {
+            background-color: #e2e8f0;
+        }
+
+        .story-translation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-style: italic;
+            color: #334155;
+        }
+
+        /* Flashcards Section */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .flashcard-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ffffff, #f1f5f9);
+            border: 3px solid var(--primary);
+            color: var(--text-main);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-subtext {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .card-back .card-subtext {
+            color: #bfdbfe;
+        }
+
+        .audio-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(239, 65, 53, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            background-color: var(--text-main);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Quiz Section */
+        .quiz-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background-color: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background-color: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .quiz-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-top: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .tab-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Session de Français</h1>
+        <p>Maîtrisez les nuances du jour : en fait, croiser, rater, emmener...</p>
+    </header>
+
+    <!-- Onglets -->
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab('histoire')">📖 L'Histoire</button>
+        <button class="tab-btn" onclick="switchTab('cartes')">📇 Cartes Mémoires</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">✍️ Le Quiz</button>
+    </nav>
+
+    <!-- Contenu : Histoire -->
+    <section id="histoire" class="tab-content active">
+        <div class="story-card">
+            <h2>Une rencontre inattendue 🚶‍♂️☕</h2>
+            <br>
+            <p class="story-text">
+                <span class="highlight" data-translation="By the way" tabIndex="0">Au fait</span>, je dois te raconter ma matinée ! Je voulais aller dans ce nouveau café du centre-ville. <span class="highlight" data-translation="Actually / In fact" tabIndex="0">En fait</span>, je pensais que c'était fermé, mais c'était bien ouvert. En m'y rendant, j'ai couru car je ne voulais pas <span class="highlight" data-translation="to miss the bus" tabIndex="0">rater le bus</span>. Malheureusement, j'ai quand même réussi à le <span class="highlight" data-translation="to miss / to fail" tabIndex="0">rater</span>.
+            </p>
+            <p class="story-text">
+                J'ai donc décidé de <span class="highlight" data-translation="to cross the street" tabIndex="0">traverser la rue</span> et de marcher jusqu'au quartier latin. C'est un endroit magnifique, <span class="highlight" data-translation="one can find students, pubs, and libraries" tabIndex="0">on y croise des étudiants, des bars et des bibliothèques</span>. Soudain, <span class="highlight" data-translation="I've met a friend in the street" tabIndex="0">j'ai croisé un ami dans la rue</span>. On s'est <span class="highlight" data-translation="to look at each other" tabIndex="0">croisés du regard</span> et il m'a dit : « Quelle coïncidence ! Je vais chez Pierre, je dois lui <span class="highlight" data-translation="to bring (an object) to someone" tabIndex="0">apporter</span> son livre. Viens avec moi, je peux t' <span class="highlight" data-translation="to guide/take (someone) along" tabIndex="0">emmener</span> ! »
+            </p>
+            <p class="story-text">
+                J'ai répondu : « Je veux bien t'accompagner, mais <span class="highlight" data-translation="I am not aware of these infos" tabIndex="0">je ne suis pas au fait de ces informations</span> : Pierre a déménagé ? » Mon ami a ri et m'a dit : « Oui, <span class="highlight" data-translation="in fact" tabIndex="0">en fait</span>, il habite juste ici. Je <span class="highlight" data-translation="cross fingers" tabIndex="0">croise les doigts</span> pour qu'il soit chez lui ! »
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: 10px;">💡 Astuce : Cliquez ou survolez les mots surlignés en rouge pour voir leur traduction en anglais !</p>
+            
+            <!-- Traduction de l'histoire -->
+            <button class="translation-toggle" onclick="toggleTranslation()">🇬🇧 Afficher la traduction anglaise</button>
+            <div id="story-en" class="story-translation">
+                <p class="story-text"><strong>An unexpected encounter 🚶‍♂️☕</strong></p>
+                <p class="story-text"><strong>By the way</strong>, I have to tell you about my morning! I wanted to go to this new café downtown. <strong>Actually</strong>, I thought it was closed, but it was wide open. On my way there, I ran because I didn't want to <strong>miss the bus</strong>. Unfortunately, I still managed to <strong>miss</strong> it.</p>
+                <p class="story-text">So I decided to <strong>cross the street</strong> and walk to the Latin Quarter. It's a beautiful place, <strong>one can find students, pubs, and libraries there</strong>. Suddenly, <strong>I met a friend in the street</strong>. We <strong>looked at each other (caught each other's eye)</strong> and he said: "What a coincidence! I'm going to Pierre's, I have to <strong>bring</strong> him his book. Come with me, I can <strong>take/guide you along</strong>!"</p>
+                <p class="story-text">I replied: "I'd love to come with you, but <strong>I am not aware of this information</strong>: did Pierre move?" My friend laughed and said: "Yes, <strong>in fact</strong>, he lives right here. I'm <strong>crossing my fingers</strong> that he is home!"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu : Cartes Mémoires -->
+    <section id="cartes" class="tab-content">
+        <div class="cards-container">
+            <p>Cliquez sur la carte pour voir sa traduction. Utilisez le bouton 🔊 pour l'audio français.</p>
+            <div class="flashcard-wrapper">
+                <div class="flashcard" id="card" onclick="flipCard()">
+                    <!-- Recto (Français) -->
+                    <div class="card-face card-front">
+                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: bold; margin-bottom: 5px;">FRANÇAIS</span>
+                        <div class="card-text" id="card-fr">Chargement...</div>
+                        <div class="card-subtext" id="card-fr-sub"></div>
+                        <button class="audio-btn" onclick="speakFrench(event)" title="Écouter la prononciation">🔊</button>
+                    </div>
+                    <!-- Verso (Anglais) -->
+                    <div class="card-face card-back">
+                        <span style="font-size: 0.8rem; color: #93c5fd; font-weight: bold; margin-bottom: 5px;">ANGLAIS</span>
+                        <div class="card-text" id="card-en">Loading...</div>
+                        <div class="card-subtext" id="card-en-sub"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-controls">
+                <button class="control-btn" onclick="prevCard()">← Précédent</button>
+                <button class="control-btn" onclick="nextCard()">Suivant →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu : Quiz -->
+    <section id="quiz" class="tab-content">
+        <div class="quiz-card">
+            <h2>Testez vos connaissances ! 🧠</h2>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #e2e8f0;">
+            <div id="quiz-box">
+                <div class="quiz-question" id="question">Question s'affiche ici</div>
+                <div class="quiz-options" id="options"></div>
+                <div id="feedback" style="font-weight: bold; margin-bottom: 15px; min-height: 24px;"></div>
+                <button class="control-btn" id="next-quiz-btn" onclick="nextQuestion()" style="display:none;">Question suivante</button>
+                <p class="quiz-score">Score : <span id="score">0</span> / <span id="total-questions">0</span></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    const vocabulary = [
+        { fr: "au fait", frSub: "(= au courant)", en: "by the way / aware of", enSub: "" },
+        { fr: "en fait", frSub: "(= en réalité)", en: "actually / in fact", enSub: "" },
+        { fr: "je ne suis pas au fait de ces informations", frSub: "(= pas au courant)", en: "I am not aware of these infos", enSub: "" },
+        { fr: "croiser", frSub: "(un ami / les doigts)", en: "to cross / to meet", enSub: "to cross fingers / to meet a friend" },
+        { fr: "traverser la rue", frSub: "", en: "to cross the street", enSub: "" },
+        { fr: "croiser du regard", frSub: "", en: "to look at each other / catch eyes", enSub: "" },
+        { fr: "on y croise des étudiants", frSub: "(= on y trouve / on y voit)", en: "one can find / see students there", enSub: "" },
+        { fr: "rater", frSub: "(le bus / un plat / la cible)", en: "to miss / to fail / to screw up", enSub: "" },
+        { fr: "apporter", frSub: "(= apporter un objet à quelqu'un)", en: "to bring (an object)", enSub: "" },
+        { fr: "emmener", frSub: "(= guider quelqu'un, 'ensemble')", en: "to guide / take (someone)", enSub: "" }
+    ];
+
+    // --- Fonction d'affichage de la traduction de l'histoire ---
+    function toggleTranslation() {
+        const transDiv = document.getElementById('story-en');
+        const toggleBtn = document.querySelector('.translation-toggle');
+        if (transDiv.style.display === "block") {
+            transDiv.style.display = "none";
+            toggleBtn.textContent = "🇬🇧 Afficher la traduction anglaise";
+        } else {
+            transDiv.style.display = "block";
+            toggleBtn.textContent = "🇫🇷 Masquer la traduction anglaise";
+        }
+    }
+
+    // --- Gestion des Onglets ---
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        if (tabId === 'cartes') showCard();
+        else if (tabId === 'quiz') initQuiz();
+    }
+
+    // --- Gestion des Cartes Mémoires ---
+    let currentCardIndex = 0;
+    const cardEl = document.getElementById('card');
+    const cardFrEl = document.getElementById('card-fr');
+    const cardFrSubEl = document.getElementById('card-fr-sub');
+    const cardEnEl = document.getElementById('card-en');
+    const cardEnSubEl = document.getElementById('card-en-sub');
+
+    function showCard() {
+        cardEl.classList.remove('flipped');
+        setTimeout(() => {
+            const item = vocabulary[currentCardIndex];
+            cardFrEl.textContent = item.fr;
+            cardFrSubEl.textContent = item.frSub || "";
+            cardEnEl.textContent = item.en;
+            cardEnSubEl.textContent = item.enSub || "";
+        }, 150);
+    }
+
+    function flipCard() { cardEl.classList.toggle('flipped'); }
+    function nextCard() { currentCardIndex = (currentCardIndex + 1) % vocabulary.length; showCard(); }
+    function prevCard() { currentCardIndex = (currentCardIndex - 1 + vocabulary.length) % vocabulary.length; showCard(); }
+
+    function speakFrench(event) {
+        event.stopPropagation();
+        const text = vocabulary[currentCardIndex].fr;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR';
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // --- Gestion du Quiz ---
+    let quizIndex = 0;
+    let score = 0;
+    let quizData = [];
+
+    function initQuiz() {
+        quizIndex = 0;
+        score = 0;
+        quizData = [...vocabulary].sort(() => Math.random() - 0.5);
+        document.getElementById('total-questions').textContent = quizData.length;
+        document.getElementById('score').textContent = score;
+        loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('next-quiz-btn').style.display = "none";
+        
+        const currentItem = quizData[quizIndex];
+        document.getElementById('question').textContent = `Quelle est la traduction de : "${currentItem.fr}" ?`;
+
+        let options = [currentItem.en];
+        const distractors = vocabulary.filter(item => item.en !== currentItem.en).map(item => item.en);
+        distractors.sort(() => Math.random() - 0.5);
+        options = options.concat(distractors.slice(0, 3)).sort(() => Math.random() - 0.5);
+
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = "";
+
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.classList.add('option-btn');
+            btn.textContent = option;
+            btn.onclick = () => selectOption(btn, option, currentItem.en);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(selectedBtn, chosenOption, correctOption) {
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correctOption) btn.classList.add('correct');
+        });
+
+        const feedbackEl = document.getElementById('feedback');
+        if (chosenOption === correctOption) {
+            score++;
+            document.getElementById('score').textContent = score;
+            feedbackEl.textContent = "Excellent ! C'est la bonne réponse. 🎉";
+            feedbackEl.style.color = "#10b981";
+        } else {
+            selectedBtn.classList.add('incorrect');
+            feedbackEl.textContent = `Oups ! La bonne réponse était : "${correctOption}".`;
+            feedbackEl.style.color = "#ef4444";
+        }
+        document.getElementById('next-quiz-btn').style.display = "inline-block";
+    }
+
+    function nextQuestion() {
+        quizIndex++;
+        if (quizIndex < quizData.length) loadQuizQuestion();
+        else {
+            document.getElementById('quiz-box').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h3>Quiz Terminé ! 🏆</h3>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">Votre score final est de <strong>${score} sur ${quizData.length}</strong>.</p>
+                    <button class="control-btn" onclick="initQuiz()">Recommencer le quiz</button>
+                </div>`;
+        }
+    }
+
+    showCard();
+</script>
+</body>
+</html>
