@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leçon du jour - Renée</title>
+  <style>
+    :root {
+      --primary: #c85a32; /* Couleur ocre/garrigue */
+      --primary-hover: #a34320;
+      --bg: #fcf9f5;
+      --card-bg: #ffffff;
+      --text: #2c2c2c;
+      --border-radius: 12px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 2px solid #e5dace;
+      margin-bottom: 30px;
+    }
+
+    h1 { color: var(--primary); margin-bottom: 5px; }
+    h2 { color: var(--primary-hover); margin-top: 40px; border-bottom: 2px solid var(--primary); padding-bottom: 8px;}
+
+    section {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    /* Grammaire */
+    .rule-box {
+      background: #fdf5ef;
+      border-left: 5px solid var(--primary);
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+
+    /* Story Section */
+    .lang-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--primary-hover); }
+    .btn.secondary { background: #e0e0e0; color: #333; }
+    .story-text { font-size: 1.1em; }
+    .highlight { font-weight: bold; color: var(--primary); }
+
+    /* Flashcard Single Container (3D Flip) */
+    .flashcard-viewer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .scene {
+      width: 100%;
+      max-width: 450px;
+      height: 280px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--border-radius);
+    }
+
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--border-radius);
+      border: 2px solid #ebdcd0;
+      background: #ffffff;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .card-face-back {
+      transform: rotateY(180deg);
+      background: #fdfaf7;
+      border-color: var(--primary);
+    }
+
+    .card-tag {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .word-main {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 5px 0;
+    }
+
+    .ipa {
+      font-family: monospace;
+      color: #777;
+      font-size: 0.95em;
+    }
+
+    .example-fr {
+      font-size: 1.1em;
+      margin: 10px 0;
+      color: var(--text);
+    }
+
+    .example-en {
+      font-size: 1.1em;
+      font-style: italic;
+      color: #444;
+      margin-top: 15px;
+    }
+
+    .audio-btn {
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .audio-btn:hover { background: #e0e0e0; transform: scale(1.05); }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .card-counter {
+      font-weight: bold;
+      color: #666;
+    }
+
+    /* Quiz */
+    .quiz-question { margin-bottom: 20px; }
+    .options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .option-btn {
+      text-align: left;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .option-btn:hover { background: #eee; }
+    .option-btn.correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+    .option-btn.incorrect { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Vocabulaire & Grammaire</h1>
+    <p>Leçon avec Renée</p>
+  </header>
+
+  <!-- SECTION 1: LE PRONOM 'Y' -->
+  <section>
+    <h2> focus Grammaire : Le pronom "Y"</h2>
+    <p>Le pronom <strong>Y</strong> remplace généralement un lieu ou une idée introduite par la préposition <strong>à</strong>.</p>
+
+    <div class="rule-box">
+      <strong>1. Indiquer un lieu (remplace <i>à, dans, en, sur...</i>)</strong>
+      <ul>
+        <li><i>Tu vas au café ?</i> &rarr; Oui, j'<strong>y</strong> vais. (<em>I am going there</em>)</li>
+        <li><i>En me rendant dans ce café...</i> &rarr; En m'<strong>y</strong> rendant... (<em>While going there...</em>)</li>
+        <li><i>Il y a 2 personnes.</i> (Forme figée pour dire <em>There is / There are</em>)</li>
+        <li><i>Vas-y !</i> (<em>Go there! / Go ahead!</em>)</li>
+      </ul>
+    </div>
+
+    <div class="rule-box">
+      <strong>2. Remplacer une idée ou une chose (<i>à + chose</i>)</strong>
+      <ul>
+        <li><i>Pensez à votre avenir.</i> &rarr; Pensez-<strong>y</strong> ! (<em>Think about it!</em>)</li>
+        <li><i>Attention :</i> Pour une personne, on ne dit pas "y" : <i>Pensez à Marie</i> &rarr; <i>Pensez à elle.</i></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CONTEXTE / HISTOIRE -->
+  <section>
+    <h2> Une journée en Provence (Contexte)</h2>
+    <div class="lang-toggle">
+      <button class="btn" onclick="toggleLanguage('fr')">Français</button>
+      <button class="btn secondary" onclick="toggleLanguage('en')">English</button>
+    </div>
+
+    <div id="story-fr" class="story-text">
+      <p>Aujourd'hui, j'ai décidé de <span class="highlight">parcourir</span> le sud de la France. En m'<span class="highlight">y</span> rendant, j'ai traversé une magnifique <span class="highlight">garrigue</span> parfumée au thym, aux nuances d'<span class="highlight">ocres</span> resplendissantes. Plus tard, je me suis arrêté dans une petite maison au toit de <span class="highlight">tuiles</span> rouges et au sol en <span class="highlight">tomettes</span> traditionnelles.</p>
+      <p>Un vieux <span class="highlight">bougre</span> du village travaillait <span class="highlight">à d'arrache-pied</span> dans son jardin. Il m'a vu et a crié : « Holà ! On <span class="highlight">fait une partie de boules</span> ? ». J'ai hésité, mais il a insisté : « Allez, <span class="highlight">vas-y</span>, viens jouer ! ». Après le jeu, nous sommes allés au café. <span class="highlight">Combien y a-t-il de personnes</span> ici ? Beaucoup ! Si vous passez par là un jour, <span class="highlight">pensez-y</span>, c'est un endroit magnifique.</p>
+    </div>
+
+    <div id="story-en" class="story-text" style="display: none;">
+      <p>Today, I decided to <span class="highlight">explore/travel through</span> the south of France. <span class="highlight">While going there</span>, I crossed a magnificent <span class="highlight">scrubland (garrigue)</span> scented with thyme, with resplendent <span class="highlight">ochre</span> shades. Later, I stopped by a small house with red roof <span class="highlight">tiles</span> and traditional terracotta <span class="highlight">floor tiles</span>.</p>
+      <p>An old <span class="highlight">guy</span> from the village was working <span class="highlight">relentlessly</span> in his garden. He saw me and shouted: "Hey! Let's <span class="highlight">play a game of pétanque</span>?". I hesitated, but he insisted: "Come on, <span class="highlight">go on</span>, come play!". After the game, we went to the café. <span class="highlight">How many people are there</span> here? A lot! If you pass by one day, <span class="highlight">think about it</span>, it's a magnificent place.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: CARTES MÉMOIRES (1 PAR 1) -->
+  <section>
+    <h2> Cartes Mémoires Interactives</h2>
+    <p>Cliquez sur la carte pour la retourner et voir la traduction.</p>
+
+    <div class="flashcard-viewer">
+      <div class="scene" onclick="flipCard()">
+        <div class="card" id="flashcard">
+          
+          <!-- RECTO (FR) -->
+          <div class="card-face card-face-front">
+            <span class="card-tag">Français (Recto)</span>
+            <div>
+              <div class="word-main" id="fc-word">--</div>
+              <div class="ipa" id="fc-ipa">--</div>
+              <p class="example-fr" id="fc-ex-fr">--</p>
+            </div>
+            <button class="audio-btn" onclick="event.stopPropagation(); speakCurrent()" title="Écouter la phrase">🔊</button>
+          </div>
+
+          <!-- VERSO (EN) -->
+          <div class="card-face card-face-back">
+            <span class="card-tag">English (Verso)</span>
+            <div>
+              <div class="word-main" id="fc-trans">--</div>
+              <p class="example-en" id="fc-ex-en">--</p>
+            </div>
+            <small style="color: #888;">🔄 Cliquez pour retourner</small>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CONTROLES -->
+      <div class="controls">
+        <button class="btn" onclick="prevCard()">← Précédent</button>
+        <span class="card-counter" id="fc-counter">1 / 1</span>
+        <button class="btn" onclick="nextCard()">Suivant →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: QUIZ INTERACTIF -->
+  <section>
+    <h2> Quiz de vérification</h2>
+    <div id="quiz-container">
+      <!-- Le quiz sera généré en JS -->
+    </div>
+  </section>
+</div>
+
+<script>
+// VOCABULAIRE DE LA LEÇON
+const vocab = [
+  {
+    word: "La garrigue",
+    ipa: "/ga.ʁig/",
+    trans: "Scrubland",
+    exFr: "J'ai me promener dans la garrigue au printemps.",
+    exEn: "I love walking in the scrubland in spring."
+  },
+  {
+    word: "Un pyromane",
+    ipa: "/pi.ʁɔ.man/",
+    trans: "An arsonist",
+    exFr: "Le pyromane a été arrêté par la police.",
+    exEn: "The arsonist was arrested by the police."
+  },
+  {
+    word: "Une tomette",
+    ipa: "/tɔ.mɛt/",
+    trans: "A terracotta floor tile",
+    exFr: "Le sol de la cuisine est couvert de tomettes.",
+    exEn: "The kitchen floor is covered with terracotta tiles."
+  },
+  {
+    word: "Une tuile",
+    ipa: "/tɥil/",
+    trans: "A roof tile",
+    exFr: "Le vent a arraché une tuile du toit.",
+    exEn: "The wind tore a tile off the roof."
+  },
+  {
+    word: "Faisons une partie de boules",
+    ipa: "/fə.zɔ̃ yn paʁ.ti də bul/",
+    trans: "Let's play pétanque",
+    exFr: "Il fait beau, faisons une partie de boules !",
+    exEn: "The weather is nice, let's play a game of pétanque!"
+  },
+  {
+    word: "Les ocres",
+    ipa: "/lɛz ɔkʁ/",
+    trans: "Ochre colors/earth",
+    exFr: "Roussillon est célèbre pour ses falaises d'ocres.",
+    exEn: "Roussillon is famous for its ochre cliffs."
+  },
+  {
+    word: "Parcourir le monde",
+    ipa: "/paʁ.ku.ʁiʁ lə mɔ̃d/",
+    trans: "To explore/travel the world",
+    exFr: "Son rêve est de parcourir le monde à pied.",
+    exEn: "His dream is to travel the world on foot."
+  },
+  {
+    word: "En m'y rendant",
+    ipa: "/ɑ̃ mi ʁɑ̃.dɑ̃/",
+    trans: "While going there",
+    exFr: "En m'y rendant, j'ai croisé un ami.",
+    exEn: "While on my way there, I ran into a friend."
+  },
+  {
+    word: "Vas-y !",
+    ipa: "/va.zi/",
+    trans: "Go ahead! / Go there!",
+    exFr: "N'hésite pas, vas-y maintenant !",
+    exEn: "Don't hesitate, go ahead now!"
+  },
+  {
+    word: "Pensez-y",
+    ipa: "/pɑ̃.se.zi/",
+    trans: "Think about it",
+    exFr: "C'est une excellente occasion, pensez-y.",
+    exEn: "It's a great opportunity, think about it."
+  },
+  {
+    word: "Un bougre",
+    ipa: "/buɡʁ/",
+    trans: "A guy / fellow",
+    exFr: "Ce brave bougre m'a aidé à porter le sac.",
+    exEn: "That good fellow helped me carry the bag."
+  },
+  {
+    word: "Travailler à d'arrache-pied",
+    ipa: "/da.ʁaʃ.pje/",
+    trans: "To work relentlessly",
+    exFr: "Elle a travaillé à d'arrache-pied pour réussir son examen.",
+    exEn: "She worked relentlessly to pass her exam."
+  }
+];
+
+// DONNÉES DU QUIZ
+const quizData = [
+  {
+    q: "Que signifie « travailler à d'arrache-pied » ?",
+    options: ["Travailler en se faisant mal au pied", "Travailler d'arrache-coeur", "Travailler très dur / sans relâche"],
+    answer: 2
+  },
+  {
+    q: "Complétez la phrase : « Je vais à la plage. En ______ rendant, j'ai vu un dauphin. »",
+    options: ["m'y", "me", "y"],
+    answer: 0
+  },
+  {
+    q: "Comment traduit-on « a floor tile » en français ?",
+    options: ["Une tuile", "Une tomette", "Une boule"],
+    answer: 1
+  },
+  {
+    q: "Que remplace le pronom 'y' dans « Pensez-y » ?",
+    options: ["Une personne", "Une chose ou une idée", "Une personne ou une chose"],
+    answer: 1
+  }
+];
+
+let currentIndex = 0;
+
+// GESTION DU FLIP DE CARTE
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('is-flipped');
+}
+
+// RENDU DE LA CARTE ACTUELLE
+function updateCard() {
+  const cardElement = document.getElementById('flashcard');
+  cardElement.classList.remove('is-flipped');
+
+  setTimeout(() => {
+    const item = vocab[currentIndex];
+    document.getElementById('fc-word').innerText = item.word;
+    document.getElementById('fc-ipa').innerText = item.ipa;
+    document.getElementById('fc-ex-fr').innerText = `« ${item.exFr} »`;
+    document.getElementById('fc-trans').innerText = item.trans;
+    document.getElementById('fc-ex-en').innerText = `« ${item.exEn} »`;
+    
+    document.getElementById('fc-counter').innerText = `${currentIndex + 1} / ${vocab.length}`;
+  }, 150);
+}
+
+function nextCard() {
+  currentIndex = (currentIndex + 1) % vocab.length;
+  updateCard();
+}
+
+function prevCard() {
+  currentIndex = (currentIndex - 1 + vocab.length) % vocab.length;
+  updateCard();
+}
+
+// AUDIO (TEXT TO SPEECH)
+function speakCurrent() {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const item = vocab[currentIndex];
+    // On lit la phrase d'exemple
+    const utterance = new SpeechSynthesisUtterance(item.exFr);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+// TOGGLE LANGUE HISTOIRE
+function toggleLanguage(lang) {
+  const storyFr = document.getElementById('story-fr');
+  const storyEn = document.getElementById('story-en');
+  const btns = document.querySelectorAll('.lang-toggle .btn');
+
+  if(lang === 'fr') {
+    storyFr.style.display = 'block';
+    storyEn.style.display = 'none';
+    btns[0].classList.remove('secondary');
+    btns[1].classList.add('secondary');
+  } else {
+    storyFr.style.display = 'none';
+    storyEn.style.display = 'block';
+    btns[0].classList.add('secondary');
+    btns[1].classList.remove('secondary');
+  }
+}
+
+// RENDER QUIZ
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  quizData.forEach((item, qIndex) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'quiz-question';
+    qDiv.innerHTML = `<strong>${qIndex + 1}. ${item.q}</strong>`;
+    
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+
+    item.options.forEach((opt, oIndex) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = opt;
+      btn.onclick = () => checkAnswer(btn, qIndex, oIndex);
+      optionsDiv.appendChild(btn);
+    });
+
+    qDiv.appendChild(optionsDiv);
+    container.appendChild(qDiv);
+  });
+}
+
+function checkAnswer(selectedBtn, qIndex, selectedIndex) {
+  const parent = selectedBtn.parentElement;
+  const buttons = parent.querySelectorAll('.option-btn');
+  buttons.forEach(btn => btn.disabled = true);
+
+  if (selectedIndex === quizData[qIndex].answer) {
+    selectedBtn.classList.add('correct');
+  } else {
+    selectedBtn.classList.add('incorrect');
+    buttons[quizData[qIndex].answer].classList.add('correct');
+  }
+}
+
+// INITIALISATION
+document.addEventListener('DOMContentLoaded', () => {
+  updateCard();
+  renderQuiz();
+});
+</script>
+
+</body>
+</html>
