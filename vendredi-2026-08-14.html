@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon du Jour - Vendredi 14 Août 2026</title>
+    <style>
+        :root {
+            --primary: #8B5E3C; /* Châtaigne */
+            --primary-dark: #6B4527;
+            --secondary: #C77B2E; /* Feuilles d'automne */
+            --accent: #A8421D;
+            --bg-light: #FBF7F1;
+            --card-bg: #ffffff;
+            --text-main: #2C2320;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Section Story */
+        .story-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background-color: #FBE3C7;
+            color: #7B3F1D;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 2px dashed #7B3F1D;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: attr(data-translation);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: #1e293b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .highlight:hover::after, .highlight:focus::after, .highlight:active::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .translation-toggle {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: var(--primary-dark);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .translation-toggle:hover {
+            background-color: #e2e8f0;
+        }
+
+        .story-translation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-style: italic;
+            color: #334155;
+        }
+
+        .story-translation .story-text {
+            font-size: 1.1rem;
+            color: #334155;
+        }
+
+        /* Flashcards Section */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cards-container > p {
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .flashcard-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ffffff, #FBF3E8);
+            border: 3px solid var(--primary);
+            color: var(--text-main);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-subtext {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .card-back .card-subtext {
+            color: #F5E3D3;
+        }
+
+        .audio-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(168, 66, 29, 0.4);
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .card-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .control-btn {
+            background-color: var(--text-main);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .control-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .card-counter {
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        /* Quiz Section */
+        .quiz-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background-color: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background-color: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .quiz-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-top: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .tab-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Leçon de Français</h1>
+        <p>Vendredi 14 août 2026 · L'automne, les cartes mémoires et la table 🍂🍷</p>
+    </header>
+
+    <!-- Onglets -->
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab('histoire')">📖 L'Histoire</button>
+        <button class="tab-btn" onclick="switchTab('cartes')">📇 Cartes Mémoires</button>
+        <button class="tab-btn" onclick="switchTab('quiz')">✍️ Le Quiz</button>
+    </nav>
+
+    <!-- Contenu : Histoire -->
+    <section id="histoire" class="tab-content active">
+        <div class="story-card">
+            <h2>Un automne à Piégros 🍁🌰</h2>
+            <br>
+            <p class="story-text">
+                C'est l'<span class="highlight" data-translation="autumn / fall" tabIndex="0">automne</span> à Piégros. On <span class="highlight" data-translation="you reap what you sow" tabIndex="0">récolte ce que l'on sème</span> : les <span class="highlight" data-translation="chestnuts" tabIndex="0">châtaignes</span> et les <span class="highlight" data-translation="mushrooms" tabIndex="0">champignons</span> sont partout dans la garrigue. Le matin, le <span class="highlight" data-translation="frost" tabIndex="0">gel</span> blanchit les <span class="highlight" data-translation="chrysanthemums" tabIndex="0">chrysanthèmes</span> du jardin, mais l'après-midi, <span class="highlight" data-translation="the sun hits hard during the afternoon" tabIndex="0">le soleil cogne dur</span> !
+            </p>
+            <p class="story-text">
+                Après la promenade, l'<span class="highlight" data-translation="aperitif" tabIndex="0">apéritif</span> attend : un <span class="highlight" data-translation="pastis" tabIndex="0">petit jaune</span>, un <span class="highlight" data-translation="a kir (white wine + blackcurrant liqueur)" tabIndex="0">kir</span> ou un verre de <span class="highlight" data-translation="sweet wine" tabIndex="0">vin moelleux</span> ? L'<span class="highlight" data-translation="atmosphere / ambience" tabIndex="0">ambiance</span> est <span class="highlight" data-translation="warm" tabIndex="0">chaleureuse</span> et <span class="highlight" data-translation="relaxed" tabIndex="0">décontractée</span>. C'est bientôt le 19 novembre : le <span class="highlight" data-translation="Beaujolais Nouveau (new wine), Nov 19 2026" tabIndex="0">Beaujolais nouveau</span> arrive !
+            </p>
+            <p class="story-text">
+                Ce vieux <span class="highlight" data-translation="gruff / gruff fellow" tabIndex="0">bourru</span> du village <span class="highlight" data-translation="to tighten one's belt (budget)" tabIndex="0">se serre la ceinture</span> avant l'hiver. Au dessert, des <span class="highlight" data-translation="apples" tabIndex="0">pommes</span>, des <span class="highlight" data-translation="pears" tabIndex="0">poires</span> et un <span class="highlight" data-translation="custard" tabIndex="0">flan</span>, suivis d'un <span class="highlight" data-translation="digestif" tabIndex="0">digestif</span>. Tout le monde <span class="highlight" data-translation="smiles" tabIndex="0">sourit</span> et parle de la <span class="highlight" data-translation="swimming pool" tabIndex="0">piscine</span> — oui, même en automne, on y pense !
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: 10px;">💡 Astuce : Survolez ou cliquez les mots surlignés pour voir leur traduction en anglais !</p>
+
+            <!-- Traduction de l'histoire -->
+            <button class="translation-toggle" onclick="toggleTranslation()">🇬🇧 Afficher la traduction anglaise</button>
+            <div id="story-en" class="story-translation">
+                <p class="story-text"><strong>Autumn in Piégros 🍁🌰</strong></p>
+                <p class="story-text">It's <strong>autumn</strong> in Piégros. <strong>You reap what you sow</strong>: <strong>chestnuts</strong> and <strong>mushrooms</strong> are everywhere in the scrubland. In the morning, <strong>frost</strong> whitens the garden <strong>chrysanthemums</strong>, but in the afternoon <strong>the sun hits hard</strong>!</p>
+                <p class="story-text">After the walk, the <strong>aperitif</strong> is waiting: a <strong>pastis</strong> ("little yellow"), a <strong>kir</strong>, or a glass of <strong>sweet wine</strong>? The <strong>atmosphere</strong> is <strong>warm</strong> and <strong>relaxed</strong>. November 19 is coming soon: <strong>Beaujolais Nouveau</strong> is on its way!</p>
+                <p class="story-text">That <strong>gruff</strong> old fellow from the village <strong>tightens his belt</strong> before winter. For dessert, <strong>apples</strong>, <strong>pears</strong> and <strong>custard</strong>, followed by a <strong>digestif</strong>. Everyone <strong>smiles</strong> and talks about the <strong>swimming pool</strong> — yes, even in autumn, you still think about it!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu : Cartes Mémoires -->
+    <section id="cartes" class="tab-content">
+        <div class="cards-container">
+            <p>Cliquez sur la carte pour voir sa traduction. Utilisez le bouton 🔊 pour l'audio français.</p>
+            <div class="flashcard-wrapper">
+                <div class="flashcard" id="card" onclick="flipCard()">
+                    <!-- Recto (Français) -->
+                    <div class="card-face card-front">
+                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: bold; margin-bottom: 5px;">FRANÇAIS</span>
+                        <div class="card-text" id="card-fr">Chargement...</div>
+                        <div class="card-subtext" id="card-fr-sub"></div>
+                        <button class="audio-btn" onclick="speakFrench(event)" title="Écouter la prononciation">🔊</button>
+                    </div>
+                    <!-- Verso (Anglais) -->
+                    <div class="card-face card-back">
+                        <span style="font-size: 0.8rem; color: #F5E3D3; font-weight: bold; margin-bottom: 5px;">ANGLAIS</span>
+                        <div class="card-text" id="card-en">Loading...</div>
+                        <div class="card-subtext" id="card-en-sub"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-controls">
+                <button class="control-btn" onclick="prevCard()">← Précédent</button>
+                <span class="card-counter" id="card-counter">1 / 1</span>
+                <button class="control-btn" onclick="nextCard()">Suivant →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenu : Quiz -->
+    <section id="quiz" class="tab-content">
+        <div class="quiz-card">
+            <h2>Testez vos connaissances ! 🧠</h2>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #e2e8f0;">
+            <div id="quiz-box">
+                <div class="quiz-question" id="question">Question s'affiche ici</div>
+                <div class="quiz-options" id="options"></div>
+                <div id="feedback" style="font-weight: bold; margin-bottom: 15px; min-height: 24px;"></div>
+                <button class="control-btn" id="next-quiz-btn" onclick="nextQuestion()" style="display:none;">Question suivante</button>
+                <p class="quiz-score">Score : <span id="score">0</span> / <span id="total-questions">0</span></p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    const vocabulary = [
+        { fr: "sourire", frSub: "(verbe)", en: "to smile", enSub: "" },
+        { fr: "les cartes mémoires", frSub: "(= les flashcards)", en: "flash cards", enSub: "" },
+        { fr: "la châtaigne", frSub: "(fruit d'automne)", en: "the chestnut", enSub: "" },
+        { fr: "le champignon", frSub: "", en: "the mushroom", enSub: "" },
+        { fr: "le printemps", frSub: "", en: "spring", enSub: "" },
+        { fr: "l'automne", frSub: "(= l'fall)", en: "autumn / fall", enSub: "" },
+        { fr: "le chrysanthème", frSub: "(fleur d'automne)", en: "the chrysanthemum", enSub: "" },
+        { fr: "le Beaujolais nouveau", frSub: "(le 19 novembre 2026)", en: "Beaujolais Nouveau", enSub: "young French wine released the 3rd Thursday of November" },
+        { fr: "le vin bourru", frSub: "(jeune vin en fermentation)", en: "young / fermenting wine", enSub: "rough, sweet, freshly fermented" },
+        { fr: "bourru", frSub: "(adjectif)", en: "gruff", enSub: "brusque / rough-mannered" },
+        { fr: "On récolte ce que l'on sème", frSub: "(proverbe)", en: "You reap what you sow", enSub: "" },
+        { fr: "la gourde", frSub: "= courge, ou bouteille d'eau", en: "gourd / squash", enSub: "also: a water bottle" },
+        { fr: "cogner", frSub: "", en: "to hit / to strike", enSub: "" },
+        { fr: "le soleil cogne durant l'après-midi", frSub: "", en: "the sun hits hard during the afternoon", enSub: "" },
+        { fr: "une ambiance chaleureuse", frSub: "", en: "a warm atmosphere", enSub: "cozy / friendly atmosphere" },
+        { fr: "le gel", frSub: "(météo)", en: "frost", enSub: "" },
+        { fr: "le petit jaune", frSub: "(argot)", en: "pastis", enSub: "anise-flavoured apéritif" },
+        { fr: "jeune", frSub: "(adjectif)", en: "young", enSub: "" },
+        { fr: "les pommes", frSub: "(pluriel)", en: "apples", enSub: "" },
+        { fr: "les poires", frSub: "(pluriel)", en: "pears", enSub: "" },
+        { fr: "le digestif", frSub: "(après le repas)", en: "digestif / after-dinner drink", enSub: "" },
+        { fr: "la piscine", frSub: "", en: "swimming pool", enSub: "" },
+        { fr: "le flan", frSub: "(dessert)", en: "custard", enSub: "flan / custard tart" },
+        { fr: "décontracté", frSub: "(adjectif)", en: "relaxed / laid-back", enSub: "" },
+        { fr: "se serrer la ceinture", frSub: "(figuré : économiser)", en: "to tighten one's belt", enSub: "to cut back on spending" },
+        { fr: "l'apéritif", frSub: "(= l'apéro)", en: "aperitif", enSub: "pre-dinner drink" },
+        { fr: "la bière", frSub: "", en: "beer", enSub: "" },
+        { fr: "le vin", frSub: "", en: "wine", enSub: "" },
+        { fr: "le kir", frSub: "(vin blanc + crème de cassis)", en: "kir", enSub: "white wine with blackcurrant liqueur" },
+        { fr: "doux", frSub: "(adjectif)", en: "soft / sweet / gentle", enSub: "" },
+        { fr: "le vin moelleux", frSub: "(= le vin doux)", en: "sweet wine", enSub: "" },
+        { fr: "moelleux", frSub: "(adjectif)", en: "spongy / soft", enSub: "e.g. a moist, tender cake" }
+    ];
+
+    // --- Fonction d'affichage de la traduction de l'histoire ---
+    function toggleTranslation() {
+        const transDiv = document.getElementById('story-en');
+        const toggleBtn = document.querySelector('.translation-toggle');
+        if (transDiv.style.display === "block") {
+            transDiv.style.display = "none";
+            toggleBtn.textContent = "🇬🇧 Afficher la traduction anglaise";
+        } else {
+            transDiv.style.display = "block";
+            toggleBtn.textContent = "🇫🇷 Masquer la traduction anglaise";
+        }
+    }
+
+    // --- Gestion des Onglets ---
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        if (tabId === 'cartes') showCard();
+        else if (tabId === 'quiz') initQuiz();
+    }
+
+    // --- Gestion des Cartes Mémoires ---
+    let currentCardIndex = 0;
+    const cardEl = document.getElementById('card');
+    const cardFrEl = document.getElementById('card-fr');
+    const cardFrSubEl = document.getElementById('card-fr-sub');
+    const cardEnEl = document.getElementById('card-en');
+    const cardEnSubEl = document.getElementById('card-en-sub');
+    const cardCounterEl = document.getElementById('card-counter');
+
+    function showCard() {
+        cardEl.classList.remove('flipped');
+        setTimeout(() => {
+            const item = vocabulary[currentCardIndex];
+            cardFrEl.textContent = item.fr;
+            cardFrSubEl.textContent = item.frSub || "";
+            cardEnEl.textContent = item.en;
+            cardEnSubEl.textContent = item.enSub || "";
+            cardCounterEl.textContent = `${currentCardIndex + 1} / ${vocabulary.length}`;
+        }, 150);
+    }
+
+    function flipCard() { cardEl.classList.toggle('flipped'); }
+    function nextCard() { currentCardIndex = (currentCardIndex + 1) % vocabulary.length; showCard(); }
+    function prevCard() { currentCardIndex = (currentCardIndex - 1 + vocabulary.length) % vocabulary.length; showCard(); }
+
+    function speakFrench(event) {
+        event.stopPropagation();
+        const text = vocabulary[currentCardIndex].fr;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // --- Gestion du Quiz ---
+    let quizIndex = 0;
+    let score = 0;
+    let quizData = [];
+
+    function initQuiz() {
+        quizIndex = 0;
+        score = 0;
+        quizData = [...vocabulary].sort(() => Math.random() - 0.5);
+        document.getElementById('total-questions').textContent = quizData.length;
+        document.getElementById('score').textContent = score;
+        loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+        document.getElementById('feedback').textContent = "";
+        document.getElementById('next-quiz-btn').style.display = "none";
+
+        const currentItem = quizData[quizIndex];
+        document.getElementById('question').textContent = `Quelle est la traduction de : "${currentItem.fr}" ?`;
+
+        let options = [currentItem.en];
+        const distractors = vocabulary.filter(item => item.en !== currentItem.en).map(item => item.en);
+        distractors.sort(() => Math.random() - 0.5);
+        options = options.concat(distractors.slice(0, 3)).sort(() => Math.random() - 0.5);
+
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = "";
+
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.classList.add('option-btn');
+            btn.textContent = option;
+            btn.onclick = () => selectOption(btn, option, currentItem.en);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(selectedBtn, chosenOption, correctOption) {
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === correctOption) btn.classList.add('correct');
+        });
+
+        const feedbackEl = document.getElementById('feedback');
+        if (chosenOption === correctOption) {
+            score++;
+            document.getElementById('score').textContent = score;
+            feedbackEl.textContent = "Excellent ! C'est la bonne réponse. 🎉";
+            feedbackEl.style.color = "#10b981";
+        } else {
+            selectedBtn.classList.add('incorrect');
+            feedbackEl.textContent = `Oups ! La bonne réponse était : "${correctOption}".`;
+            feedbackEl.style.color = "#ef4444";
+        }
+        document.getElementById('next-quiz-btn').style.display = "inline-block";
+    }
+
+    function nextQuestion() {
+        quizIndex++;
+        if (quizIndex < quizData.length) loadQuizQuestion();
+        else {
+            document.getElementById('quiz-box').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h3>Quiz Terminé ! 🏆</h3>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">Votre score final est de <strong>${score} sur ${quizData.length}</strong>.</p>
+                    <button class="control-btn" onclick="initQuiz()">Recommencer le quiz</button>
+                </div>`;
+        }
+    }
+
+    showCard();
+</script>
+</body>
+</html>
