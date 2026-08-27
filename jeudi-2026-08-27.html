@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marseille : 2600 ans d'histoire - Le Monde de Jamy</title>
+  <style>
+    :root {
+      --primary: #0083cb;
+      --primary-dark: #005f95;
+      --secondary: #e65100;
+      --bg: #f4f7f9;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+      --border: #e0e6ed;
+      --correct: #2e7d32;
+      --correct-bg: #e8f5e9;
+      --incorrect: #c62828;
+      --incorrect-bg: #ffebee;
+      --radius: 12px;
+      --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin: 2.5rem 0 1.5rem 0;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: var(--bg);
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 15px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: #f8fafc;
+      border-color: var(--primary);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: bold;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 4px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 4px solid var(--incorrect);
+    }
+
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--primary);
+    }
+
+    .score-banner h3 {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+    }
+
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--secondary);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .expression-header {
+      margin-bottom: 0.8rem;
+    }
+
+    .expression-title {
+      font-size: 1.2rem;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    .expression-english {
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #fff8e1;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      border-left: 3px solid #ffa000;
+    }
+
+    .audio-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .audio-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+      .section-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Marseille : 2600 ans d'histoire</h1>
+    <p>Apprenez le français avec Le Monde de Jamy</p>
+  </header>
+
+  <main>
+    <!-- Vidéo YouTube -->
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/1vXpjihH3T0" title="Marseille : 2600 ans d’histoire, du Vieux-Port au mistral" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Score -->
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre niveau !</p>
+    </div>
+
+    <!-- Filtres QCM -->
+    <div class="section-title">
+      <span>QCM d'Apprentissage</span>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+    </div>
+
+    <!-- Liste des Questions -->
+    <div id="quiz-container"></div>
+
+    <!-- Expressions -->
+    <div class="section-title">
+      <span>10 Expressions de la Vidéo</span>
+    </div>
+
+    <div class="expressions-grid" id="expressions-container"></div>
+  </main>
+
+  <script>
+    // Données des Questions
+    const questions = [
+      // COMPRÉHENSION
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "D'où venaient les marins grecs qui ont fondé la cité antique de Marseille il y a 2 600 ans ?",
+        options: [
+          "De la ville de Phocée en actuelle Turquie",
+          "De la ville d'Athènes en Grèce",
+          "De l'île de Crète",
+          "De Rome en Italie"
+        ],
+        answer: 0,
+        explanation: "Les marins grecs venaient de Phocée (actuelle Turquie). C'est pourquoi Marseille est encore surnommée 'La cité phocéenne' [00:00:40]."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle décision a été prise en 1950 pour définir le 'bon parler français' à l'oral ?",
+        options: [
+          "S'inspirer du provençal parlé à Marseille",
+          "S'inspirer des conversations soignées entre Parisiens cultivés",
+          "Prendre pour modèle l'accent du Sud de la France",
+          "Conserver les 75 langues régionales à égalité"
+        ],
+        answer: 1,
+        explanation: "Le phonéticien Pierre Foucher a décrété en 1950 que la norme orale devait s'inspirer du parler soigné des Parisiens cultivés [00:03:50]."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle a été l'innovation majeure de Marcel Pagnol pour le cinéma dans les années 1930 ?",
+        options: [
+          "Il a inventé le cinéma en couleur",
+          "Il a été le premier à tourner en décors naturels hors des studios",
+          "Il a créé le festival de Cannes",
+          "Il a fait interdire les films américains"
+        ],
+        answer: 1,
+        explanation: "Marcel Pagnol a été un pionnier en sortant des studios pour tourner ses films directement dans les paysages naturels de Provence [00:06:10]."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel phénomène physique explique la forte accélération du Mistral dans la vallée du Rhône ?",
+        options: [
+          "L'effet de serre",
+          "L'effet Venturi",
+          "La force de Coriolis",
+          "Le phénomène d'El Niño"
+        ],
+        answer: 1,
+        explanation: "L'air froid s'engouffre dans le passage étroit de la vallée du Rhône, provoquant une accélération appelée effet Venturi [00:08:38]."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Pourquoi le parc naturel des Calanques est-il considéré en grand danger pendant l'été ?",
+        options: [
+          "Il subit une surfréquentation avec 3 millions de visiteurs et des risques d'incendie",
+          "L'eau de mer y est devenue glacée",
+          "Les falaises s'effondrent à cause du Mistral",
+          "Toutes les espèces animales y ont disparu"
+        ],
+        answer: 0,
+        explanation: "La surfréquentation touristique entraîne une accumulation de déchets, la dégradation des sentiers et un fort risque d'incendie lié aux mégots [00:10:07]."
+      },
+
+      // VOCABULAIRE
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le terme 'Glottophobie' mentionné dans le reportage ?",
+        options: [
+          "La peur de parler en public",
+          "La discrimination fondée sur la langue ou l'accent",
+          "L'étude scientifique des accents régionaux",
+          "La passion pour l'apprentissage des langues étranges"
+        ],
+        answer: 1,
+        explanation: "La glottophobie est un terme désignant la discrimination vis-à-vis des personnes en raison de leur accent ou de leur manière de parler [00:02:52]."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que veut dire l'expression marseillaise 'Fanadolie' (ou être fada) ?",
+        options: [
+          "Être fatigué par la chaleur",
+          "Être un peu folle ou un peu fou",
+          "Être très en colère",
+          "Être élégant et bien habillé"
+        ],
+        answer: 1,
+        explanation: "Dans le Sud, 'fada' ou être atteinte de 'fanadolie' signifie être un peu fou, extravagante ou originale [00:02:41]."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Qu'est-ce qu'un 'Écrin' (ex: 'cet écrin de biodiversité') ?",
+        options: [
+          "Un grand port industriel",
+          "Un coffret précieux qui protège un joyau",
+          "Une zone touchée par la pollution",
+          "Un sommet de montagne enneigé"
+        ],
+        answer: 1,
+        explanation: "Au sens figuré, un écrin désigne un lieu naturel exceptionnel et préservé qui abrite des richesses (comme les Calanques) [00:10:26]."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le verbe 'S'engouffrer' à propos de l'air ou du vent ?",
+        options: [
+          "S'arrêter subitement",
+          "S'introduire avec violence ou rapidité dans un espace étroit",
+          "S'élever très haut dans les nuages",
+          "Chauffer progressivement"
+        ],
+        answer: 1,
+        explanation: "'S'engouffrer' signifie pénétrer bruyamment ou brusquement dans un endroit resserré (ex: le vent dans la vallée) [00:08:26]."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie 'Prendre le taureau par les cornes' ?",
+        options: [
+          "Faire de la corrida en Provence",
+          "Faire face à une situation difficile avec détermination",
+          "Fuir devant le danger",
+          "Attendre que les problèmes se résolvent seuls"
+        ],
+        answer: 1,
+        explanation: "C'est une expression idiomatique signifiant affronter directement et courageusement une difficulté [00:10:31]."
+      },
+
+      // PRONONCIATION
+      {
+        id: 11,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce la consonne 'R' finale dans le mot 'Vieux-Port' [vjø pɔʁ] ?",
+        options: [
+          "Le 'R' est muet",
+          "Le 'R' est prononcé clairement (R guttural français)",
+          "Le 'R' se prononce comme un 'S'",
+          "Le 'R' fait la liaison avec le mot suivant"
+        ],
+        answer: 1,
+        explanation: "En français, le 'r' final dans 'port' est bien prononcé /pɔʁ/, contrairement à des mots comme 'parler'."
+      },
+      {
+        id: 12,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Quelle est la particularité de la prononciation du nom de la ville 'Marseille' ?",
+        options: [
+          "Le 'L' est dur comme dans 'ville'",
+          "Le groupe 'ille' se prononce avec un son yod /j/ (mar-say)",
+          "Le 'e' final est très accentué à Paris",
+          "Le 'M' initial est muet"
+        ],
+        answer: 1,
+        explanation: "'Marseille' se prononce /maʁsɛj/ avec un son semi-voyelle /j/ à la fin (comme dans 'soleil' ou 'bouteille')."
+      },
+      {
+        id: 13,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce l'expression 'C'est dégain' citée par la journaliste ?",
+        options: [
+          "Avec la voyelle nasale /ɛ̃/ à la fin (dé-gain)",
+          "Comme le mot anglais 'again'",
+          "En séparant le 'g' et le 'a'",
+          "Le 's' de 'c'est' est prononcé fort"
+        ],
+        answer: 0,
+        explanation: "'Dégain' se termine par le son nasal français /ɛ̃/ (comme dans 'pain' ou 'vin')."
+      },
+      {
+        id: 14,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans l'accent méridional du Sud, comment prononce-t-on souvent le 'e' muet final (ex: 'Marseille', 'France') ?",
+        options: [
+          "On le supprime toujours totalement",
+          "On le prononce sous forme d'un 'e' sonore /ə/ (ex: 'Marseill-uh')",
+          "On le transforme en 'i'",
+          "On le transforme en voyelle nasale"
+        ],
+        answer: 1,
+        explanation: "L'accent du Sud se caractérise par le maintien du 'e' caduc en fin de mot, prononcé très distinctement /ə/."
+      },
+      {
+        id: 15,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment effectue-t-on la liaison dans 'un3 des Français' [œ̃ tʲɛʁ de fʁɑ̃sɛ] ?",
+        options: [
+          "On prononce 'un-t-iers'",
+          "La liaison entre 'tiers' et 'des' ne se fait pas habituellement à l'oral fluide",
+          "On prononce 'des-z-accent'",
+          "On prononce le 's' de 'français'"
+        ],
+        answer: 1,
+        explanation: "Entre le nom 'tiers' et la préposition/article 'des', la liaison en 's' (/z/) est facultative et souvent omise en langage courant."
+      },
+
+      // GRAMMAIRE
+      {
+        id: 16,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Une ville fondée il y a 2600 ans', quelle est la fonction grammaticale de 'fondée' ?",
+        options: [
+          "Un verbe au présent",
+          "Un participe passé employé comme adjectif (accordé au féminin avec 'ville')",
+          "Un adverbe de temps",
+          "Un nom commun"
+        ],
+        answer: 1,
+        explanation: "'Fondée' est le participe passé du verbe fonder. Employé sans auxiliaire, il s'accorde en genre et en nombre avec le nom qu'il qualifie ('ville' -> féminin singulier)."
+      },
+      {
+        id: 17,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Ce vent dont les rafales sont redoutées', que remplace le pronom relatif 'dont' ?",
+        options: [
+          "Il remplace 'les rafales'",
+          "Il remplace 'Ce vent' (complément introduit par 'de' : les rafales DE ce vent)",
+          "Il indique un lieu",
+          "Il remplace le verbe 'sont'"
+        ],
+        answer: 1,
+        explanation: "Le pronom 'dont' remplace un complément introduit par la préposition 'de' (les rafales de ce vent)."
+      },
+      {
+        id: 18,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle forme verbale utilise-t-on après l'expression 'afin de' ou 'pour' (ex: 'pour fonder une colonie') ?",
+        options: [
+          "Le subjonctif",
+          "L'infinitif présent",
+          "Le participe passé",
+          "L'imparfait"
+        ],
+        answer: 1,
+        explanation: "Les prépositions de but 'pour', 'afin de' sont directement suivies d'un verbe à l'infinitif."
+      },
+      {
+        id: 19,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Si l'air refroidit, il devient plus lourd', quelle est la nuance apportée par 'Si' ?",
+        options: [
+          "Une concession",
+          "Une condition ou une relation de cause à effet au présent",
+          "Un doute sur le passé",
+          "Une interdiction"
+        ],
+        answer: 1,
+        explanation: "'Si' + présent suivi du présent exprime une vérité générale ou une condition réalisée régulièrement."
+      },
+      {
+        id: 20,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Identifiez le superlatif dans la phrase : 'Marseille est la plus ancienne ville de France'.",
+        options: [
+          "ancienne",
+          "la plus ancienne",
+          "de France",
+          "ville"
+        ],
+        answer: 1,
+        explanation: "Le superlatif de supériorité est formé par 'la plus' + adjectif ('ancienne')."
+      }
+    ];
+
+    // Données des Expressions
+    const expressions = [
+      {
+        title: "C'est dégain !",
+        english: "That's stylish / That's cool!",
+        meaning: "Expression marseillaise populaire pour dire que quelque chose est classe, stylé ou super.",
+        example: "Regarde sa nouvelle voiture, c'est trop dégain !",
+        textToSpeak: "C'est dégain"
+      },
+      {
+        title: "Être fada / La fanadolie",
+        english: "To be crazy / Craziness",
+        meaning: "Désigne quelqu'un d'un peu fou, d'excentrique ou d'impulsif.",
+        example: "Tu veux vous baigner en plein hiver ? Mais tu es complètement fada !",
+        textToSpeak: "Tu es complètement fada"
+      },
+      {
+        title: "Larguer les amarres",
+        english: "To set sail / To cast off",
+        meaning: "Détacher les cordes d'un bateau pour partir. Au sens figuré : démarrer un nouveau projet ou partir en voyage.",
+        example: "Après dix ans dans la même entreprise, il a décidé de larguer les amarres et de voyager.",
+        textToSpeak: "Larguer les amarres"
+      },
+      {
+        title: "Plaque tournante",
+        english: "A hub / Central turntable",
+        meaning: "Un lieu central où s'effectuent d'importants échanges commerciaux ou culturels.",
+        example: "Le port de Marseille a longtemps été une plaque tournante du commerce méditerranéen.",
+        textToSpeak: "Une plaque tournante"
+      },
+      {
+        title: "Haut en couleur",
+        english: "Colorful / Picturesque / Flamboyant",
+        meaning: "Plein d'originalité, de pittoresque, très vivant.",
+        example: "Les marchés de Marseille sont toujours animés par des personnages hauts en couleur.",
+        textToSpeak: "Un personnage haut en couleur"
+      },
+      {
+        title: "Avoir le vent en poupe",
+        english: "To have the wind in one's sails / To be on a roll",
+        meaning: "Être favorisé par les circonstances, rencontrer un grand succès.",
+        example: "Cette jeune journaliste a vraiment le vent en poupe en ce moment.",
+        textToSpeak: "Avoir le vent en poupe"
+      },
+      {
+        title: "Prendre le taureau par les cornes",
+        english: "To take the bull by the horns",
+        meaning: "Affronter une situation difficile avec détermination et sans hésiter.",
+        example: "Face à la pollution des plages, la municipalité a pris le taureau par les cornes.",
+        textToSpeak: "Prendre le taureau par les cornes"
+      },
+      {
+        title: "À couper le souffle",
+        english: "Breathtaking",
+        meaning: "Extrêmement beau, spectaculaire ou impressionnant.",
+        example: "La vue sur la mer depuis le sommet des Calanques est simplement à couper le souffle.",
+        textToSpeak: "Une vue à couper le souffle"
+      },
+      {
+        title: "Victime de son succès",
+        english: "A victim of its own success",
+        meaning: "Subir des désavantages à cause d'une trop grande popularité.",
+        example: "Ce restaurant est victime de son succès : il faut réserver trois semaines à l'avance.",
+        textToSpeak: "Être victime de son succès"
+      },
+      {
+        title: "Un livre de chevet",
+        english: "A bedside book / Favorite book",
+        meaning: "Un livre très cher à quelqu'un, qu'il garde près de son lit et relit souvent.",
+        example: "'La Gloire de mon père' de Marcel Pagnol a été le livre de chevet de toute une génération.",
+        textToSpeak: "Un livre de chevet"
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    // Initialisation de la page
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    // Rendu du Quiz
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Correct !' : 'Incorrect.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Gestion de la sélection d'une réponse
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      // Re-rendre la question actuellement filtrée
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    // Mise à jour du score
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Félicitations ! Excellent niveau en français et parfaite connaissance de Marseille !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon travail ! Vous avez de très bonnes bases.";
+        } else {
+          msg.innerText = "Bonne tentative ! N'hésitez pas à revoir la vidéo pour vous perfectionner.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    // Filtrer le Quiz
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    // Rendu des Expressions
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <div>
+            <div class="expression-header">
+              <div class="expression-title">${exp.title}</div>
+              <div class="expression-english">${exp.english}</div>
+              <button class="audio-btn" onclick="speakText('${exp.textToSpeak.replace(/'/g, "\\'")}')">
+                🔊 Écouter
+              </button>
+            </div>
+            <div class="expression-meaning">${exp.meaning}</div>
+          </div>
+          <div class="expression-example">
+            <strong>Exemple :</strong> "${exp.example}"
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Synthèse vocale pour la prononciation
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("La synthèse vocale n'est pas supportée par votre navigateur.");
+      }
+    }
+  </script>
+</body>
+</html>
