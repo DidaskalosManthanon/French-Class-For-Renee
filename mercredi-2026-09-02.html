@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Georges Brassens - La Ballade des gens qui sont nés quelque part</title>
+  <style>
+    :root {
+      --primary: #5c3d2e;
+      --primary-dark: #3d281e;
+      --accent: #c86b27;
+      --bg: #f8f5f0;
+      --card-bg: #ffffff;
+      --text: #2b2b2b;
+      --border: #e2d9cd;
+      --correct: #2e7d32;
+      --correct-bg: #e8f5e9;
+      --incorrect: #c62828;
+      --incorrect-bg: #ffebee;
+      --radius: 12px;
+      --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #f1e7d0;
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: normal;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin: 2.5rem 0 1.5rem 0;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.4rem;
+      font-family: sans-serif;
+    }
+
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--accent);
+      font-family: sans-serif;
+    }
+
+    .score-banner h3 {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+    }
+
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      font-family: sans-serif;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      font-family: sans-serif;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: var(--bg);
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 15px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: #fdfaf6;
+      border-color: var(--accent);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: bold;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 4px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 4px solid var(--incorrect);
+    }
+
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      font-family: sans-serif;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .expression-title {
+      font-size: 1.2rem;
+      color: var(--accent);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #fff8f0;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .lyrics-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .lyrics-column h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+      font-family: sans-serif;
+    }
+
+    .lyrics-text {
+      white-space: pre-line;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      .lyrics-box { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.6rem; }
+      .section-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>La Ballade des gens qui sont nés quelque part</h1>
+    <p>Georges Brassens - Étude de texte & Exercices</p>
+  </header>
+
+  <main>
+    <div class="section-title">1. Écoute de la chanson</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/iiyWPm7ds-0" title="Georges Brassens - La ballade des gens qui sont nés quelque part" allowfullscreen></iframe>
+    </div>
+
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions pour tester vos connaissances !</p>
+    </div>
+
+    <div class="section-title">2. QCM de compréhension et de langue</div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="section-title">3. Chanson avec paroles</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/3GaCtjAK4IM" title="Georges Brassens - La Ballade des gens qui sont nés quelque part (paroles)" allowfullscreen></iframe>
+    </div>
+
+    <div class="section-title">4. Expressions de la chanson dans la vie courante</div>
+    <div class="expressions-grid" id="expressions-container"></div>
+
+    <div class="section-title">5. Paroles et Traduction anglaise (Lyrics & English Translation)</div>
+    <div class="lyrics-box">
+      <div class="lyrics-column">
+        <h3>Paroles originales (Français)</h3>
+        <div class="lyrics-text">
+C'est vrai que les p'tits patelins
+Sont assommants sur certains points
+Mais n'en déplaise aux petits hargneux
+C'est là qu'on trouve les plus joyeux
+Car les aborigènes d'ici
+S'embêtent tellement dans leur nid
+Qu'ils se réjouissent chaque fois
+Qu'un étranger passe par là.
+
+Mais les imbéciles heureux qui sont nés quelque part
+Les imbéciles heureux qui sont nés quelque part
+Maudissent le passant qui n'a pas la frousse
+De ne pas être né dans la même brousse.
+
+C'est vrai qu'à Paris, à Rome, à Sète
+Ou à Montcuq, la vie est fête
+Pour peu qu'on ait le cœur à ça
+Et qu'on sache où poser le pas.
+Mais ce n'est pas une raison
+Pour afficher avec ostentation
+Un air de mépris ou de dédain
+Pour ceux qui viennent d'un autre coin.
+
+Mais les imbéciles heureux qui sont nés quelque part
+Les imbéciles heureux qui sont nés quelque part
+Bénissent le bon Dieu d'avoir eu la chance
+D'être venus au monde en un point de la France.
+
+C'est vrai que la guerre est un fléau
+Qui ravage les villes et les hameaux
+Et que la paix est un bien précieux
+Qu'il faut préserver de son mieux.
+Mais ce n'est pas une raison
+Pour aller faire la leçon
+À ceux qui ont le malheur de vivre
+Sous un autre ciel ou sous un autre livre.
+
+Mais les imbéciles heureux qui sont nés quelque part
+Les imbéciles heureux qui sont nés quelque part
+Sont prêts à marcher au pas cadencé
+Pour défendre leur bout de terre sacré.
+
+Mon Dieu, que la terre serait belle
+Sans cette race d'imbéciles
+Qui s'imaginent que leur village
+Est le seul centre de l'univers !
+        </div>
+      </div>
+      <div class="lyrics-column">
+        <h3>English Translation</h3>
+        <div class="lyrics-text">
+It's true that small towns
+Are dull in certain ways
+But no offense to the aggressive ones
+That's where you find the happiest people
+Because the locals here
+Are so bored in their nest
+That they rejoice every time
+A stranger passes by.
+
+But the happy fools who were born somewhere
+The happy fools who were born somewhere
+Curse the passerby who isn't afraid
+Of not being born in the same bush.
+
+It's true that in Paris, Rome, Sète
+Or Montcuq, life is a party
+As long as you're in the mood for it
+And know where to step.
+But that's no reason
+To display with ostentation
+An air of contempt or disdain
+For those coming from another corner.
+
+But the happy fools who were born somewhere
+The happy fools who were born somewhere
+Bless the Good Lord for having had the luck
+To be born somewhere in France.
+
+It's true that war is a scourge
+That ravages cities and hamlets
+And that peace is a precious good
+That we must preserve as best as we can.
+But that's no reason
+To go lecturing
+Those who have the misfortune to live
+Under another sky or another book.
+
+But the happy fools who were born somewhere
+The happy fools who were born somewhere
+Are ready to march in cadence
+To defend their sacred patch of land.
+
+My God, how beautiful the earth would be
+Without this breed of fools
+Who imagine that their village
+Is the sole center of the universe!
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      // COMPRÉHENSION
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Que dénonce principalement Georges Brassens dans cette chanson ?",
+        options: [
+          "La vie difficile dans les petits villages",
+          "Le chauvinisme, l'esprit de clocher et la fierté nationale aveugle",
+          "Les dangers des voyages à l'étranger",
+          "Le manque de fêtes à Paris et à Rome"
+        ],
+        answer: 1,
+        explanation: "Brassens critique avec ironie le chauvinisme des personnes qui se croient supérieures uniquement parce qu'elles sont nées à un endroit précis."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Pourquoi les habitants des 'petits patelins' accueillent-ils bien les étrangers selon le premier couplet ?",
+        options: [
+          "Parce qu'ils vendent des souvenirs aux touristes",
+          "Parce qu'ils s'ennuient tellement que tout passage les réjouit",
+          "Parce qu'ils obligent les étrangers à s'installer",
+          "Parce qu'ils partagent le même livre sacré"
+        ],
+        answer: 1,
+        explanation: "Brassens écrit ironiquement que les locaux s'embêtent tellement qu'ils sont heureux de voir passer une nouvelle tête."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle attitude adopte l'auteur vis-à-vis des villes comme Paris, Rome, Sète ou Montcuq ?",
+        options: [
+          "Il dit que la vie y est agréable, mais que ce n'est pas une raison pour mépriser les autres",
+          "Il affirme que ce sont les seules villes où l'on peut vivre heureux",
+          "Il conseille d'éviter ces villes très dangereuses",
+          "Il prétend qu'on n'y trouve que des imbéciles"
+        ],
+        answer: 0,
+        explanation: "Brassens reconnaît qu'on peut s'y amuser ('la vie est fête'), mais refuse qu'on en tire de la supériorité ou du mépris."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Que sont prêts à faire les 'imbéciles heureux' à la fin du troisième couplet ?",
+        options: [
+          "Organiser une grande fête villageoise",
+          "Partir en voyage autour du monde",
+          "Marcher au pas cadencé pour faire la guerre et défendre leur bout de terre",
+          "Apprendre la langue de leurs voisins"
+        ],
+        answer: 2,
+        explanation: "L'expression 'marcher au pas cadencé' désigne la marche militaire et l'engrenage vers la guerre patriotique."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle est la conclusion formulée par le chanteur à la toute fin ?",
+        options: [
+          "Que la Terre serait magnifique sans la race des gens chauvins",
+          "Qu'il faut détruire tous les petits villages",
+          "Que tout le monde devrait déménager à Paris",
+          "Que Dieu a très bien fait les choses"
+        ],
+        answer: 0,
+        explanation: "Brassens conclut par : 'Mon Dieu, que la terre serait belle sans cette race d'imbéciles qui s'imaginent que leur village est le seul centre de l'univers'."
+      },
+
+      // VOCABULAIRE
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le mot familier 'Patelin' (ex: 'les p'tits patelins') ?",
+        options: [
+          "Un petit village ou un bourg",
+          "Un plat traditionnel du Sud",
+          "Un chapeau de paille",
+          "Un animal de compagnie"
+        ],
+        answer: 0,
+        explanation: "En français familier, un 'patelin' désigne un petit village sans grande importance."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que veut dire l'expression 'Avoir la frousse' ?",
+        options: [
+          "Avoir très faim",
+          "Avoir peur ou être effrayé",
+          "Être très fier de soi",
+          "Avoir de la chance"
+        ],
+        answer: 1,
+        explanation: "'Avoir la frousse' est un terme familier qui signifie éprouver de la peur."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie 'Afficher avec ostentation' ?",
+        options: [
+          "Montrer discrètement",
+          "Cacher avec soin",
+          "Montrer de manière excessive et visible pour se faire remarquer",
+          "Vendre aux enchères"
+        ],
+        answer: 2,
+        explanation: "L'ostentation consiste à faire étalage de quelque chose avec vanité ou exagération."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Qu'est-ce qu'un 'Fléau' (ex: 'la guerre est un fléau') ?",
+        options: [
+          "Une grande catastrophe ou une calamité qui touche beaucoup de monde",
+          "Un outil de jardinage pacifique",
+          "Une fête populaire de village",
+          "Un type de navire de guerre"
+        ],
+        answer: 0,
+        explanation: "Un fléau désigne une calamité majeure (maladie, guerre, sécheresse)."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne le terme 'Dédain' ?",
+        options: [
+          "Un sentiment de profond mépris",
+          "Une grande admiration",
+          "Un manque de mémoire",
+          "Une politesse exagérée"
+        ],
+        answer: 0,
+        explanation: "Le dédain est le mépris exprimé envers quelqu'un qu'on estime inférieur."
+      },
+
+      // GRAMMAIRE
+      {
+        id: 11,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'N'en déplaise aux petits hargneux', à quel mode verbal est 'déplaise' ?",
+        options: [
+          "Indicatif présent",
+          "Subjonctif présent",
+          "Impératif présent",
+          "Conditionnel présent"
+        ],
+        answer: 1,
+        explanation: "'N'en déplaise à' est une formule figée construite avec le subjonctif du verbe déplaire."
+      },
+      {
+        id: 12,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans 'Pour peu qu'on ait le cœur à ça', quelle nuance exprime 'Pour peu que' ?",
+        options: [
+          "Une restriction avec condition minimale (suivie du subjonctif)",
+          "Une cause certaine dans le passé",
+          "Une comparaison d'égalité",
+          "Une interdiction absolue"
+        ],
+        answer: 0,
+        explanation: "'Pour peu que' introduit une condition suffisante et exige le subjonctif ('ait')."
+      },
+      {
+        id: 13,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle est la nature de 'ceux' dans 'ceux qui viennent d'un autre coin' ?",
+        options: [
+          "Un adjectif démonstratif",
+          "Un pronom démonstratif masculin pluriel",
+          "Un pronom possessif",
+          "Un article défini"
+        ],
+        answer: 1,
+        explanation: "'Ceux' est le pronom démonstratif (pluriel de 'celui') désignant des personnes."
+      },
+      {
+        id: 14,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans 'Que la terre serait belle sans cette race', quel temps/mode est utilisé pour 'serait' ?",
+        options: [
+          "Futur simple de l'indicatif",
+          "Conditionnel présent",
+          "Imparfait de l'indicatif",
+          "Présent du subjonctif"
+        ],
+        answer: 1,
+        explanation: "'Serait' est le verbe être au conditionnel présent, exprimant ici un souhait ou un monde hypothétique."
+      },
+      {
+        id: 15,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans 'Bénissent le bon Dieu d'avoir eu la chance', quelle est la structure 'd'avoir eu' ?",
+        options: [
+          "Infinitif passé du verbe avoir",
+          "Gérondif présent",
+          "Plus-que-parfait de l'indicatif",
+          "Participe présent"
+        ],
+        answer: 0,
+        explanation: "'D'avoir eu' est l'infinitif passé (auxiliaire avoir à l'infinitif + participe passé)."
+      },
+
+      // PRONONCIATION
+      {
+        id: 16,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment Brassens prononce-t-il 'les p'tits patelins' à l'oral ?",
+        options: [
+          "Il prononce 'les petits' de manière très détachée",
+          "Il élide le 'e' de 'petits' [pti] pour respecter le rythme et la métrique de la chanson",
+          "Il ne prononce pas le 's' de 'les'",
+          "Il transforme le 'i' en 'u'"
+        ],
+        answer: 1,
+        explanation: "Dans la tradition de la chanson française, la suppression du 'e' caduc ('p'tits') permet de réduire le nombre de syllabes."
+      },
+      {
+        id: 17,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Quelle est la prononciation du nom de la commune 'Montcuq' citée dans la chanson ?",
+        options: [
+          "On prononce 'Mon-cu' sans le 'q' final",
+          "On prononce le 'q' final comme un 'k' [mɔ̃kyk]",
+          "On prononce 'Mont-coq'",
+          "Le nom est muet"
+        ],
+        answer: 1,
+        explanation: "La ville de Montcuq (dans le Lot) se prononce traditionnellement [mɔ̃kyk] en faisant entendre le 'q' final."
+      },
+      {
+        id: 18,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se fait la liaison dans 'les imbéciles_heureux' ?",
+        options: [
+          "Elle est interdite",
+          "On fait une liaison obligatoire en [z] : 'les-z-imbéciles-z-heureux'",
+          "On fait une liaison en [n]",
+          "On fait une pause entre chaque mot"
+        ],
+        answer: 1,
+        explanation: "Après le déterminant 'les' et entre l'adjectif/nom et l'adjectif commençant par une voyelle ou un h muet, la liaison en [z] est de rigueur."
+      },
+      {
+        id: 19,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le 'g' dans le mot 'Hargneux' [aʁɲø] ?",
+        options: [
+          "Comme le 'g' de 'gare'",
+          "Le groupe 'gn' se prononce comme un 'n' mouillé /ɲ/ (comme dans 'espagnol' ou 'vigne')",
+          "Comme le 'j' de 'jour'",
+          "Le 'g' est totalement muet sans affecter le 'n'"
+        ],
+        answer: 1,
+        explanation: "Le digramme 'gn' en français représente le son nasal palatal /ɲ/."
+      },
+      {
+        id: 20,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans le mot 'Ostentation', quelle est la prononciation du 't' de la dernière syllabe ?",
+        options: [
+          "Il se prononce [t] comme dans 'tapis'",
+          "Il se prononce [s] (os-ten-ta-sion) comme dans 'attention' ou 'nation'",
+          "Il se prononce [z]",
+          "Il ne se prononce pas"
+        ],
+        answer: 1,
+        explanation: "Le 't' suivi de 'ion' dans les noms d'origine latine se prononce généralement [s]."
+      }
+    ];
+
+    const expressions = [
+      {
+        title: "Nés quelque part",
+        meaning: "Être originaire d'un endroit précis. Utilisé souvent pour rappeler la neutralité ou le hasard de notre lieu de naissance.",
+        example: "On est tous nés quelque part, personne ne choisit son pays d'origine."
+      },
+      {
+        title: "N'en déplaise à...",
+        meaning: "Formule polie mais ferme pour dire 'même si cela déplaît ou dérange certaines personnes'.",
+        example: "N'en déplaise à mes voisins, j'aime écouter de la musique le samedi après-midi."
+      },
+      {
+        title: "Un petit patelin",
+        meaning: "Un tout petit village ou un bourg rural isolé.",
+        example: "Pendant les vacances, nous avons loué une maison dans un petit patelin très calme."
+      },
+      {
+        title: "Avoir la frousse",
+        meaning: "Avoir très peur (langage familier).",
+        example: "J'ai eu la frousse de ma vie quand le chien du voisin s'est mis à aboyer."
+      },
+      {
+        title: "Pour peu que...",
+        meaning: "Il suffit seulement que... / Si seulement une condition minimale est remplie.",
+        example: "Pour peu qu'il fasse beau ce week-end, nous irons faire un pique-nique."
+      },
+      {
+        title: "Afficher avec ostentation",
+        meaning: "Montrer quelque chose de façon très visible pour se faire remarquer ou fanfaronner.",
+        example: "Il affiche sa nouvelle montre avec ostentation devant tous ses collègues."
+      },
+      {
+        title: "Avoir le cœur à ça",
+        meaning: "Être d'humeur à faire quelque chose, en avoir l'envie ou l'esprit disponible.",
+        example: "Après cette mauvaise nouvelle, je n'avais vraiment pas le cœur à faire la fête."
+      },
+      {
+        title: "Faire la leçon à quelqu'un",
+        meaning: "Donner de manière prétentieuse des conseils moraux ou des ordres à quelqu'un.",
+        example: "Arrête de me faire la leçon, je sais très bien ce que j'ai à faire !"
+      },
+      {
+        title: "Marcher au pas cadencé",
+        meaning: "Défiler en ordre militaire. Au sens figuré : obéir aveuglément à des ordres collectifs.",
+        example: "Les soldats marchaient au pas cadencé lors du défilé du 14 juillet."
+      },
+      {
+        title: "Le centre de l'univers",
+        meaning: "L'endroit ou la personne autour de qui tout semble tourner (utilisé ironiquement).",
+        example: "Il est tellement narcissique qu'il se croit le centre de l'univers."
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Bravo ! Vous avez une excellente compréhension de la chanson et du français !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon résultat ! Vous avez bien saisi les subtilités de Brassens.";
+        } else {
+          msg.innerText = "Bonne tentative ! N'hésitez pas à réécouter la vidéo et relire les explications.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <div>
+            <div class="expression-title">${exp.title}</div>
+            <div class="expression-meaning">${exp.meaning}</div>
+          </div>
+          <div class="expression-example">
+            <strong>Exemple :</strong> "${exp.example}"
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
