@@ -1,0 +1,832 @@
+html_content = """<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Incontournables de Provence - Application Web Interactive</title>
+  <style>
+    :root {
+      --primary: #4a2e80;
+      --primary-dark: #321c5b;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      --bg: #fdfbf7;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-muted: #4b5563;
+      --border: #e5e7eb;
+      --correct: #15803d;
+      --correct-bg: #dcfce7;
+      --incorrect: #b91c1c;
+      --incorrect-bg: #fee2e2;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #321c5b, #6b21a8);
+      color: #ffffff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      color: var(--primary-dark);
+      margin: 2.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 0.4rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2.5rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* Score banner */
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--accent);
+    }
+
+    .score-banner h3 {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Quiz Navigation Tabs */
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: 700;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 5px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 5px solid var(--incorrect);
+    }
+
+    /* Expressions Section */
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .expression-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .expression-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .expression-title {
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .expression-translation {
+      font-style: italic;
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #f9fafb;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+      .section-title { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Découvrir la Provence avec Partir.com</h1>
+    <p>Application pédagogique interactive : Vidéo, QCM de langue française et expressions clés</p>
+  </header>
+
+  <main>
+    <!-- Section 1 : Vidéo YouTube -->
+    <h2 class="section-title">1. Visionnage de la vidéo</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/eTr3w6PVWvw" title="Places not to be missed in Provence - Partir.com" allowfullscreen></iframe>
+    </div>
+
+    <!-- Section 2 : QCM -->
+    <h2 class="section-title">2. QCM de compréhension et de langue (20 questions)</h2>
+
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre niveau de français !</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes les questions (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <!-- Section 3 : Expressions -->
+    <h2 class="section-title">3. Expressions utiles issues de la vidéo</h2>
+    <div class="expressions-grid" id="expressions-container"></div>
+  </main>
+
+  <script>
+    const questions = [
+      // COMPRÉHENSION (5)
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel est l'objectif principal de la vidéo produite par Partir.com ?",
+        options: [
+          "Présenter une recette de cuisine traditionnelle provençale",
+          "Faire découvrir les lieux et paysages incontournables de la Provence",
+          "Expliquer l'histoire politique de la région Provence-Alpes-Côte d'Azur",
+          "Comparer les prix des hôtels dans le sud de la France"
+        ],
+        answer: 1,
+        explanation: "La vidéo de Partir.com est un guide de voyage visuel présentant les plus beaux sites touristiques et paysages de Provence."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel paysage emblématique de la Provence est célèbre pour ses fleurs violettes en été ?",
+        options: [
+          "Les champs de lavande du plateau de Valensole",
+          "Les rizières de Camargue",
+          "Les forêts de sapins du Mercantour",
+          "Les oliveraies de Nyons"
+        ],
+        answer: 0,
+        explanation: "Les champs de lavande du plateau de Valensole et du Luberon sont mondialement connus pour leur floraison estivale."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel grand canyon naturel est souvent présenté comme l'un des plus impressionnants d'Europe dans cette vidéo ?",
+        options: [
+          "Les Gorges du Tarn",
+          "Le Canyon du Colorado provençal",
+          "Les Gorges du Verdon",
+          "La vallée de la Dordogne"
+        ],
+        answer: 2,
+        explanation: "Les Gorges du Verdon, avec leurs eaux turquoise spectaculaires, forment le plus grand canyon d'Europe."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle cité historique célèbre pour son palais des Papes figure parmi les étapes phares de la région ?",
+        options: [
+          "Aix-en-Provence",
+          "Avignon",
+          "Arles",
+          "Marseille"
+        ],
+        answer: 1,
+        explanation: "Avignon est mondialement connue pour son Palais des Papes et son célèbre pont Saint-Bénézet."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel parc naturel côtier offre des falaises calcaires majestueuses tombant dans la mer Méditerranée ?",
+        options: [
+          "Le Parc national des Écrins",
+          "Le Parc naturel régional du Queyras",
+          "Le Parc national des Calanques",
+          "Le Bassin d'Arcachon"
+        ],
+        answer: 2,
+        explanation: "Le Parc national des Calanques, entre Marseille et Cassis, offre des paysages côtiers uniques entre roche blanche et mer turquoise."
+      },
+
+      // VOCABULAIRE (5)
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie l'expression 'Incontournable' (ex: 'les lieux incontournables') ?",
+        options: [
+          "Un endroit difficile d'accès où l'on se perd facilement",
+          "Un site tellement essentiel ou célèbre qu'il faut absolument le visiter",
+          "Un chemin interdit aux touristes",
+          "Un lieu payant réservé aux visites guidées"
+        ],
+        answer: 1,
+        explanation: "'Incontournable' désigne ce qu'on ne peut pas contourner ou éviter, donc un lieu indispensable à voir."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Qu'est-ce qu'une 'Calanque' dans la géographie du Sud de la France ?",
+        options: [
+          "Une petite colline recouverte d'oliviers",
+          "Une baie ou crique étroite et profonde encadrée de falaises calcaires escarpées",
+          "Un marché traditionnel du matin",
+          "Un champ irrigable près d'un fleuve"
+        ],
+        answer: 1,
+        explanation: "Une calanque est une formation géologique caractéristique de la côte méditerranéenne formée d'une vallée encaissée dans de la roche."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne le terme provençal 'Mas' ?",
+        options: [
+          "Un bateau de pêcheur traditionnel",
+          "Une grande maison de campagne traditionnelle en pierre typique du Sud de la France",
+          "Une fête de village estivale",
+          "Un vêtement en toile de coton"
+        ],
+        answer: 1,
+        explanation: "Le 'mas' est la ferme traditionnelle ou la maison de campagne de Provence."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le verbe 'S'émerveiller' ?",
+        options: [
+          "Ressentir une grande admiration mêlée d'étonnement et de plaisir",
+          "Chercher son chemin sans carte",
+          "Se plaindre de la chaleur de l'été",
+          "Prendre des photos en continu"
+        ],
+        answer: 0,
+        explanation: "S'émerveiller signifie éprouver un sentiment d'admiration émerveillée face à la beauté d'un lieu."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Qu'est-ce que la 'Garrigue' ?",
+        options: [
+          "Une forêt de grands sapins de montagne",
+          "Une végétation basse et aromatique (thym, romarin, lavande) typique du climat méditerranéen",
+          "Une spécialité culinaire à base de poissons",
+          "Un vent froid qui souffle depuis les Alpes"
+        ],
+        answer: 1,
+        explanation: "La garrigue est la formation végétale méditerranéenne poussant sur les terrains calcaires."
+      },
+
+      // GRAMMAIRE (5)
+      {
+        id: 11,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Pour bien profiter de votre séjour, il est conseillé de réserver à l'avance', quelle est la formule 'il est conseillé de' ?",
+        options: [
+          "Une tournure impersonnelle suivie d'un infinitif",
+          "Un verbe au futur antérieur",
+          "Un subjonctif présent passif",
+          "Une forme pronominale obligatoire"
+        ],
+        answer: 0,
+        explanation: "'Il est + adjectif/participe + de + infinitif' est une structure impersonnelle courante pour donner une recommandation."
+      },
+      {
+        id: 12,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'C'est une région dont les paysages sont magnifiques', quel est le rôle du pronom 'dont' ?",
+        options: [
+          "Pronom relatif complétant un nom introduit par la préposition 'de' ('les paysages de cette région')",
+          "Pronom démonstratif marquant une distance",
+          "Adverbe de lieu désignant la Provence",
+          "Conjonction de subordination exprimant le temps"
+        ],
+        answer: 0,
+        explanation: "'Dont' remplace un complément précédé de 'de' (les paysages de la région -> une région dont les paysages...)."
+      },
+      {
+        id: 13,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle phrase exprime correctement une condition irréelle dans le présent ?",
+        options: [
+          "Si vous visitez la Provence, vous serez content.",
+          "Si j'avais le temps, je visiterais les Gorges du Verdon cet été.",
+          "Si vous viendrez en Provence, appelez-moi.",
+          "Si nous avions réservé, nous serions arrivés hier."
+        ],
+        answer: 1,
+        explanation: "La condition hypothétique dans le présent se forme avec : Si + Imparfait ('avais'), Conditionnel présent ('visiterais')."
+      },
+      {
+        id: 14,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Les photos que j'ai prises montrent des champs de lavande', pourquoi 'prises' s'accorde-t-il au féminin pluriel ?",
+        options: [
+          "Parce qu'il s'accorde toujours avec le sujet 'j''",
+          "Parce que le C.O.D. ('que' / 'les photos') est placé avant le verbe composé avec l'auxiliaire 'avoir'",
+          "Parce que le verbe 'prendre' est un verbe d'état",
+          "L'accord est une erreur de frappe"
+        ],
+        answer: 1,
+        explanation: "Avec l'auxiliaire 'avoir', le participe passé s'accorde avec le C.O.D. si celui-ci est placé avant le verbe ('les photos que')."
+      },
+      {
+        id: 15,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle préposition doit-on utiliser devant le nom de région 'Provence' (féminin) ?",
+        options: [
+          "Au (ex: Je vais au Provence)",
+          "En (ex: Je voyage en Provence)",
+          "À la (ex: Je réside à la Provence)",
+          "Dans le (ex: Je suis dans le Provence)"
+        ],
+        answer: 1,
+        explanation: "Devant un nom de région ou de pays féminin (se terminant par un 'e'), on utilise la préposition 'en'."
+      },
+
+      // PRONONCIATION (5)
+      {
+        id: 16,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le nom de la ville provençale 'Aix-en-Provence' ?",
+        options: [
+          "On prononce 'Aks-en-Provence' avec le son [ks]",
+          "On prononce 'Aish-en-Provence'",
+          "On prononce 'A-en-Provence' (le x est muet)",
+          "On prononce 'Ex-en-Provence'"
+        ],
+        answer: 0,
+        explanation: "'Aix' dans Aix-en-Provence se prononce [ɛks] (comme 'axe' ou 'eks')."
+      },
+      {
+        id: 17,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans l'accent du Sud de la France (accent provençal), quelle est une caractéristique très fréquente ?",
+        options: [
+          "On ne prononce jamais les consonne finales",
+          "On prononce souvent le 'e' muet final (ex: 'Provence' devient 'Pro-ven-sə')",
+          "On prononce tous les 'r' de manière roulée espagnole",
+          "On supprime toutes les voyelles nasales"
+        ],
+        answer: 1,
+        explanation: "L'accent du Midi se caractérise notamment par le maintien de la prononciation du 'e' muet final (le schwa)."
+      },
+      {
+        id: 18,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce la liaison dans l'expression 'Les_incontournables' ?",
+        options: [
+          "Elle ne se fait pas : 'Les / incontournables'",
+          "On fait une liaison en [z] : 'Les-z-incontournables'",
+          "On fait une liaison en [t] : 'Les-t-incontournables'",
+          "On fait une liaison en [n] : 'Les-n-incontournables'"
+        ],
+        answer: 1,
+        explanation: "Entre le déterminant 'les' et un adjectif/nom commençant par une voyelle, la liaison en [z] est obligatoire."
+      },
+      {
+        id: 19,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le nom du village célèbre 'Roussillon' ?",
+        options: [
+          "On prononce le 'ill' comme un 'l' double dur (Rous-ti-lon)",
+          "On prononce le 'ill' comme un 'y' semi-voyelle [ʁusijɔ̃] (Rous-si-yon)",
+          "On prononce 'Rous-si-gon'",
+          "Le 's' central se prononce comme un [z]"
+        ],
+        answer: 1,
+        explanation: "Le groupe 'ill' précédé d'une voyelle forme le son mouillé /j/ (comme dans 'famille' ou 'papillon')."
+      },
+      {
+        id: 20,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans le mot 'Gorges' (ex: 'les Gorges du Verdon'), comment se prononcent les deux 'g' ?",
+        options: [
+          "Le premier est dur [g] et le second est doux [ʒ]",
+          "Les deux 'g' se prononcent de manière douce [ʒ] (comme le 'j' de jour)",
+          "Les deux 'g' sont durs [g] (comme dans gâteau)",
+          "Le premier est muet et le second est dur"
+        ],
+        answer: 1,
+        explanation: "Devant la voyelle 'o' suivie de 'r' et 'e', 'g' se prononce [ʒ] (doux) dans 'Gorges'."
+      }
+    ];
+
+    const expressions = [
+      {
+        title: "Les lieux incontournables",
+        translation: "Must-see places / Unmissable spots",
+        meaning: "Les endroits essentiels et les plus célèbres qu'il faut absolument visiter lors d'un voyage.",
+        example: "Le Palais des Papes d'Avignon fait partie des lieux incontournables lors d'une visite en Provence.",
+        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Valoir le détour",
+        translation: "To be worth a detour / Worth visiting",
+        meaning: "Mériter qu'on s'y arrête ou qu'on fasse un petit crochet sur son itinéraire.",
+        example: "Ce petit village perché au sommet de la colline vaut vraiment le détour !",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Prendre un bain de soleil",
+        translation: "To sunbathe / To soak up the sun",
+        meaning: "S'exposer au soleil pour se détendre, bronzer et profiter de la chaleur.",
+        example: "En été, les touristes aiment prendre un bain de soleil sur la plage de Cassis.",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "À couper le souffle",
+        translation: "Breathtaking / Stunning",
+        meaning: "Qui provoque une immense admiration ou un émerveillement par sa grande beauté.",
+        example: "La vue panoramique depuis le sommet des falaises du Verdon est tout simplement à couper le souffle.",
+        image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Hors des sentiers battus",
+        translation: "Off the beaten path / Off the beaten track",
+        meaning: "Loin des circuits touristiques habituels et des endroits très fréquentés.",
+        example: "Pour découvrir la vraie Provence authentique, nous avons préféré voyager hors des sentiers battus.",
+        image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Flâner dans les ruelles",
+        translation: "To stroll through narrow streets",
+        meaning: "Se promener lentement, sans but précis, pour le simple plaisir d'observer le paysage.",
+        example: "Nous avons passé l'après-midi à flâner dans les ruelles pavées du village de Gordes.",
+        image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "En prendre plein les yeux",
+        translation: "To feast one's eyes / To be blown away by the sight",
+        meaning: "Voir des paysages ou des choses magnifiques et très impressionnantes.",
+        example: "Durant notre randonnée dans les Calanques de Marseille, nous en avons pris plein les yeux !",
+        image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Se mettre au vert",
+        translation: "To get away from it all in the countryside",
+        meaning: "Quitter la ville encombrée pour aller se reposer à la campagne au contact de la nature.",
+        example: "Après une longue année de travail à Paris, toute la famille part se mettre au vert dans un mas provençal.",
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Prendre son temps",
+        translation: "To take one's time / To slow down",
+        meaning: "Faire les choses tranquillement, sans se presser, en profitant du moment présent.",
+        example: "Ici en Provence, la vie est paisible et il faut savoir prendre son temps.",
+        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Faire le plein de souvenirs",
+        translation: "To gather memories / To stock up on memories",
+        meaning: "Vivre beaucoup d'expériences mémorables que l'on gardera longtemps en mémoire.",
+        example: "Ce voyage guidé en Méditerranée nous a permis de faire le plein de beaux souvenirs en famille.",
+        image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Félicitations ! Vous maîtrisez parfaitement le vocabulaire et les connaissances sur la Provence !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon travail ! Vous avez une bonne compréhension globale.";
+        } else {
+          msg.innerText = "Bon effort ! Réévisez les questions et réécoutez la vidéo pour progresser.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <img src="${exp.image}" alt="${exp.title}" class="expression-img" loading="lazy">
+          <div class="expression-body">
+            <div>
+              <div class="expression-title">${exp.title}</div>
+              <div class="expression-translation">🇬🇧 ${exp.translation}</div>
+              <div class="expression-meaning">${exp.meaning}</div>
+            </div>
+            <div class="expression-example">
+              <strong>Exemple :</strong> "${exp.example}"
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
