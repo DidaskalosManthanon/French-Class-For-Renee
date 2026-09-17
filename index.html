@@ -4,33 +4,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours de français pour Renée</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #4a2e80;
+            --primary-dark: #321c5b;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding-bottom: 3rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #ffffff;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .month-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .month-title {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .card-type {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+        }
+
+        .card-type.quiz {
+            color: #2563eb;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .card.quiz-card {
+            background-color: #f0f9ff;
+            border-color: #bae6fd;
+        }
+
+        .card.quiz-card:hover {
+            border-color: #2563eb;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Archives des cours français</h1>
-    </header>
-    <nav class="menu">
-        <h3>Séances</h3>
-        <a href="mardi-2026-02-03.html" class="btn-date secondary">Séance du 3 février</a>
-        <a href="mardi-2026-01-27.html" class="btn-date secondary">Séance du 27 janvier</a>
-        <a href="mardi-2026-01-20.html" class="btn-date secondary">Séance du 20 janvier</a>
-        <a href="lundi-2026-06-01-fr.html" class="btn-date secondary">Séance du 1er juin</a>
-        <a href="jeudi-2026-06-25.html" class="btn-date secondary">Séance du 25 juin</a>
-        <a href="lundi-2026-07-13.html" class="btn-date secondary">Séance du 13 juillet</a>
-        <a href="vendredi-2026-07-17.html" class="btn-date secondary">Séance du 17 juillet</a>
-        <a href="jeudi-2026-07-30.html" class="btn-date secondary">Séance du 30 juillet</a>
-        <a href="vendredi-2026-08-14.html" class="btn-date secondary">Séance du 14 août</a>
-        <a href="jeudi-2026-08-20.html" class="btn-date  secondary">Séance du 20 août</a>
-        <a href="jeudi-2026-08-27.html" class="btn-date secondary">Séance du 27 août</a>
-        <a href="mercredi-2026-09-02.html" class="btn-date secondary">Séance du 02 septembre</a>
-        <a href="jeudi-2026-09-10.html" class="btn-date">Séance du 10 septembre</a>
-        
 
-        <h3 style="margin-top: 20px;">Révisions (Quiz)</h3>
-        <a href="quiz-2026-01-20.html" class="btn-date secondary">Quiz - 20 Janvier</a>
-        <a href="quiz-2026-01-27.html" class="btn-date secondary">Quiz - 27 Janvier</a>
-        <a href="quiz-2026-02-03.html" class="btn-date secondary">Quiz - 03 Février</a>
-    </nav>
+    <header>
+        <h1>Cours de français pour Renée</h1>
+        <p>Archives interactives et fiches de révision</p>
+    </header>
+
+    <main>
+
+        <!-- Septembre 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Septembre 2026</h2>
+            <div class="grid">
+                <a href="jeudi-2026-09-17.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 17 septembre</div>
+                    </div>
+                </a>
+                <a href="jeudi-2026-09-10.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 10 septembre</div>
+                    </div>
+                </a>
+                <a href="mercredi-2026-09-02.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 02 septembre</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Août 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Août 2026</h2>
+            <div class="grid">
+                <a href="jeudi-2026-08-27.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 27 août</div>
+                    </div>
+                </a>
+                <a href="jeudi-2026-08-20.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 20 août</div>
+                    </div>
+                </a>
+                <a href="vendredi-2026-08-14.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 14 août</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Juillet 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Juillet 2026</h2>
+            <div class="grid">
+                <a href="jeudi-2026-07-30.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 30 juillet</div>
+                    </div>
+                </a>
+                <a href="vendredi-2026-07-17.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 17 juillet</div>
+                    </div>
+                </a>
+                <a href="lundi-2026-07-13.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 13 juillet</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Juin 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Juin 2026</h2>
+            <div class="grid">
+                <a href="jeudi-2026-06-25.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 25 juin</div>
+                    </div>
+                </a>
+                <a href="lundi-2026-06-01-fr.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 1er juin</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Février 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Février 2026</h2>
+            <div class="grid">
+                <a href="mardi-2026-02-03.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 3 février</div>
+                    </div>
+                </a>
+                <a href="quiz-2026-02-03.html" class="card quiz-card">
+                    <div>
+                        <span class="card-type quiz">Quiz</span>
+                        <div class="card-title">Quiz - 03 Février</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Janvier 2026 -->
+        <section class="month-section">
+            <h2 class="month-title">Janvier 2026</h2>
+            <div class="grid">
+                <a href="mardi-2026-01-27.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 27 janvier</div>
+                    </div>
+                </a>
+                <a href="quiz-2026-01-27.html" class="card quiz-card">
+                    <div>
+                        <span class="card-type quiz">Quiz</span>
+                        <div class="card-title">Quiz - 27 Janvier</div>
+                    </div>
+                </a>
+                <a href="mardi-2026-01-20.html" class="card">
+                    <div>
+                        <span class="card-type">Séance</span>
+                        <div class="card-title">Séance du 20 janvier</div>
+                    </div>
+                </a>
+                <a href="quiz-2026-01-20.html" class="card quiz-card">
+                    <div>
+                        <span class="card-type quiz">Quiz</span>
+                        <div class="card-title">Quiz - 20 Janvier</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
 </body>
 </html>
