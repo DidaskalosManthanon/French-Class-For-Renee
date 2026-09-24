@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 lieux secrets en France - Bruno Maltor</title>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e40af;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #ffffff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      color: #1e3a8a;
+      margin: 2.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 0.4rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2.5rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* Score banner */
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--accent);
+    }
+
+    .score-banner h3 {
+      color: #1e3a8a;
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Quiz Navigation Tabs */
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: var(--accent-light);
+      color: #b45309;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: 700;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 5px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 5px solid var(--incorrect);
+    }
+
+    /* Expressions Section */
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .expression-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .expression-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .expression-title {
+      font-size: 1.15rem;
+      color: #1e3a8a;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .expression-translation {
+      font-style: italic;
+      color: #b45309;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+      .section-title { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>10 lieux secrets en France</h1>
+    <p>Application pédagogique basée sur la vidéo du créateur Bruno Maltor</p>
+  </header>
+
+  <main>
+    <!-- Section 1 : Vidéo YouTube -->
+    <h2 class="section-title">1. Visionnage de la vidéo</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/GX38bYntDP8" title="10 lieux que vous ne connaissez (sûrement) pas en FRANCE" allowfullscreen></iframe>
+    </div>
+
+    <!-- Section 2 : QCM -->
+    <h2 class="section-title">2. QCM de compréhension et de langue (20 questions)</h2>
+
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre compréhension et votre français !</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes les questions (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <!-- Section 3 : Expressions -->
+    <h2 class="section-title">3. Expressions utiles issues de la vidéo</h2>
+    <div class="expressions-grid" id="expressions-container"></div>
+  </main>
+
+  <script>
+    const questions = [
+      // COMPRÉHENSION (5)
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel outil recommandé par Bruno Maltor permet de dénicher des endroits insolites hors des guides classiques ?",
+        options: [
+          "Google Maps",
+          "Atlas Obscura",
+          "TripAdvisor",
+          "Chat GPT"
+        ],
+        answer: 1,
+        explanation: "Bruno mentionne à [00:00:51] qu'Atlas Obscura est la meilleure mine d'or pour dénicher des lieux insolites[cite: 5]."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle est la particularité légale et financière du statut religieux au Mont Sainte-Odile (Alsace) ?",
+        options: [
+          "C'est un lieu entièrement géré par la mairie de Strasbourg",
+          "Il bénéficie du régime concordataire, où les ministres du culte sont rémunérés par l'État",
+          "L'entrée y est payante et gérée par une entreprise privée",
+          "Il appartient au domaine public national"
+        ],
+        answer: 1,
+        explanation: "En Alsace-Moselle, le régime concordataire s'applique encore [00:02:14] : l'État rémunère les ministres du culte[cite: 5]."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Pourquoi l'accès à la plage de l'Île Vierge sur la presqu'île de Crozon est-il interdit depuis 2019 ?",
+        options: [
+          "À cause de la pollution de l'eau",
+          "Pour des raisons militaires confidentielles",
+          "Pour des risques de chutes de pierres et pour protéger la nidification des oiseaux",
+          "Parce que la plage est devenue une propriété privée"
+        ],
+        answer: 2,
+        explanation: "L'accès est interdit par arrêté préfectoral pour la sécurité (chutes de pierres) et la protection de la faune [00:09:56][cite: 5]."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel avantage personnel majeur Bruno trouve-t-il à la conduite en véhicule électrique ?",
+        options: [
+          "Une vitesse de pointe plus élevée",
+          "Le silence de fonctionnement, soulageant ses acouphènes",
+          "La gratuité totale des recharges sur autoroute",
+          "La possibilité de conduire sans permis"
+        ],
+        answer: 1,
+        explanation: "Bruno explique qu'étant sensible au bruit à cause d'acouphènes, le silence du véhicule électrique est un vrai bonheur [00:07:59][cite: 5]."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Pourquoi le Territoire de Belfort est-il devenu un département français distinct après la guerre de 1870-1871 ?",
+        options: [
+          "Parce qu'il a résisté pendant 103 jours et n'a pas été annexé par l'Empire allemand",
+          "Par arrêté Napoléonien pour créer un parc naturel",
+          "Parce qu'il abritait la frontière suisse",
+          "Suite à la demande de l'artiste Bartholdi"
+        ],
+        answer: 0,
+        explanation: "Grâce à sa résistance de 103 jours en 1871, Belfort est resté français alors que le reste de l'Alsace devenait allemand [00:12:07][cite: 5]."
+      },
+
+      // VOCABULAIRE (5)
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le mot 'Pépite' au sens figuré quand Bruno parle de 'dénicher des pépites' ?",
+        options: [
+          "Un petit morceau d'or brut",
+          "Une chose exceptionnelle, remarquable ou peu connue",
+          "Une grosse pierre sur un sentier",
+          "Un piège à touristes"
+        ],
+        answer: 1,
+        explanation: "Au sens figuré [00:00:23], une pépite désigne un endroit, objet ou contenu rare d'une valeur remarquable[cite: 5]."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie l'expression populaire 'Pleuvoir des cordes' (mentionnée à 02:00) ?",
+        options: [
+          "Pleuvoir très fort et de façon continue",
+          "Tomber de la grêle sur les montagnes",
+          "Faire un temps très sec et venteux",
+          "Y avoir de la brume matinale"
+        ],
+        answer: 0,
+        explanation: "'Pleuvoir des cordes' [00:02:00] est une locution familière pour désigner une pluie intense[cite: 5]."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que veut dire avoir 'Carte blanche' (comme l'artiste Carrasco dans l'église du Menoux à 03:08) ?",
+        options: [
+          "N'avoir aucun budget pour réaliser des travaux",
+          "Avoir une liberté totale d'action et d'initiative",
+          "Devoir peindre uniquement avec de la peinture blanche",
+          "Avoir un contrat de bénévolat obligatoire"
+        ],
+        answer: 1,
+        explanation: "Avoir 'carte blanche' [00:03:08] signifie disposer de l'entière liberté de créer sans restrictions[cite: 5]."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Dans le contexte touristique, que signifie un lieu 'Sous-coté' (ou sous-estimé) ?",
+        options: [
+          "Un endroit très cher à visiter",
+          "Un endroit dont la valeur réelle n'est pas suffisamment reconnue à sa juste valeur",
+          "Un endroit situé au bord du littoral",
+          "Un endroit dangereux pour les enfants"
+        ],
+        answer: 1,
+        explanation: "'Sous-coté' [00:09:32] qualifie un lieu ou une destination qui mérite plus d'attention qu'il n'en reçoit[cite: 5]."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne l'expression 'Carte navigo' mentionnée à 06:33 ?",
+        options: [
+          "Une carte d'abonnement aux transports publics d'Île-de-France",
+          "Un permis de conduire des bateaux de plaisance",
+          "Une carte routière papier de la France",
+          "Un système GPS embarqué"
+        ],
+        answer: 0,
+        explanation: "La carte Navigo [00:06:33] est la carte de transport collectif en région parisienne (Île-de-France)[cite: 5]."
+      },
+
+      // GRAMMAIRE (5)
+      {
+        id: 11,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'des lieux que vous n'aurez pas déjà vu partout', à quel temps est conjugué le verbe ?",
+        options: [
+          "Futur simple",
+          "Futur antérieur",
+          "Conditionnel passé",
+          "Plus-que-parfait"
+        ],
+        answer: 1,
+        explanation: "'Aurez vu' [00:00:34] combine l'auxiliaire 'avoir' au futur simple et le participe passé, formant le futur antérieur[cite: 5]."
+      },
+      {
+        id: 12,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Complétez la structure exprimant une hypothèse : 'Si vous ______ visiter ce musée, il faudrait réserver.'",
+        options: [
+          "vouliez",
+          "voudrez",
+          "voudriez",
+          "voulez"
+        ],
+        answer: 0,
+        explanation: "La structure hypothétique classique avec le conditionnel ('faudrait') exige l'imparfait ('vouliez') dans la subordonnée avec 'si'."
+      },
+      {
+        id: 13,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la tournure 'C'est chez moi', quelle est la fonction grammaticale du mot 'chez' ?",
+        options: [
+          "Adverbe de lieu",
+          "Préposition de lieu",
+          "Adjectif démonstratif",
+          "Pronom possessif"
+        ],
+        answer: 1,
+        explanation: "'Chez' est une préposition indiquant le domicile, la région ou le lieu d'appartenance d'une personne."
+      },
+      {
+        id: 14,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Il a abrité la toute première lentille', pourquoi 'première' s'accorde-t-il au féminin ?",
+        options: [
+          "Parce qu'il s'accorde avec le sujet 'Il'",
+          "Parce qu'il s'accorde avec le nom féminin 'lentille'",
+          "C'est une forme invariable",
+          "Parce qu'il suit le mot 'toute'"
+        ],
+        answer: 1,
+        explanation: "L'adjectif ordinal 'première' [00:10:45] concorde en genre (féminin) et en nombre avec le nom 'lentille' qu'il qualifie[cite: 5]."
+      },
+      {
+        id: 15,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle forme relative complète correctement : 'C'est un département ______ je vous conseille de visiter.' ?",
+        options: [
+          "dont",
+          "que",
+          "où",
+          "auquel"
+        ],
+        answer: 1,
+        explanation: "'Que' est le pronom relatif complément d'objet direct (COD) du verbe 'visiter' (visiter un département)."
+      },
+
+      // PRONONCIATION (5)
+      {
+        id: 16,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se réalise la liaison dans l'expression 'Des_endroits insolites' ?",
+        options: [
+          "Pas de liaison ('Des / endroits')",
+          "Liaison obligatoire en [z] ('Des-z-endroits')",
+          "Liaison en [t] ('Des-t-endroits')",
+          "Liaison en [r] ('Des-r-endroits')"
+        ],
+        answer: 1,
+        explanation: "Devant une voyelle, la liaison après le déterminant pluriel 'des' est obligatoire et se prononce avec le son [z]."
+      },
+      {
+        id: 17,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans le mot 'Mont' (comme dans 'Mont-Saint-Michel' ou 'Mont Sainte-Odile'), la consonne finale 't' est-elle prononcée ?",
+        options: [
+          "Oui, toujours",
+          "Non, c'est une consonne muette",
+          "Seulement si le mot suivant commence par 'S'",
+          "Elle se prononce comme un 'd'"
+        ],
+        answer: 1,
+        explanation: "Le 't' final du mot 'mont' est muet en français ([mɔ̃])."
+      },
+      {
+        id: 18,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le graphème 'oi' dans le mot 'Histoire' ou 'Crozon' ?",
+        options: [
+          "Le son [wa]",
+          "Le son [o]",
+          "Le son [wi]",
+          "Le son [ɛ]"
+        ],
+        answer: 0,
+        explanation: "En français, la combinaison 'oi' se prononce régulièrement [wa] (ex: histoire, endroit, Crozon)."
+      },
+      {
+        id: 19,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "À l'oral relâché, comment se prononce souvent la phrase 'Je ne sais pas' ?",
+        options: [
+          "« Chais pas »",
+          "« Je ne sait pas »",
+          "« Saura pas »",
+          "« Je sais-t-il »"
+        ],
+        answer: 0,
+        explanation: "Dans le registre familier oral fluide, 'Je ne sais pas' se réduit phonétiquement à « Chais pas »."
+      },
+      {
+        id: 20,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce la terminaison '-ent' du verbe 'résistent' dans 'Ils résistent' ?",
+        options: [
+          "On prononce [ɑ̃] comme dans 'vent'",
+          "Elle est muette (se prononce [ʁe.zist])",
+          "On prononce le 't' final fort",
+          "Elle se prononce 'ente'"
+        ],
+        answer: 1,
+        explanation: "La terminaison '-ent' des verbes conjugués à la 3e personne du pluriel au présent est totalement muette."
+      }
+    ];
+
+    const expressions = [
+      {
+        title: "Valoir le détour",
+        translation: "To be well worth a visit / detour",
+        meaning: "Meriter qu'on s'y rende ou qu'on y consacre du temps en raison de son intérêt.",
+        example: "Même si le village est un peu isolé dans la montagne, la vue au sommet vaut vraiment le détour.",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Pleuvoir des cordes",
+        translation: "To rain cats and dogs / To pour down",
+        meaning: "Pleuvoir abondamment et de manière très intense.",
+        example: "N'oublie pas ton parapluie et tes bottes, il pleut des cordes dehors depuis ce matin !",
+        image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Avoir carte blanche",
+        translation: "To have free rein / carte blanche",
+        meaning: "Bénéficier d'une liberté totale pour réaliser un projet sans contrainte.",
+        example: "Le directeur a donné carte blanche à la styliste pour concevoir la nouvelle collection.",
+        image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Dénicher une pépite",
+        translation: "To unearth a gem / rare find",
+        meaning: "Trouver par hasard un objet, un endroit ou une œuvre d'une grande valeur ou qualité.",
+        example: "En me promenant dans le marché aux puces, j'ai déniché une pépite : un premier tirage d'un roman d'époque.",
+        image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Faire un écart",
+        translation: "To make an exception / To make a slight detour",
+        meaning: "S'éloigner momentanément de son itinéraire ou de ses habitudes.",
+        example: "Pendant nos vacances en Provence, nous avons fait un petit écart pour visiter un vignoble local.",
+        image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Passer sous les radars",
+        translation: "To fly under the radar",
+        meaning: "Rester inaperçu, ne pas attirer l'attention du grand public ou des médias.",
+        example: "Ce petit restaurant familial est excellent mais il passe complètement sous les radars des guides gastronomiques.",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Être hors du temps",
+        translation: "To be timeless / timeless place",
+        meaning: "Donner l'impression de ne pas appartenir à l'époque moderne, d'être préservé du stress.",
+        example: "Ce hameau de pêcheurs avec ses ruelles en pierre et ses bateaux en bois semble totalement hors du temps.",
+        image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Être sous-coté",
+        translation: "To be underrated",
+        meaning: "Être sous-estimé, ne pas recevoir l'appréciation ou la renommée qu'on mérite.",
+        example: "Ce musée de province est totalement sous-coté alors qu'il abrite des peintures magistrales.",
+        image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Donner de la force",
+        translation: "To give support / to show love and support",
+        meaning: "Apporter son soutien, ses encouragements ou sa visibilité à un créateur ou un projet.",
+        example: "Pensez à laisser un pouce bleu et un commentaire pour donner de la force aux artisans locaux.",
+        image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Faire le job",
+        translation: "To do the job / To do the trick",
+        meaning: "Remplir parfaitement son rôle ou son objectif.",
+        example: "Pas besoin de louer un gros 4x4, cette petite voiture citadine fait parfaitement le job pour visiter l'île.",
+        image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Félicitations ! Vous maîtrisez parfaitement la vidéo et le français !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon travail ! Vos connaissances en français sont très solides.";
+        } else {
+          msg.innerText = "Bonne tentative ! Re-visionnez la vidéo pour consolider le vocabulaire et la grammaire.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <img src="${exp.image}" alt="${exp.title}" class="expression-img" loading="lazy">
+          <div class="expression-body">
+            <div>
+              <div class="expression-title">${exp.title}</div>
+              <div class="expression-translation">🇬🇧 ${exp.translation}</div>
+              <div class="expression-meaning">${exp.meaning}</div>
+            </div>
+            <div class="expression-example">
+              <strong>Exemple :</strong> "${exp.example}"
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
