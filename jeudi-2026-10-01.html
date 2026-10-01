@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inondations dans le Sud de la France - France Info</title>
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-dark: #b45309;
+      --accent: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #ffffff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--primary);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #94a3b8;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin: 2.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.4rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2.5rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* Score banner */
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--primary);
+    }
+
+    .score-banner h3 {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Quiz Navigation Tabs */
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: #fffbe3;
+      border-color: var(--primary);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: 700;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 5px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 5px solid var(--incorrect);
+    }
+
+    /* Expressions Section */
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .expression-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .expression-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .expression-title {
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .section-title { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Inondations et crues en Méditerranée</h1>
+    <p>Exercice de compréhension et de langue basé sur le reportage de France Info</p>
+  </header>
+
+  <main>
+    <!-- Section 1 : Vidéo YouTube -->
+    <h2 class="section-title">1. Reportage France Info</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/cHXhznCWw04" title="Inondations et crues en Méditerranée - France Info" allowfullscreen></iframe>
+    </div>
+
+    <!-- Section 2 : QCM -->
+    <h2 class="section-title">2. QCM de compréhension et d'apprentissage (20 questions)</h2>
+
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre compréhension de la vidéo !</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes les questions (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <!-- Section 3 : Expressions -->
+    <h2 class="section-title">3. Expressions françaises issues du reportage</h2>
+    <div class="expressions-grid" id="expressions-container"></div>
+  </main>
+
+  <script>
+    const questions = [
+      // COMPRÉHENSION (5)
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quels sont les deux départements français placés en vigilance rouge dans le reportage ?",
+        options: [
+          "Le Var et les Bouches-du-Rhône",
+          "Le Gard et l'Hérault",
+          "L'Aude et les Pyrénées-Orientales",
+          "La Drôme et le Vaucluse"
+        ],
+        answer: 1,
+        explanation: "Le reportage mentionne dès le début [00:00:02] que le Gard et l'Hérault sont placés en vigilance rouge[cite: 5]."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "À Saint-Hippolyte-du-Fort, quelle quantité de pluie est tombée en une seule journée ?",
+        options: [
+          "L'équivalent de 10 jours de pluie (100 litres/m²)",
+          "L'équivalent de 61 jours de pluie (près de 340 litres/m²)",
+          "L'équivalent d'une semaine de pluie (50 litres/m²)",
+          "L'équivalent de 6 mois de pluie (1 000 litres/m²)"
+        ],
+        answer: 1,
+        explanation: "Le reportage indique [00:00:09] que près de 340 litres/m² sont tombés, soit l'équivalent de 61 jours de pluie en une journée[cite: 5]."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quel fleuve traversant Montpellier a été placé en vigilance rouge avec un risque de crue majeur ?",
+        options: [
+          "Le Rhône",
+          "L'Hérault",
+          "Le Lez",
+          "Le Vidourle"
+        ],
+        answer: 2,
+        explanation: "À Montpellier [00:02:48], c'est le fleuve Lez qui a été placé en vigilance rouge pour risque de crue majeur[cite: 5]."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Selon les experts, quelle est la cause principale de l'intensité accrue de cet épisode cévenol ?",
+        options: [
+          "La fonte brutale des neiges en montagne",
+          "Les températures anormalement élevées de la mer Méditerranée entraînant une forte évaporation",
+          "La rupture soudaine d'un barrage hydraulique",
+          "Un vent d'ouest extrêmement froid venu de l'Atlantique"
+        ],
+        answer: 1,
+        explanation: "L'air chaud s'évapore d'une mer Méditerranée anormalement chaude [00:05:51], se gorgeant d'humidité avant de butter sur les Cévennes[cite: 5]."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quels autres pays/villes sont mentionnés à la fin du reportage pour avoir subi des intempéries similaires ?",
+        options: [
+          "L'Italie (Rome et Naples)",
+          "L'Espagne (Barcelone, Valence et Gérone)",
+          "La Grèce (Athènes)",
+          "Le Portugal (Lisbonne)"
+        ],
+        answer: 1,
+        explanation: "Le reportage se termine [00:06:38] en montrant des images des fortes pluies subies en Espagne (Barcelone, Valence, Gérone)[cite: 5]."
+      },
+
+      // VOCABULAIRE (5)
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie l'expression 'un épisode cévenol' dans le contexte météorologique français ?",
+        options: [
+          "Une sécheresse prolongée pendant l'été",
+          "Un phénomène de pluies diluviennes et d'orages violents survenant au pied des Cévennes",
+          "Une vague de froid accompagnée de fortes chutes de neige",
+          "Une tempête de vent de sable venant du Sahara"
+        ],
+        answer: 1,
+        explanation: "Un épisode cévenol [00:05:42] désigne des pluies extrêmement intenses qui se bloquent sur les montagnes des Cévennes[cite: 5]."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne le mot 'Sinistré' (ex: 'cette salle à disposition pour les sinistrés') ?",
+        options: [
+          "Une personne qui travaille pour les services d'urgence",
+          "Une personne victime d'un dommage important ou d'une catastrophe naturelle",
+          "Un habitant qui refuse de quitter son logement",
+          "Un journaliste qui couvre une catastrophe"
+        ],
+        answer: 1,
+        explanation: "Un sinistré [00:02:02] est une personne touchée par une catastrophe (inondation, incendie, etc.) ayant subi des pertes matérielles[cite: 5]."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Dans la phrase 'Un fleuve sorti de son lit', que signifie l'expression 'sortir de son lit' ?",
+        options: [
+          "S'assécher complètement sous l'effet de la chaleur",
+          "Déborder de ses berges naturelles ou de son cours habituel",
+          "Changer définitivement de direction",
+          "Gelée pendant l'hiver"
+        ],
+        answer: 1,
+        explanation: "'Sortir de son lit' [00:03:17] signifie pour un cours d'eau déborde et envahir les zones environnantes[cite: 5]."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie l'adjectif 'Diluvienne' dans la tournure 'des pluies diluviennes' ?",
+        options: [
+          "Des pluies légères et intermittentes",
+          "Des pluies extrêmement abondantes et torrentielles",
+          "Des pluies acides d'origine industrielle",
+          "Des pluies de courte durée en été"
+        ],
+        answer: 1,
+        explanation: "Des pluies diluviennes [00:05:00] désignent des précipitations torrentielles évoquant le Déluge[cite: 5]."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le verbe 'Scrutent' dans 'Les habitants scrutent la montée des eaux' ?",
+        options: [
+          "Observer très attentivement et avec inquiétude",
+          "Filmer avec un téléphone portable",
+          "Nettoyer l'eau accumulée",
+          "Ignorer le danger"
+        ],
+        answer: 0,
+        explanation: "Scrutent [00:05:18] vient du verbe scruter, qui signifie examiner très attentivement un élément en mouvement ou en évolution[cite: 5]."
+      },
+
+      // GRAMMAIRE (5)
+      {
+        id: 11,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'L'eau a augmenté de 76 cm', à quel temps est conjugué le verbe ?",
+        options: [
+          "Imparfait",
+          "Passé composé",
+          "Plus-que-parfait",
+          "Présent de l'indicatif"
+        ],
+        answer: 1,
+        explanation: "'A augmenté' [00:01:14] est au passé composé (auxiliaire avoir au présent + participe passé)[cite: 5]."
+      },
+      {
+        id: 12,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Quelle forme verbale complète correctement l'hypothèse : 'Si les digues venaient à lâcher, nous ______ inondés.' ?",
+        options: [
+          "serons",
+          "serions",
+          "sommes",
+          "étions"
+        ],
+        answer: 1,
+        explanation: "La structure 'Si + imparfait' ('venaient') demande le conditionnel présent ('serions') [00:04:15] dans la proposition principale[cite: 5]."
+      },
+      {
+        id: 13,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Deux gymnases ont été ouverts pour mettre à l'abri les personnes qui en auraient besoin', quelle est la fonction de 'qui' ?",
+        options: [
+          "Pronom démonstratif",
+          "Pronom relatif sujet d'avoir besoin",
+          "Pronom interrogatif",
+          "Adverbe de lieu"
+        ],
+        answer: 1,
+        explanation: "'Qui' [00:03:00] est un pronom relatif sujet introduisant la proposition subordonnée relative 'qui en auraient besoin'[cite: 5]."
+      },
+      {
+        id: 14,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Choisissez la bonne préposition : 'Les secours se préparent ______ éventuelles évacuations.'",
+        options: [
+          "de",
+          "à d'",
+          "par",
+          "en"
+        ],
+        answer: 1,
+        explanation: "Le verbe 'se préparer' se construit avec la préposition 'à' ('se préparer à quelque chose'). Devant un adjectif au pluriel ('éventuelles'), 'des' devient 'd''."
+      },
+      {
+        id: 15,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'L'eau s'approche dangereusement', quel type de mot est 'dangereusement' ?",
+        options: [
+          "Un adjectif qualificatif",
+          "Un adverbe de manière",
+          "Un nom commun",
+          "Un participe présent"
+        ],
+        answer: 1,
+        explanation: "Les mots finissant par '-ment' formés sur un adjectif (dangereux -> dangereuse -> dangereusement) sont des adverbes de manière."
+      },
+
+      // PRONONCIATION (5)
+      {
+        id: 16,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se fait la liaison dans la phrase 'Des_orages se reforment' ?",
+        options: [
+          "Pas de liaison ('Des / orages')",
+          "Liaison obligatoire en [z] ('Des-z-orages')",
+          "Liaison en [t] ('Des-t-orages')",
+          "Liaison en [n] ('Des-n-orages')"
+        ],
+        answer: 1,
+        explanation: "Devant un mot commençant par une voyelle ('orages'), la liaison du plural 'des' se prononce [z]."
+      },
+      {
+        id: 17,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans le mot 'Montpellier', la consonne finale 'r' est-elle prononcée ?",
+        options: [
+          "Oui, on prononce le 'r' fort",
+          "Non, la terminaison '-ier' se prononce [je]",
+          "Elle se transforme en [s]",
+          "On prononce 'Mon-pel-yère'"
+        ],
+        answer: 1,
+        explanation: "En français, les mots et noms propres se terminant en '-ier' ont un 'r' muet et se prononcent [je]."
+      },
+      {
+        id: 18,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce la voyelle nasale dans le mot 'Inondation' ?",
+        options: [
+          "Le son [ɛ̃] au début et [ɔ̃] à la fin",
+          "Le son [ɑ̃] au début et [ɑ̃] à la fin",
+          "Le son [in] au début et [on] à la fin",
+          "Le son [y] au début et [o] à la fin"
+        ],
+        answer: 0,
+        explanation: "Dans 'inondation', 'in-' se prononce [ɛ̃] et '-tion' se prononce [sjlɔ̃]."
+      },
+      {
+        id: 19,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le mot 'Hérault' (département français) ?",
+        options: [
+          "On prononce le 'H' aspiré et le 'lt' final",
+          "On prononce 'É-ro' (le 'H' est muet et 'ault' se prononce [o])",
+          "On prononce 'Hé-rault-te'",
+          "On prononce 'Hé-ra-ult'"
+        ],
+        answer: 1,
+        explanation: "Le nom du département 'Hérault' se prononce tout simplement [e.ʁo] ('Éro')."
+      },
+      {
+        id: 20,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans la phrase 'Les cours d'eau montent rapidement', la terminaison '-ent' du verbe 'montent' est-elle sonore ?",
+        options: [
+          "Oui, elle se prononce 'an'",
+          "Non, elle est totalement muette",
+          "Elle se prononce 'ente'",
+          "Elle fait une liaison en [t]"
+        ],
+        answer: 1,
+        explanation: "À la 3e personne du pluriel au présent de l'indicatif, la terminaison '-ent' d'un verbe est toujours muette."
+      }
+    ];
+
+    const expressions = [
+      {
+        title: "Rester vigilant",
+        meaning: "Maintenir une attention soutenue et se tenir prêt à agir face à un danger potentiel.",
+        example: "Même si la pluie a faibli cet après-midi, les autorités demandent aux habitants de rester vigilants.",
+        image: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Rester bloqué chez soi",
+        meaning: "Être dans l'impossibilité de sortir de son logement en raison de circonstances extérieures d'urgence.",
+        example: "Avec la montée subite des eaux dans la rue, plusieurs familles sont restées bloquées chez elles toute la journée.",
+        image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Être pris de court",
+        meaning: "Être surpris ou déstabilisé par la rapidité imprévue d'un événement.",
+        example: "Les commerçants du centre-ville ont été pris de court par l'inondation éclair et n'ont pas pu protéger leurs stocks.",
+        image: "https://images.unsplash.com/photo-1527482797697-8795b05a13fe?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Assister impuissant",
+        meaning: "Observer un événement tragique ou une catastrophe sans avoir la possibilité d'intervenir pour l'empêcher.",
+        example: "Les riverains ont assisté impuissants à la montée continue du fleuve dans leurs jardins.",
+        image: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Faire face à la situation",
+        meaning: "S'adapter et affronter courageusement des difficultés ou une crise.",
+        example: "Malgré les dégâts matériels importants, la communauté locale s'entraide pour faire face à la situation.",
+        image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Mettre à l'abri",
+        meaning: "Placer des personnes ou des biens dans un endroit sécurisé pour les protéger d'un péril.",
+        example: "La mairie a ouvert deux gymnases municipaux afin de mettre à l'abri les personnes évacuées.",
+        image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Par mesure de précaution",
+        meaning: "Agir à titre préventif afin de prévenir un risque potentiel, même s'il n'est pas encore avéré.",
+        example: "Par mesure de précaution, les écoles de la région resteront fermées jusqu'à la fin de la vigilance rouge.",
+        image: "https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Se frayer un chemin",
+        meaning: "Reussir à progresser ou circuler avec difficulté à travers un obstacle ou une zone encombrée.",
+        example: "Les véhicules de secours ont dû se frayer un chemin à travers les rues submergées par l'eau.",
+        image: "https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Sortir de son lit",
+        meaning: "En parlant d'un cours d'eau, débordant de ses berges naturelles et causant une inondation.",
+        example: "Au milieu de l'après-midi, le fleuve est sorti de son lit, envahissant la promenade piétonne.",
+        image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Suivre la situation de près",
+        meaning: "Observer attentivement l'évolution d'un événement au fur et à mesure que les informations arrivent.",
+        example: "Le préfet et les services météorologiques suivent la situation de près tout au long de la nuit.",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Félicitations ! Excellent résultat de compréhension et de maîtrise du français !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon travail ! Vous avez très bien compris le reportage.";
+        } else {
+          msg.innerText = "Bonne tentative ! Re-visionnez le reportage pour réviser le vocabulaire et la grammaire.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <img src="${exp.image}" alt="${exp.title}" class="expression-img" loading="lazy">
+          <div class="expression-body">
+            <div>
+              <div class="expression-title">${exp.title}</div>
+              <div class="expression-meaning">${exp.meaning}</div>
+            </div>
+            <div class="expression-example">
+              <strong>Exemple :</strong> "${exp.example}"
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
