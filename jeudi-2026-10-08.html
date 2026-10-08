@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouvement lycéen en France - Learn French with Elisabeth</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #dc2626;
+      --accent-light: #fee2e2;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --incorrect: #dc2626;
+      --incorrect-bg: #fee2e2;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #e2e8f0;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #1e3a8a;
+      margin: 2.5rem 0 1.2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.4rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #000;
+      margin-bottom: 2.5rem;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* Score banner */
+    .score-banner {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px solid var(--primary);
+    }
+
+    .score-banner h3 {
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Quiz Navigation Tabs */
+    .quiz-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .quiz-nav button {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .quiz-nav button.active, .quiz-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Quiz Card */
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .question-tag {
+      background: #dbeafe;
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+
+    .option-btn.correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: var(--correct) !important;
+      font-weight: 700;
+    }
+
+    .option-btn.incorrect {
+      background: var(--incorrect-bg) !important;
+      border-color: var(--incorrect) !important;
+      color: var(--incorrect) !important;
+    }
+
+    .explanation {
+      margin-top: 1rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .explanation.show { display: block; }
+
+    .explanation.correct-exp {
+      background: var(--correct-bg);
+      color: var(--correct);
+      border-left: 5px solid var(--correct);
+    }
+
+    .explanation.incorrect-exp {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+      border-left: 5px solid var(--incorrect);
+    }
+
+    /* Expressions Section */
+    .expressions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .expression-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .expression-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .expression-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .expression-title {
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .expression-translation {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .expression-meaning {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .expression-example {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .section-title { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Mouvement et blocages dans les lycées français</h1>
+    <p>Application pédagogique basée sur la vidéo d'Elisabeth (Learn French with HelloFrench)</p>
+  </header>
+
+  <main>
+    <!-- Section 1 : Vidéo YouTube -->
+    <h2 class="section-title">1. Visionnage de la vidéo</h2>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/c4vjPOHvYVI" title="Riots at French High Schools - Learn French with the News #40" allowfullscreen></iframe>
+    </div>
+
+    <!-- Section 2 : QCM -->
+    <h2 class="section-title">2. QCM d'apprentissage du français (20 questions)</h2>
+
+    <div class="score-banner">
+      <h3>Votre Score : <span id="score">0</span> / 20</h3>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre compréhension de l'actualité et de la langue !</p>
+    </div>
+
+    <div class="quiz-nav">
+      <button class="active" onclick="filterQuiz('all')">Toutes les questions (20)</button>
+      <button onclick="filterQuiz('comprehension')">Compréhension (5)</button>
+      <button onclick="filterQuiz('vocabulaire')">Vocabulaire (5)</button>
+      <button onclick="filterQuiz('grammaire')">Grammaire (5)</button>
+      <button onclick="filterQuiz('prononciation')">Prononciation (5)</button>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <!-- Section 3 : Expressions -->
+    <h2 class="section-title">3. Vocabulaire et expressions clés de la vidéo</h2>
+    <div class="expressions-grid" id="expressions-container"></div>
+  </main>
+
+  <script>
+    const questions = [
+      // COMPRÉHENSION (5)
+      {
+        id: 1,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Où et comment le mouvement de protestation des lycéens a-t-il débuté en septembre 2026 ?",
+        options: [
+          "Dans un lycée de Marseille suite à une grève des cantines",
+          "Au lycée Saint-Exupéry de Créteil après une grève des professeurs dénonçant le manque de personnel",
+          "Dans une université parisienne contre la hausse des frais d'inscription",
+          "À Lyon en raison de l'interdiction des téléphones portables"
+        ],
+        answer: 1,
+        explanation: "Le mouvement a débuté le 17 septembre 2026 au lycée Saint-Exupéry à Créteil [00:03:41] lorsque les professeurs se sont mis en grève contre le manque de personnel."
+      },
+      {
+        id: 2,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Par quel moyen le mouvement de blocus s'est-il propagé très rapidement dans toute la France ?",
+        options: [
+          "Par les journaux télévisés nationaux",
+          "Via des tracts distribués à la sortie de la gare",
+          "Par les réseaux sociaux comme TikTok, Snapchat et Instagram",
+          "Grâce à des affiches placardées dans les métros"
+        ],
+        answer: 2,
+        explanation: "Les élèves ont utilisé Snapchat, TikTok et Instagram [00:04:31] pour diffuser des images des blocages, propageant le mouvement à l'échelle nationale."
+      },
+      {
+        id: 3,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Selon la vidéo, quel pourcentage d'établissements scolaires publics manquaient d'au moins un professeur à la rentrée ?",
+        options: [
+          "10 %",
+          "25 %",
+          "53 %",
+          "84 %"
+        ],
+        answer: 2,
+        explanation: "D'après une enquête menée auprès de 1000 établissements [00:07:38], 53 % d'entre eux manquaient d'au moins un professeur à la rentrée."
+      },
+      {
+        id: 4,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Qu'est-ce que Parcoursup et pourquoi crée-t-il du stress chez 84 % des lycéens ?",
+        options: [
+          "C'est un examen de sport jugé trop difficile physiquement",
+          "C'est une plateforme nationale d'affectation dans l'enseignement supérieur jugée opaque et génératrice d'attente sur liste d'attente",
+          "C'est un logiciel de gestion des emplois du temps au lycée",
+          "C'est la cantine numérique obligatoire dans les lycées"
+        ],
+        answer: 1,
+        explanation: "Parcoursup est la plateforme d'orientation post-bac [00:10:48] perçue comme stressante [00:13:08] en raison de la gestion des candidatures et du manque de transparence."
+      },
+      {
+        id: 5,
+        category: 'comprehension',
+        catLabel: 'Compréhension',
+        question: "Quelle a été la réponse initiale du Premier ministre Sébastien Lecornu face aux revendications des lycéens ?",
+        options: [
+          "Il a ordonné la fermeture définitive des lycées mobilisés",
+          "Il a demandé à ses équipes de travailler sur 5 points clés (remplacement des profs, rénovation, emplois du temps, transparence de Parcoursup, écoute des élèves)",
+          "Il a décidé de supprimer complètement le baccalauréat",
+          "Il a refusé d'ouvrir toute négociation avec les représentants des élèves"
+        ],
+        answer: 1,
+        explanation: "Le gouvernement s'est engagé à apporter des réponses d'ici la fin du mois d'octobre [00:19:35] sur 5 axes prioritaires."
+      },
+
+      // VOCABULAIRE (5)
+      {
+        id: 6,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le mot 'Blocus' dans le contexte scolaire français [00:04:48] ?",
+        options: [
+          "Une fermeture administrative décidée par le directeur",
+          "Une action menée par des élèves pour bloquer l'accès physiquement à l'établissement en signe de protestation",
+          "Un cours de révision intensif avant les examens",
+          "Une grève exclusive des personnels de cantine"
+        ],
+        answer: 1,
+        explanation: "Un blocus [00:04:56] consiste à barrer les entrées de l'établissement (poubelles, grilles, barrières) pour empêcher la tenue normale des cours."
+      },
+      {
+        id: 7,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne l'expression 'Poste vacant' au sein de l'Éducation nationale [00:08:07] ?",
+        options: [
+          "Un poste d'enseignant libre durant les vacances scolaires",
+          "Un poste qui existe administrativement mais pour lequel aucun professeur n'est attribué",
+          "Un poste d'enseignant réservé aux étudiants stagiaires",
+          "Une salle de classe vide sans matériel"
+        ],
+        answer: 1,
+        explanation: "Un poste vacant [00:08:11] signifie qu'il n'y a personne pour assurer le cours, laissant les élèves sans enseignant dans la matière concernée."
+      },
+      {
+        id: 8,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que signifie le terme 'Saccager' lorsqu'on parle de dégradations dans un lycée [00:15:19] ?",
+        options: [
+          "Nettoyer entièrement les locaux",
+          "Détruire, vandaliser ou abîmer gravement un lieu",
+          "Décorer les murs avec des fresques artistiques",
+          "Ranger la cour de récréation"
+        ],
+        answer: 1,
+        explanation: "'Saccager' [00:15:19] signifie détruire ou dégrader fortement un lieu ou des équipements."
+      },
+      {
+        id: 9,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que désigne le terme 'Casseur' dans les médias lors d'une manifestation [00:15:32] ?",
+        options: [
+          "Un élève qui a échoué à un examen",
+          "Une personne qui commet des actes de destruction ou de vandalisme en marge des défilés",
+          "Un policier chargé de maintenir l'ordre",
+          "Un journaliste spécialisé dans les faits divers"
+        ],
+        answer: 1,
+        explanation: "Un 'casseur' [00:15:33] est un individu qui profite d'une rassemblement populaire pour vandaliser du mobilier urbain ou des bâtiments."
+      },
+      {
+        id: 10,
+        category: 'vocabulaire',
+        catLabel: 'Vocabulaire',
+        question: "Que veut dire la formule 'Lever le blocus' [00:05:22] ?",
+        options: [
+          "Mettre en place de nouvelles barrières devant l'école",
+          "Mettre fin à la protestation et débloquer les accès à l'établissement",
+          "Augmenter le nombre de policiers sur place",
+          "Exclure temporairement des élèves perturbateurs"
+        ],
+        answer: 1,
+        explanation: "'Lever le blocus' [00:05:23] signifie retirer les obstacles et rétablir le libre accès au lycée."
+      },
+
+      // GRAMMAIRE (5)
+      {
+        id: 11,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Les élèves se sont mis en grève', quel est le temps et la voix du verbe ?",
+        options: [
+          "Passé composé à la voix pronominale",
+          "Plus-que-parfait passif",
+          "Présent de l'indicatif",
+          "Conditionnel passé"
+        ],
+        answer: 0,
+        explanation: "'Se sont mis' [00:03:51] est le passé composé du verbe pronominal 'se mettre' (avec l'auxiliaire être)."
+      },
+      {
+        id: 12,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Choisissez la bonne forme hypothétique : 'Si le gouvernement ______ les lycéens, les blocages s'arrêteraient.'",
+        options: [
+          "écouterait",
+          "écoutait",
+          "écoutera",
+          "a écouté"
+        ],
+        answer: 1,
+        explanation: "La structure conditionnelle 'Si + Imparfait' ('écoutait') est suivie du Conditionnel Présent ('s'arrêteraient')."
+      },
+      {
+        id: 13,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la tournure 'Des cours qu'ils ont manqués', pourquoi le participe passé 'manqués' prend-il un 's' ?",
+        options: [
+          "Parce qu'il s'accorde avec le sujet 'ils'",
+          "Parce que le C.O.D. ('qu'' / 'des cours') est masculin pluriel et placé avant l'auxiliaire avoir",
+          "C'est une erreur de grammaire",
+          "Parce que le verbe 'manquer' est toujours au pluriel"
+        ],
+        answer: 1,
+        explanation: "Avec l'auxiliaire 'avoir', le participe passé s'accorde en genre et en nombre avec le C.O.D. si celui-ci est placé avant le verbe."
+      },
+      {
+        id: 14,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Dans la phrase 'Ils demandent de meilleures conditions afin d'apprendre efficacement', quelle est la valeur de 'afin de' ?",
+        options: [
+          "L'opposition",
+          "La cause",
+          "Le but / l'objectif",
+          "La concession"
+        ],
+        answer: 2,
+        explanation: "'Afin de' est une locution prépositive exprimant l'objectif ou l'intention (équivalent de 'pour')."
+      },
+      {
+        id: 15,
+        category: 'grammaire',
+        catLabel: 'Grammaire',
+        question: "Complétez correctement avec le bon pronom relatif : 'La plateforme Parcoursup ______ tout le monde parle est contestée.'",
+        options: [
+          "que",
+          "dont",
+          "laquelle",
+          "où"
+        ],
+        answer: 1,
+        explanation: "On dit 'parler de quelque chose'. Le pronom relatif qui remplace un complément introduit par 'de' est 'dont'."
+      },
+
+      // PRONONCIATION (5)
+      {
+        id: 16,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se prononce le nom de l'examen final du lycée 'Baccalauréat' ou son abréviation 'Bac' ?",
+        options: [
+          "Le 'c' final se prononce [k] (comme dans 'sac')",
+          "Le 'c' final est muet",
+          "On prononce 'Bake'",
+          "Le 'c' se prononce [s]"
+        ],
+        answer: 0,
+        explanation: "Dans le mot court 'bac' [00:03:31], la consonne finale 'c' s'entend distinctement et se prononce [bak]."
+      },
+      {
+        id: 17,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment se réalise la liaison dans l'expression 'Des_établissements' [00:15:13] ?",
+        options: [
+          "Pas de liaison ('Des / établissements')",
+          "Liaison obligatoire avec le son [z] ('Des-z-établissements')",
+          "Liaison en [t]",
+          "Liaison en [n]"
+        ],
+        answer: 1,
+        explanation: "Devant une voyelle, la liaison du pluriel 'des' est obligatoire et produit le son voyelle liée [z]."
+      },
+      {
+        id: 18,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans la prononciation courante du mot 'Lycéen', combien de syllabes entend-on ?",
+        options: [
+          "2 syllabes ('Ly-céen')",
+          "3 syllabes [li-se-ɛ̃] ('Ly-cé-in')",
+          "4 syllabes ('Li-sé-e-ne')",
+          "1 seule syllabe"
+        ],
+        answer: 1,
+        explanation: "'Lycéen' se décompose phonétiquement en 3 syllabes distinctes : [li-se-ɛ̃]."
+      },
+      {
+        id: 19,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Dans le verbe 'Ils manifestent', la terminaison '-ent' est-elle prononcée ?",
+        options: [
+          "Oui, elle se prononce comme 'en' [ɑ̃]",
+          "Non, la terminaison '-ent' du pluriel des verbes est muette",
+          "Elle se prononce 'ente'",
+          "Elle se prononce comme 'in'"
+        ],
+        answer: 1,
+        explanation: "À la 3e personne du pluriel du présent, la terminaison '-ent' est muette à l'oral."
+      },
+      {
+        id: 20,
+        category: 'prononciation',
+        catLabel: 'Prononciation',
+        question: "Comment prononce-t-on la voyelle nasale dans le mot 'Revendication' [00:07:12] ?",
+        options: [
+          "Elle contient deux sons nasaux : [ɑ̃] ('ren- / -dan-') et [ɔ̃] ('-tion')",
+          "Seul le début est nasal",
+          "On prononce toutes les lettres comme en anglais",
+          "Toutes les voyelles sont ouvertes"
+        ],
+        answer: 0,
+        explanation: "Le mot 're-ven-di-ca-tion' associe la voyelle nasale [ɑ̃] pour 'en' et [ɔ̃] pour 'tion'."
+      }
+    ];
+
+    const expressions = [
+      {
+        title: "Se mettre en grève",
+        translation: "To go on strike",
+        meaning: "Cesser collectivement le travail pour protester ou réclamer de meilleures conditions.",
+        example: "Les enseignants du lycée se sont mis en grève pour réclamer le remplacement des professeurs absents.",
+        image: "https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Bloquer l'accès",
+        translation: "To block access / To barricade",
+        meaning: "Placer des obstacles physiques pour empêcher l'entrée ou la sortie d'un bâtiment.",
+        example: "Dès 7 heures du matin, les élèves ont entassé des poubelles pour bloquer l'accès au lycée.",
+        image: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Une classe surchargée",
+        translation: "An overcrowded classroom",
+        meaning: "Une classe contenant un nombre trop élevé d'élèves par rapport à sa capacité d'accueil.",
+        example: "Dans cette classe surchargée de 35 élèves, le professeur a du mal à faire passer ses cours au calme.",
+        image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Un poste vacant",
+        translation: "A job vacancy / Unfilled position",
+        meaning: "Un poste de travail qui n'a pas été attribué ou pour lequel il n'y a pas de titulaire.",
+        example: "Depuis le début de l'année, ce cours de mathématiques correspond à un poste vacant non remplacé.",
+        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Un emploi du temps à rallonge",
+        translation: "An excessively long daily schedule",
+        meaning: "Une journée d'études ou de travail très étendue avec de nombreuses heures de présence.",
+        example: "Avec des cours de 8h à 18h et deux heures de transport, les élèves ont un emploi du temps à rallonge.",
+        image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Être sur liste d'attente",
+        translation: "To be on a waiting list",
+        meaning: "Attendre qu'une place se libère pour pouvoir être accepté dans une formation ou une école.",
+        example: "Il est très anxieux car il est sur liste d'attente pour la faculté de médecine depuis deux semaines.",
+        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Dégénérer",
+        translation: "To spiral out of control / To deteriorate",
+        meaning: "Évoluer de façon très défavorable ou devenir violent.",
+        example: "La rassemblement pacifiste a malheureusement dégénéré en fin d'après-midi.",
+        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Faire polémique",
+        translation: "To cause controversy / To be controversial",
+        meaning: "Susciter de vives réactions, des débats passionnés ou des critiques dans l'opinion publique.",
+        example: "L'utilisation de certaines armes par les forces de l'ordre fait polémique dans les médias.",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Porter plainte",
+        translation: "To press charges / To file a official complaint",
+        meaning: "Déposer une réclamation officielle devant la justice ou la police contre l'auteur d'une infraction.",
+        example: "La famille de l'adolescent blessé a décidé de porter plainte pour faire toute la lumière sur les faits.",
+        image: "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        title: "Prendre en compte les demandes",
+        translation: "To address / take into account the demands",
+        meaning: "Examiner sérieusement des revendications pour y apporter des solutions.",
+        example: "Le ministère s'est engagé à prendre en compte les demandes des étudiants d'ici la fin du mois.",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
+      }
+    ];
+
+    let userAnswers = {};
+    let currentScore = 0;
+
+    window.onload = () => {
+      renderQuiz('all');
+      renderExpressions();
+    };
+
+    function renderQuiz(filter) {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      const filteredQuestions = filter === 'all' 
+        ? questions 
+        : questions.filter(q => q.category === filter);
+
+      filteredQuestions.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `q-${q.id}`;
+
+        const isAnswered = userAnswers.hasOwnProperty(q.id);
+        const selectedOpt = userAnswers[q.id];
+
+        let optionsHTML = '';
+        q.options.forEach((opt, oIdx) => {
+          let btnClass = 'option-btn';
+          if (isAnswered) {
+            if (oIdx === q.answer) btnClass += ' correct';
+            else if (oIdx === selectedOpt) btnClass += ' incorrect';
+          }
+
+          optionsHTML += `
+            <button class="${btnClass}" 
+                    onclick="selectAnswer(${q.id}, ${oIdx})" 
+                    ${isAnswered ? 'disabled' : ''}>
+              <span>${String.fromCharCode(65 + oIdx)}.</span> ${opt}
+            </button>
+          `;
+        });
+
+        let explanationHTML = '';
+        if (isAnswered) {
+          const isCorrect = selectedOpt === q.answer;
+          explanationHTML = `
+            <div class="explanation show ${isCorrect ? 'correct-exp' : 'incorrect-exp'}">
+              <strong>${isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse.'}</strong> ${q.explanation}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-tag">${q.catLabel}</span>
+            <span class="question-title">${q.id}. ${q.question}</span>
+          </div>
+          <div class="options-grid">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (userAnswers.hasOwnProperty(questionId)) return;
+
+      userAnswers[questionId] = optionIndex;
+
+      const q = questions.find(item => item.id === questionId);
+      if (optionIndex === q.answer) {
+        currentScore++;
+      }
+
+      updateScoreDisplay();
+      
+      const activeNav = document.querySelector('.quiz-nav button.active');
+      const currentFilter = activeNav ? activeNav.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+      renderQuiz(currentFilter);
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = currentScore;
+      const msg = document.getElementById('score-msg');
+      
+      const answeredCount = Object.keys(userAnswers).length;
+      if (answeredCount === 20) {
+        if (currentScore >= 18) {
+          msg.innerText = "Bravo ! Vous avez une excellente compréhension de l'actualité et de la langue française !";
+        } else if (currentScore >= 12) {
+          msg.innerText = "Très bon résultat ! Vous maîtrisez bien le vocabulaire d'actualité.";
+        } else {
+          msg.innerText = "Bon effort ! N'hésitez pas à revoir la vidéo pour enrichir votre vocabulaire.";
+        }
+      } else {
+        msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
+      }
+    }
+
+    function filterQuiz(category) {
+      document.querySelectorAll('.quiz-nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderQuiz(category);
+    }
+
+    function renderExpressions() {
+      const container = document.getElementById('expressions-container');
+      container.innerHTML = '';
+
+      expressions.forEach(exp => {
+        const card = document.createElement('div');
+        card.className = 'expression-card';
+
+        card.innerHTML = `
+          <img src="${exp.image}" alt="${exp.title}" class="expression-img" loading="lazy">
+          <div class="expression-body">
+            <div>
+              <div class="expression-title">${exp.title}</div>
+              <div class="expression-translation">🇬🇧 ${exp.translation}</div>
+              <div class="expression-meaning">${exp.meaning}</div>
+            </div>
+            <div class="expression-example">
+              <strong>Exemple :</strong> "${exp.example}"
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
