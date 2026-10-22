@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprenons le Français - Les Manifestations en France</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'fr-blue': '#002654',
+                        'fr-red': '#ED2939',
+                        'fr-light-blue': '#1E40AF',
+                        'fr-soft-bg': '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Styles personnalisés pour animations et ajustements */
+        .tab-btn.active {
+            border-bottom: 3px solid #ED2939;
+            color: #002654;
+            font-weight: 700;
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- En-tête / Header -->
+    <header class="bg-fr-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white text-fr-blue flex items-center justify-center font-black text-xl shadow-inner">
+                    🇫🇷
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Learn French With Justine</h1>
+                    <p class="text-xs text-blue-200">Slow French with Subtitles • Pourquoi la France manifeste-t-elle ?</p>
+                </div>
+            </div>
+            <!-- Navigation Onglets -->
+            <nav class="flex space-x-1 md:space-x-2 bg-blue-950/60 p-1.5 rounded-xl text-sm font-medium">
+                <button onclick="switchTab('video-tab')" id="nav-video-tab" class="tab-btn active px-3 py-2 rounded-lg text-white hover:bg-blue-900/50 transition">
+                    <i class="fa-solid fa-circle-play mr-1.5"></i>Vidéo & Résumé
+                </button>
+                <button onclick="switchTab('qcm-tab')" id="nav-qcm-tab" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-blue-900/50 transition">
+                    <i class="fa-solid fa-graduation-cap mr-1.5"></i>QCM Interactif (20)
+                </button>
+                <button onclick="switchTab('expressions-tab')" id="nav-expressions-tab" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-blue-900/50 transition">
+                    <i class="fa-solid fa-book-bookmark mr-1.5"></i>10 Expressions
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- ONGLET 1: VIDÉO ET RÉSUMÉ -->
+        <section id="video-tab" class="tab-content space-y-8">
+            <!-- Lecteur Vidéo YouTube -->
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold text-fr-blue flex items-center gap-2">
+                        <i class="fa-brands fa-youtube text-fr-red text-2xl"></i> Vidéo : Why Is France Protesting? 🇫🇷
+                    </h2>
+                    <span class="bg-red-100 text-fr-red font-semibold text-xs px-3 py-1 rounded-full uppercase tracking-wide">Édition Octobre 2026</span>
+                </div>
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-md bg-black">
+                    <iframe class="absolute top-0 left-0 w-full h-full" 
+                            src="https://www.youtube.com/embed/glf4iwMFWI8" 
+                            title="Why Is France Protesting? Slow French with Subtitles" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Résumé Structuré de la Vidéo -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-200 pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-fr-blue"></i> Résumé global de l'actualité
+                    </h3>
+                    <p class="text-slate-600 text-sm mt-1">
+                        Cette vidéo explique les origines et le déroulement des récentes manifestations nationales en France ayant mené à la grande journée d'action du <strong>17 octobre 2026</strong>.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Carte 1 -->
+                    <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-scale-unbalanced"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Facteurs de mécontentement</h4>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>Griefs académiques :</strong> Revendications des lycéens et étudiants face au manque de professeurs et au système <em>Parcoursup</em>.</li>
+                            <li><strong>Inquiétudes économiques :</strong> Hausse marquée du coût de la vie (alimentation, carburant, électricité, loyers).</li>
+                            <li><strong>Mobilisation large :</strong> Rapprochement entre syndicats de travailleurs et le mouvement des <em>Gilets Jaunes</em>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Carte 2 -->
+                    <div class="bg-red-50/50 p-5 rounded-xl border border-red-100 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-fr-red text-white flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Journée du 17 Octobre 2026</h4>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>Forte affluence :</strong> Entre <strong>550 000 et 800 000 manifestants</strong> dans les grandes villes de France.</li>
+                            <li><strong>Tensions & Dégradations :</strong> Incidents violents et dégradations, dont l'incendie tragique de l'hôtel de ville de <em>Limoges</em>.</li>
+                            <li><strong>Bilan sécuritaire :</strong> Près de 2 400 arrestations et environ 1 000 forces de l'ordre blessées.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Carte 3 -->
+                    <div class="bg-slate-100 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <div class="w-10 h-10 rounded-lg bg-slate-800 text-white flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-lg">Réponses du Gouvernement</h4>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>Discours présidentiel :</strong> Emmanuel Macron a condamné la violence, promettant justice tout en ouvrant le dialogue avec la jeunesse.</li>
+                            <li><strong>Mesures de sécurité :</strong> Le Premier ministre Sébastien Lecornu a annoncé l'instauration de <strong>couvre-feux</strong> ciblés.</li>
+                            <li><strong>Perspectives :</strong> Nouvelles grèves prévues fin octobre et début novembre.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ONGLET 2: QCM INTERACTIF -->
+        <section id="qcm-tab" class="tab-content hidden space-y-6">
+            <!-- Barre de Score & Progression -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-20 z-40">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">QCM de Compétences linguistiques</h2>
+                    <p class="text-sm text-slate-500">20 questions réparties en 4 catégories clés (5 par section)</p>
+                </div>
+                <div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+                    <div class="text-right">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Score Total</span>
+                        <span id="score-display" class="text-2xl font-black text-fr-blue">0 / 20</span>
+                    </div>
+                    <button onclick="resetQuiz()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtres de Catégorie -->
+            <div class="flex flex-wrap gap-2 justify-center border-b border-slate-200 pb-4">
+                <button onclick="filterCategory('all')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-fr-blue text-white shadow-sm" data-cat="all">Toutes (20)</button>
+                <button onclick="filterCategory('compr')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="compr">Compréhension (5)</button>
+                <button onclick="filterCategory('vocab')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="vocab">Vocabulaire (5)</button>
+                <button onclick="filterCategory('gramm')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="gramm">Grammaire (5)</button>
+                <button onclick="filterCategory('prono')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="prono">Prononciation (5)</button>
+            </div>
+
+            <!-- Questionnaire Container -->
+            <div id="questions-container" class="space-y-6">
+                <!-- Les questions seront générées dynamiquement en JavaScript -->
+            </div>
+        </section>
+
+
+        <!-- ONGLET 3: EXPRESSIONS ILLUSTRÉES -->
+        <section id="expressions-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-fr-blue mb-2">10 Expressions Essentielles sur la Mobilisation</h2>
+                <p class="text-slate-600 text-sm">Enrichissez votre vocabulaire français avec ces idiomes fréquemment employés lors d'événements sociaux et de débats d'actualité.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="expressions-container">
+                <!-- Expressions injectées par JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pied de page / Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-sm py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <p class="text-slate-300 font-medium">Application éducative de Français Langue Étrangère (FLE)</p>
+            <p class="text-xs text-slate-500">Basée sur la vidéo pédagogique de <em>Learn French With Justine</em> • Exercices structurés pour l'apprentissage du français.</p>
+            <div class="pt-2 flex justify-center space-x-4 text-xs text-slate-500">
+                <span>🇫🇷 Apprendre le français</span>
+                <span>•</span>
+                <span> slow French</span>
+                <span>•</span>
+                <span> Niveau B1-B2</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        // Données du QCM (20 Questions: 5 par catégorie)
+        const quizData = [
+            // --- COMPRÉHENSION GÉNÉRALE (5) ---
+            {
+                id: 1,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quelle date a marqué le sommet de la mobilisation nationale lors de ces manifestations ?",
+                options: [
+                    "Le 15 septembre 2026",
+                    "Le 17 octobre 2026",
+                    "Le 1er novembre 2026",
+                    "Le 18 octobre 2026"
+                ],
+                correct: 1,
+                explanation: "La journée majeure d'action nationale a culminé le 17 octobre 2026, réunissant entre 550 000 et 800 000 personnes selon les estimations."
+            },
+            {
+                id: 2,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quels sont les motifs initiaux de protestation soulevés par les étudiants mi-septembre 2026 ?",
+                options: [
+                    "L'interdiction des téléphones portables et les uniformes",
+                    "Le manque de professeurs, le délabrement des locaux et Parcoursup",
+                    "Le prix des billets de train pour les jeunes",
+                    "La baisse du budget dédié au sport universitaire"
+                ],
+                correct: 1,
+                explanation: "Les jeunes ont commencé à manifester en raison du manque d'enseignants, du mauvais état des infrastructures scolaires et des déceptions liées à la plateforme d'orientation Parcoursup."
+            },
+            {
+                id: 3,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quel bâtiment public majeur a subi un grave incendie provoquant l'effondrement de son toit ?",
+                options: [
+                    "La préfecture de Paris",
+                    "L'hôtel de ville de Limoges",
+                    "L'assemblée nationale à Paris",
+                    "Le palais de justice de Lyon"
+                ],
+                correct: 1,
+                explanation: "L'hôtel de ville de Limoges a été victime d'un incendie volontaire entraînant l'effondrement déploré de son toit."
+            },
+            {
+                id: 4,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quelle réponse sécuritaire immédiate a été annoncée par le Premier ministre Sébastien Lecornu ?",
+                options: [
+                    "L'instauration de couvre-feux dans certaines villes",
+                    "La fermeture définitive des universités",
+                    "L'interdiction totale de toutes les grèves",
+                    "La démission collective du gouvernement"
+                ],
+                correct: 0,
+                explanation: "Face aux violences urbaines, le Premier ministre Sébastien Lecornu a décidé de mettre en place des couvre-feux localisés."
+            },
+            {
+                id: 5,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quelle a été l'attitude affichée par le président Emmanuel Macron lors de son allocution du 18 octobre ?",
+                options: [
+                    "Il a refusé de s'exprimer et a annulé ses réunions",
+                    "Il a soutenu publiquement l'incendie de l'hôtel de ville",
+                    "Il a condamné les violences tout en se disant prêt au dialogue avec la jeunesse",
+                    "Il a annoncé l'abandon immédiat du système Parcoursup"
+                ],
+                correct: 2,
+                explanation: "Le président a fermement condamné les exactions commises tout en exprimant sa volonté d'ouvrir un dialogue constructif avec la jeunesse."
+            },
+
+            // --- VOCABULAIRE (5) ---
+            {
+                id: 6,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Que signifie précisément l'expression « le coût de la vie » ?",
+                options: [
+                    "Le prix payé pour souscrire une assurance décès",
+                    "Le niveau moyen des dépenses nécessaires pour se loger, se nourrir et répondre aux besoins quotidiens",
+                    "Le coût global de fabrication d'un produit industriel",
+                    "La somme remboursée par la sécurité sociale"
+                ],
+                correct: 1,
+                explanation: "« Le coût de la vie » désigne la somme des dépenses quotidiennes essentielles (nourriture, énergie, logement, carburant)."
+            },
+            {
+                id: 7,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Quel terme désigne une interdiction légale de sortir dans la rue pendant la nuit ?",
+                options: [
+                    "Une grève générale",
+                    "Un couvre-feu",
+                    "Une manifestation d'ampleur",
+                    "Un blocus académique"
+                ],
+                correct: 1,
+                explanation: "Un « couvre-feu » est une mesure administrative fixant des heures d'interdiction de circulation publique nocturne."
+            },
+            {
+                id: 8,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Qu'est-ce qu'un « syndicat » dans le contexte socio-économique français ?",
+                options: [
+                    "Une entreprise de transport public",
+                    "Une organisation chargée de défendre les intérêts professionnels et sociaux des travailleurs",
+                    "Un club de sport étudiant",
+                    "Un service de sécurité privé"
+                ],
+                correct: 1,
+                explanation: "Un syndicat est une association dont l'objectif est la défense des droits, des salaires et des conditions de travail des employés."
+            },
+            {
+                id: 9,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Le mot « dégradation » dans le compte-rendu des événements fait référence à :",
+                options: [
+                    "L'obtention d'un diplôme universitaire",
+                    "L'amélioration des infrastructures de transport",
+                    "Des dommages matériels subis par des bâtiments ou biens publics/privés",
+                    "Une baisse programmée des impôts"
+                ],
+                correct: 2,
+                explanation: "Dans ce contexte, les « dégradations » font référence aux destructions et dégâts matériels provoqués lors de débordements."
+            },
+            {
+                id: 10,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Trouvez le synonyme le plus proche du mot « grief » :",
+                options: [
+                    "Motif de plainte ou de mécontentement",
+                    "Compliment adressé au gouvernement",
+                    "Proposition d'accord commercial",
+                    "Projet de vacances"
+                ],
+                correct: 0,
+                explanation: "Un « grief » est une injustice ressentie ou une raison officielle de reproche et de réclamation."
+            },
+
+            // --- GRAMMAIRE (5) ---
+            {
+                id: 11,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Choisissez la forme correcte : « Les étudiants ________ dans la rue avant que la police n'intervienne. »",
+                options: [
+                    "manifesteraient",
+                    "manifestaient",
+                    "sont manifestés",
+                    "manifesteront"
+                ],
+                correct: 1,
+                explanation: "L'imparfait (« manifestaient ») sert ici à décrire une action passée continue ou en cours de déroulement en arrière-plan."
+            },
+            {
+                id: 12,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Dans la phrase : « L'hôtel de ville a été détruit par un incendie », quelle est la structure grammaticale utilisée ?",
+                options: [
+                    "Le gérondif présent",
+                    "La voix passive au passé composé",
+                    "Le conditionnel passé",
+                    "Le subjonctif présent"
+                ],
+                correct: 1,
+                explanation: "Il s'agit de la voix passive construite au passé composé : auxiliaire *être* au passé composé (« a été ») + participe passé (« détruit »)."
+            },
+            {
+                id: 13,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Complétez avec le connecteur logique approprié : « Le coût de la vie augmente, ________ la colère citoyenne s'intensifie. »",
+                options: [
+                    "malgré tout",
+                    "c'est pourquoi",
+                    "bien que",
+                    "pourvu que"
+                ],
+                correct: 1,
+                explanation: "« C'est pourquoi » exprime une relation directe de cause à effet (conséquence)."
+            },
+            {
+                id: 14,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Transformez au gérondif : « Les syndicats s'expriment ________ des tracts. » (en / distribuer)",
+                options: [
+                    "en distribuant",
+                    "par distribuer",
+                    "pour distribuant",
+                    "en distribué"
+                ],
+                correct: 0,
+                explanation: "Le gérondif se forme avec la préposition *en* suivie du participe présent (*verbe + -ant*)."
+            },
+            {
+                id: 15,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Quelle phrase exprime correctement une opposition ?",
+                options: [
+                    "Beaucoup de manifestations étaient paisibles, mais quelques incidents ont éclaté.",
+                    "La manifestation était grande parce que le gouvernement est resté silencieux.",
+                    "Comme les gens protestaient, les rues étaient fermées.",
+                    "Si le président parle, les gens écouteront."
+                ],
+                correct: 0,
+                explanation: "Le mot de liaison *mais* exprime une opposition ou une nuance entre la majorité des défilés calmes et certains événements violents."
+            },
+
+            // --- PRONONCIATION ET PHONÉTIQUE (5) ---
+            {
+                id: 16,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Dans l'expression « les étudiants », la liaison est-elle obligatoire et comment se prononce le 's' ?",
+                options: [
+                    "Pas de liaison, on dit 'les - étudiants'",
+                    "Liaison obligatoire, le 's' se prononce [z] : /le.zetydjɑ̃/",
+                    "Liaison facultative, le 's' se prononce [s]",
+                    "Liaison obligatoire, le 's' se prononce [t]"
+                ],
+                correct: 1,
+                explanation: "Après le déterminant pluriel « les » suivi d'un mot commençant par une voyelle, la liaison est obligatoire et le 's' prend le son [z]."
+            },
+            {
+                id: 17,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Quelle est la différence phonétique clé entre les mots « rue » [ʁy] et « roue » [ʁu] ?",
+                options: [
+                    "Le mot 'rue' contient la voyelle antérieure arrondie [y], alors que 'roue' contient la voyelle postérieure [u].",
+                    "Ils se prononcent exactement de la même façon.",
+                    "Le 'r' est muet dans le mot 'rue'.",
+                    "'Roue' a une voyelle nasale, 'rue' une voyelle orale."
+                ],
+                correct: 0,
+                explanation: "La distinction entre le son [y] (u de *rue*) et le son [u] (ou de *roue*) est fondamentale en français et change totalement le sens du mot."
+            },
+            {
+                id: 18,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Combien de syllabes prononcées entend-on en français parlé fluide pour le mot « manifestant » ?",
+                options: [
+                    "2 syllabes : ma-nifestant",
+                    "3 syllabes : ma-ni-festant [ma.ni.fɛs.tɑ̃]",
+                    "4 syllabes : ma-ni-fes-tant",
+                    "5 syllabes : m-a-n-i-f"
+                ],
+                correct: 2,
+                explanation: "Le mot compte 4 syllabes écrites (ma-ni-fes-tant) prononcées distinctement : [ma.ni.fɛs.tɑ̃]."
+            },
+            {
+                id: 19,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Lequel de ces mots contient une voyelle nasale ?",
+                options: [
+                    "Gouvernement [ɡuvɛʁnəmɑ̃]",
+                    "Électricité [elɛktʁisite]",
+                    "Professeur [pʁɔfɛsœʁ]",
+                    "Calme [kalm]"
+                ],
+                correct: 0,
+                explanation: "La dernière syllabe de « gouvernement » se termine par la voyelle nasale [ɑ̃] (*-ment*)."
+            },
+            {
+                id: 20,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Dans le mot « hausse », le 'h' initial est-il aspiré ou muet ?",
+                options: [
+                    "Il est muet (on dit *l'hausse*)",
+                    "Il est aspiré (on ne fait pas la liaison, on dit *la hausse*)",
+                    "Il se prononce comme en anglais [h]",
+                    "Il se transforme en 's'"
+                ],
+                correct: 1,
+                explanation: "Le 'h' de *hausse* est un H aspiré : il empêche l'élision et la liaison (on prononce distinctement *la hausse*)."
+            }
+        ];
+
+        // Données des 10 Expressions Illustrées
+        const expressionsData = [
+            {
+                title: "Descendre dans la rue",
+                translationEn: "To take to the streets / To protest",
+                translationEs: "Salir a la calle a protestar",
+                definition: "Manifester publiquement son mécontentement ou ses revendications dans l'espace public.",
+                example: "« Face à l'augmentation du coût des carburants, des milliers de citoyens ont décidé de descendre dans la rue. »",
+                icon: "fa-person-walking-luggage",
+                color: "bg-blue-600"
+            },
+            {
+                title: "Serrer la ceinture",
+                translationEn: "To tighten one's belt",
+                translationEs: "Apretarse el cinturón",
+                definition: "Réduire ses dépenses en raison de difficultés financières ou de l'inflation.",
+                example: "« Avec la hausse des prix des denrées alimentaires, de nombreux foyers doivent se serrer la ceinture cet hiver. »",
+                icon: "fa-wallet",
+                color: "bg-emerald-600"
+            },
+            {
+                title: "En avoir marre",
+                translationEn: "To be fed up / sick and tired",
+                translationEs: "Estar harto / Estar hasta las narices",
+                definition: "Être excédé, exaspéré par une situation qui dure depuis trop longtemps.",
+                example: "« Les étudiants en ont marre du manque de moyens dans leurs facultés et du stress lié à Parcoursup. »",
+                icon: "fa-face-frown-open",
+                color: "bg-amber-600"
+            },
+            {
+                title: "Faire la grève",
+                translationEn: "To go on strike",
+                translationEs: "Hacer huelga",
+                definition: "Cesser collectivement le travail pour faire valoir des revendications sociales ou salariales.",
+                example: "« Les syndicats ont appelé l'ensemble des transports publics à faire la grève mardi prochain. »",
+                icon: "fa-hand-fist",
+                color: "bg-red-600"
+            },
+            {
+                title: "Mettre le feu aux poudres",
+                translationEn: "To spark / trigger a crisis",
+                translationEs: "Encender la mecha / Desatar la chispa",
+                definition: "Déclencher brutalement des réactions violentes ou une crise majeure par un événement précis.",
+                example: "« L'annonce soudaine de la réforme a mis le feu aux poudres dans tout le pays. »",
+                icon: "fa-fire-flame-curved",
+                color: "bg-orange-600"
+            },
+            {
+                title: "La goutte d'eau qui fait déborder le vase",
+                translationEn: "The straw that broke the camel's back",
+                translationEs: "La gota que colmó el vaso",
+                definition: "Le petit détail ou l'incident de trop qui rend une situation désormais intolérable.",
+                example: "« Cette nouvelle taxe a été la goutte d'eau qui a fait déborder le vase pour les automobilistes. »",
+                icon: "fa-glass-water-droplet",
+                color: "bg-cyan-600"
+            },
+            {
+                title: "Appeler au calme",
+                translationEn: "To call for calm / peace",
+                translationEs: "Hacer un llamamiento a la calma",
+                definition: "Demander publiquement d'arrêter la violence et de privilégier la sérénité.",
+                example: "« Après les dégradations subies par la mairie, les élus locaux ont appelé au calme. »",
+                icon: "fa-dove",
+                color: "bg-indigo-600"
+            },
+            {
+                title: "Tendre la main",
+                translationEn: "To offer an olive branch / extend a hand",
+                translationEs: "Tender la mano / Ofrecer diálogo",
+                definition: "Proposer le dialogue, une conciliation ou une aide à la partie adverse.",
+                example: "« Lors de son allocution, le président a voulu tendre la main aux jeunes en proposant une concertation. »",
+                icon: "fa-handshake",
+                color: "bg-teal-600"
+            },
+            {
+                title: "Prendre le relais",
+                translationEn: "To take over / relieve someone",
+                translationEs: "Tomar el relevo",
+                definition: "Succéder à quelqu'un dans une action, poursuivre un effort commencé par d'autres.",
+                example: "« Les syndicats de cheminots ont pris le relais du mouvement initié par les lycéens. »",
+                icon: "fa-people-carry-box",
+                color: "bg-purple-600"
+            },
+            {
+                title: "Avoir le dessus",
+                translationEn: "To get the upper hand",
+                translationEs: "Llevar la delantera / Salirse con la suya",
+                definition: "Prendre l'avantage ou le contrôle dans un conflit ou une négociation.",
+                example: "« Les négociateurs espèrent que le dialogue aura le dessus sur la confrontation. »",
+                icon: "fa-trophy",
+                color: "bg-yellow-600"
+            }
+        ];
+
+        // État de l'application
+        let userAnswers = {};
+        let currentScore = 0;
+
+        // Navigation par onglets
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white', 'font-bold');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeNavBtn = document.getElementById('nav-' + tabId);
+            if (activeNavBtn) {
+                activeNavBtn.classList.add('active', 'text-white', 'font-bold');
+                activeNavBtn.classList.remove('text-slate-300');
+            }
+        }
+
+        // Rendu des questions du QCM
+        function renderQuiz(filterCategory = 'all') {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const filtered = filterCategory === 'all' 
+                ? quizData 
+                : quizData.filter(q => q.category === filterCategory);
+
+            filtered.forEach((q, idx) => {
+                const isAnswered = userAnswers.hasOwnProperty(q.id);
+                const selectedOpt = userAnswers[q.id];
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4";
+                card.id = `q-card-${q.id}`;
+
+                // Header de la question
+                let catBadgeColor = "bg-blue-100 text-blue-800";
+                if(q.category === 'vocab') catBadgeColor = "bg-emerald-100 text-emerald-800";
+                if(q.category === 'gramm') catBadgeColor = "bg-purple-100 text-purple-800";
+                if(q.category === 'prono') catBadgeColor = "bg-amber-100 text-amber-800";
+
+                let html = `
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${catBadgeColor}">
+                            ${q.categoryName}
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">Question ${q.id} / 20</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">${q.question}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                `;
+
+                // Options
+                q.options.forEach((opt, optIdx) => {
+                    let btnStyle = "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200";
+                    let iconHtml = `<span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 font-semibold text-xs flex items-center justify-center mr-2">${String.fromCharCode(65 + optIdx)}</span>`;
+
+                    if (isAnswered) {
+                        if (optIdx === q.correct) {
+                            btnStyle = "bg-emerald-50 text-emerald-900 border-emerald-500 font-semibold ring-2 ring-emerald-500/20";
+                            iconHtml = `<i class="fa-solid fa-circle-check text-emerald-600 text-lg mr-2"></i>`;
+                        } else if (selectedOpt === optIdx) {
+                            btnStyle = "bg-red-50 text-red-900 border-red-400 font-semibold";
+                            iconHtml = `<i class="fa-solid fa-circle-xmark text-red-500 text-lg mr-2"></i>`;
+                        } else {
+                            btnStyle = "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
+                        }
+                    }
+
+                    html += `
+                        <button 
+                            onclick="selectOption(${q.id}, ${optIdx})" 
+                            ${isAnswered ? 'disabled' : ''} 
+                            class="option-btn text-left p-3.5 rounded-xl border text-sm flex items-center ${btnStyle} w-full transition-all">
+                            ${iconHtml}
+                            <span class="flex-1">${opt}</span>
+                        </button>
+                    `;
+                });
+
+                html += `</div>`;
+
+                // Explication détaillée
+                if (isAnswered) {
+                    const isCorrect = selectedOpt === q.correct;
+                    const expBg = isCorrect ? "bg-emerald-50/80 border-emerald-200 text-emerald-900" : "bg-slate-50 border-slate-200 text-slate-800";
+                    
+                    html += `
+                        <div class="mt-4 p-4 rounded-xl border ${expBg} text-sm space-y-1 animate-fadeIn">
+                            <div class="font-bold flex items-center gap-2">
+                                ${isCorrect 
+                                    ? '<i class="fa-solid fa-thumbs-up text-emerald-600"></i> Bravo ! Réponse correcte.' 
+                                    : '<i class="fa-solid fa-circle-info text-fr-blue"></i> Explication Pédagogique :'}
+                            </div>
+                            <p class="text-slate-700 leading-relaxed">${q.explanation}</p>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        // Sélection d'une option
+        function selectOption(questionId, optionIndex) {
+            if (userAnswers.hasOwnProperty(questionId)) return;
+
+            userAnswers[questionId] = optionIndex;
+            const q = quizData.find(item => item.id === questionId);
+
+            if (q && q.correct === optionIndex) {
+                currentScore++;
+            }
+
+            updateScoreDisplay();
+            
+            // Re-rendre pour afficher les résultats sur la question actuelle
+            const activeFilter = document.querySelector('.cat-filter-btn.bg-fr-blue')?.dataset.cat || 'all';
+            renderQuiz(activeFilter);
+        }
+
+        // Mise à jour du score
+        function updateScoreDisplay() {
+            document.getElementById('score-display').textContent = `${currentScore} / 20`;
+        }
+
+        // Filtrage par catégorie
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                    btn.classList.add('bg-fr-blue', 'text-white', 'shadow-sm');
+                } else {
+                    btn.classList.remove('bg-fr-blue', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                }
+            });
+            renderQuiz(cat);
+        }
+
+        // Réinitialiser le quiz
+        function resetQuiz() {
+            userAnswers = {};
+            currentScore = 0;
+            updateScoreDisplay();
+            const activeFilter = document.querySelector('.cat-filter-btn.bg-fr-blue')?.dataset.cat || 'all';
+            renderQuiz(activeFilter);
+        }
+
+        // Rendu des expressions utiles
+        function renderExpressions() {
+            const container = document.getElementById('expressions-container');
+            container.innerHTML = '';
+
+            expressionsData.forEach((exp, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition-shadow";
+                
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-2xl ${exp.color} text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+                                <i class="fa-solid ${exp.icon}"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-extrabold text-slate-900">${exp.title}</h3>
+                                <div class="flex flex-wrap gap-2 mt-1">
+                                    <span class="text-xs bg-slate-100 text-slate-600 font-semibold px-2.5 py-0.5 rounded-md">
+                                        🇬🇧 ${exp.translationEn}
+                                    </span>
+                                    <span class="text-xs bg-slate-100 text-slate-600 font-semibold px-2.5 py-0.5 rounded-md">
+                                        🇪🇸 ${exp.translationEs}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <p class="text-sm text-slate-700">
+                                <strong class="text-slate-900">Signification :</strong> ${exp.definition}
+                            </p>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 italic text-sm text-slate-600 border-l-4 border-l-fr-blue">
+                                ${exp.example}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Initialisation globale au chargement de la page
+        window.onload = function() {
+            renderQuiz();
+            renderExpressions();
+        };
+    </script>
+</body>
+</html>
