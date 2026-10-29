@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprenons le Français - Spécialités Culinaires de Nice</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'azur': '#0077B6',
+                        'azur-dark': '#023E8A',
+                        'terracotta': '#E07A5F',
+                        'sun-yellow': '#F4A261',
+                        'olive-green': '#2A9D8F',
+                        'cream-bg': '#FDFBF7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tab-btn.active {
+            border-bottom: 3px solid #E07A5F;
+            color: #023E8A;
+            font-weight: 700;
+        }
+        .option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-cream-bg text-slate-800 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- En-tête / Header -->
+    <header class="bg-azur-dark text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-terracotta text-white flex items-center justify-center font-black text-2xl shadow-inner">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold font-serif tracking-wide text-amber-200">Les Spécialités Culinaires de Nice</h1>
+                    <p class="text-xs text-blue-100">Découverte gastronomique avec Claire • Patrimoine Culturel Immatériel</p>
+                </div>
+            </div>
+            <!-- Navigation Onglets -->
+            <nav class="flex space-x-1 md:space-x-2 bg-blue-950/70 p-1.5 rounded-xl text-sm font-medium">
+                <button onclick="switchTab('video-tab')" id="nav-video-tab" class="tab-btn active px-3 py-2 rounded-lg text-white hover:bg-blue-900/50 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-play-circle text-sun-yellow"></i>Vidéo & Résumé
+                </button>
+                <button onclick="switchTab('qcm-tab')" id="nav-qcm-tab" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-blue-900/50 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-question text-sun-yellow"></i>QCM Interactif (20)
+                </button>
+                <button onclick="switchTab('expressions-tab')" id="nav-expressions-tab" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-blue-900/50 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-open-reader text-sun-yellow"></i>10 Expressions
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- ONGLET 1: VIDÉO ET RÉSUMÉ -->
+        <section id="video-tab" class="tab-content space-y-8">
+            <!-- Lecteur Vidéo YouTube -->
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-orange-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl md:text-2xl font-bold font-serif text-azur-dark flex items-center gap-2">
+                        <i class="fa-brands fa-youtube text-red-600 text-2xl"></i> Spécialités Culinaires de Nice par Claire
+                    </h2>
+                    <span class="bg-amber-100 text-amber-900 font-semibold text-xs px-3 py-1 rounded-full uppercase tracking-wide border border-amber-200">Cuisine Niçoise</span>
+                </div>
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-md bg-black">
+                    <iframe class="absolute top-0 left-0 w-full h-full" 
+                            src="https://www.youtube.com/embed/9GNJ2kxJJ0s" 
+                            title="Spécialités culinaires de Nice" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Résumé Structuré de la Vidéo -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-orange-100 space-y-6">
+                <div class="border-b border-amber-100 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <div>
+                        <h3 class="text-2xl font-bold font-serif text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-wheat-awn text-terracotta"></i> Les 3 Incontournables de la Gastronomie Niçoise
+                        </h3>
+                        <p class="text-slate-600 text-sm mt-1">
+                            Une immersion gourmande au cœur des traditions niçoises, reconnues à l'Inventaire national du Patrimoine Culturel Immatériel.
+                        </p>
+                    </div>
+                    <span class="bg-emerald-50 text-emerald-800 text-xs font-semibold px-3 py-1.5 rounded-lg border border-emerald-200 flex items-center gap-1 w-fit">
+                        <i class="fa-solid fa-award text-emerald-600"></i> Patrimoine Culturel Immatériel
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Carte 1: Pissaladière -->
+                    <div class="bg-amber-50/60 p-5 rounded-xl border border-amber-200/80 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-terracotta text-white font-bold text-xs px-2.5 py-1 rounded-md">01:40 - 05:07</span>
+                                <i class="fa-solid fa-pizza-slice text-terracotta text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg font-serif">1. La Pissaladière</h4>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Découverte au marché du <strong>Cours Saleya</strong>. Cette célèbre tarte aux oignons confits tire son nom du <em>pissalat</em>, une pâte ancestrale de poissons salés. Aujourd'hui, elle est souvent sublimée par une crème d'anchois et des olives picholines niçoises.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-amber-200/60 text-xs text-amber-900 italic font-medium">
+                            <i class="fa-solid fa-lightbulb text-sun-yellow mr-1"></i> Astuce : Cuisson lente des oignons sans coloration excessive.
+                        </div>
+                    </div>
+
+                    <!-- Carte 2: Socca -->
+                    <div class="bg-orange-50/60 p-5 rounded-xl border border-orange-200/80 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-sun-yellow text-slate-900 font-bold text-xs px-2.5 py-1 rounded-md">06:31 - 10:45</span>
+                                <i class="fa-solid fa-fire text-orange-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg font-serif">2. La Socca</h4>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Dégustée chez le célèbre artisan <strong>Chez Pipo</strong>. Une grande galette dorée à base de farine de pois chiches, d'eau et d'huile d'olive. Sa saveur unique provient de sa cuisson à très haute température dans un four à bois sur de grandes plaques en cuivre.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-orange-200/60 text-xs text-orange-900 italic font-medium">
+                            <i class="fa-solid fa-check text-orange-600 mr-1"></i> Texture : Croustillante en surface, moelleuse à l'intérieur.
+                        </div>
+                    </div>
+
+                    <!-- Carte 3: Merda di Can -->
+                    <div class="bg-emerald-50/60 p-5 rounded-xl border border-emerald-200/80 space-y-3 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="bg-olive-green text-white font-bold text-xs px-2.5 py-1 rounded-md">10:46 - 15:35</span>
+                                <i class="fa-solid fa-leaf text-emerald-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg font-serif">3. Merda di Can</h4>
+                            <p class="text-sm text-slate-700 mt-2 leading-relaxed">
+                                Rendez-vous au restaurant <strong>Lou Balico</strong> pour découvrir ces gnocchis verts au nom atypique (traduit littéralement par « crotte de chien »). Ils sont façonnés à la main avec de la pomme de terre et des blettes (poirées) fraîches.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-emerald-200/60 text-xs text-emerald-900 italic font-medium">
+                            <i class="fa-solid fa-utensils text-emerald-700 mr-1"></i> Teaser : Un dessert surprise à la blette (la tourte de blettes) est annoncé !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ONGLET 2: QCM INTERACTIF -->
+        <section id="qcm-tab" class="tab-content hidden space-y-6">
+            <!-- Barre de Score & Progression -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-20 z-40">
+                <div class="w-full md:w-auto">
+                    <h2 class="text-xl font-bold font-serif text-slate-900">QCM de Compétences & Connaissances</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">20 questions réparties équitablement en 4 thématiques clés (5 par section)</p>
+                    <div class="w-full bg-slate-100 h-2.5 rounded-full mt-3 overflow-hidden border border-slate-200">
+                        <div id="progress-bar" class="bg-gradient-to-r from-azur to-terracotta h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end shrink-0">
+                    <div class="text-right">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Score Actuel</span>
+                        <span id="score-display" class="text-2xl font-black text-azur-dark">0 / 20</span>
+                    </div>
+                    <button onclick="resetQuiz()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition flex items-center gap-2 border border-slate-200">
+                        <i class="fa-solid fa-rotate-right"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtres de Catégorie -->
+            <div class="flex flex-wrap gap-2 justify-center border-b border-slate-200 pb-4">
+                <button onclick="filterCategory('all')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-azur-dark text-white shadow-sm" data-cat="all">Toutes (20)</button>
+                <button onclick="filterCategory('compr')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="compr">Compréhension (5)</button>
+                <button onclick="filterCategory('vocab')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="vocab">Vocabulaire (5)</button>
+                <button onclick="filterCategory('gramm')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="gramm">Grammaire (5)</button>
+                <button onclick="filterCategory('prono')" class="cat-filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200" data-cat="prono">Prononciation (5)</button>
+            </div>
+
+            <!-- Questionnaire Container -->
+            <div id="questions-container" class="space-y-6">
+                <!-- Les questions sont générées dynamiquement -->
+            </div>
+        </section>
+
+
+        <!-- ONGLET 3: EXPRESSIONS ILLUSTRÉES -->
+        <section id="expressions-tab" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                <h2 class="text-2xl font-bold font-serif text-azur-dark mb-2">10 Expressions Françaises Gourmandes & Idiomatiques</h2>
+                <p class="text-slate-600 text-sm">Apprenez des expressions imagées couramment utilisées en français, inspirées de la vidéo, du plaisir culinaire et de la vie quotidienne.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="expressions-container">
+                <!-- Expressions injectées par JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pied de page / Footer -->
+    <footer class="bg-azur-dark text-slate-300 text-sm py-8 border-t border-blue-900 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <p class="text-amber-200 font-serif font-bold text-lg">Apprenons le Français avec la Gastronomie Niçoise</p>
+            <p class="text-xs text-slate-300 max-w-xl mx-auto">
+                Application éducative interactive conçue à partir de l'exploration culinaire de Claire à Nice.
+            </p>
+            <div class="pt-3 flex justify-center items-center space-x-4 text-xs text-amber-200">
+                <span>🇫🇷 Culture & Langue</span>
+                <span>•</span>
+                <span>Niveau Intermédiaire (B1-B2)</span>
+                <span>•</span>
+                <span>Côte d'Azur</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        // Données du QCM (20 Questions: 5 par catégorie)
+        const quizData = [
+            // --- COMPRÉHENSION (5) ---
+            {
+                id: 1,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quel est l'ingrédient de base servant à fabriquer la pâte traditionnelle de la Socca ?",
+                options: [
+                    "La farine de blé complet",
+                    "La farine de pois chiches",
+                    "La fécule de pomme de terre",
+                    "La semoule de maïs"
+                ],
+                correct: 1,
+                explanation: "La Socca est une spécialité niçoise emblématique préparée simplement avec de la farine de pois chiches, de l'eau, du sel et de l'huile d'olive."
+            },
+            {
+                id: 2,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "D'où vient historiquement le nom de la « Pissaladière » ?",
+                options: [
+                    "Du mot 'piment', épice autrefois très cultivée à Nice",
+                    "Du mot 'pissalat', une ancienne pâte de poissons salés et macérés",
+                    "Du nom du cuisinier niçois Pierre Saladière",
+                    "De la ville de Pise en Italie"
+                ],
+                correct: 1,
+                explanation: "Le mot provient du *pissalat* (poisson salé), un condiment traditionnel à base d'anchois et de sardines pilés qui parfumait la tarte aux oignons."
+            },
+            {
+                id: 3,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quel légume vert est l'élément clé de la confection des gnocchis « Merda di Can » chez Lou Balico ?",
+                options: [
+                    "L'épinard sauvage",
+                    "La blette (ou poirée)",
+                    "La courgette de Nice",
+                    "Le haricot vert"
+                ],
+                correct: 1,
+                explanation: "Les gnocchis verts niçois tirent leur couleur et leur goût caractéristique des blettes (feuilles de poirée) mélangées à la pomme de terre."
+            },
+            {
+                id: 4,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quel mode de cuisson particulier est indispensable pour obtenir une Socca parfaite ?",
+                options: [
+                    "Une cuisson à la vapeur douce durant 45 minutes",
+                    "Une cuisson au four à bois sur une plaque en cuivre à très haute température",
+                    "Une friture dans un bain d'huile d'tournesol",
+                    "Une cuisson lente au bain-marie"
+                ],
+                correct: 1,
+                explanation: "À l'établissement Chez Pipo, la Socca est cuite très rapidement dans un four à bois très chaud sur une vaste plaque circulaire en cuivre (*la plaque à socca*)."
+            },
+            {
+                id: 5,
+                category: 'compr',
+                categoryName: 'Compréhension',
+                question: "Quelle reconnaissance officielle la cuisine niçoise a-t-elle reçue en France ?",
+                options: [
+                    "Elle a été élue meilleure cuisine du monde par l'UNESCO",
+                    "Elle est inscrite à l'Inventaire national du Patrimoine Culturel Immatériel",
+                    "Chaque restaurant niçois reçoit automatiquement une étoile Michelin",
+                    "Elle est protégée par une loi d'État interdisant de modifier les recettes"
+                ],
+                correct: 1,
+                explanation: "Les savoir-faire et recettes traditionnelles de la cuisine niçoise sont inscrits au Patrimoine Culturel Immatériel de la France."
+            },
+
+            // --- VOCABULAIRE (5) ---
+            {
+                id: 6,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Que signifie le terme culinaire « confire » (comme dans 'oignons confits') ?",
+                options: [
+                    "Faire frire à feu vif dans du beurre doux",
+                    "Cuire très lentement à feu doux dans de la matière grasse jusqu'à obtenir une texture tendre et fondante",
+                    "Mettre des légumes crus dans du vinaigre blanc fort",
+                    "Congeler des ingrédients avant de les faire bouillir"
+                ],
+                correct: 1,
+                explanation: "Confire des oignons consiste à les faire réduire très doucement avec de l'huile d'olive jusqu'à ce qu'ils deviennent très tendres et légèrement caramélisés."
+            },
+            {
+                id: 7,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Qu'est-ce qu'un « artisan » dans le secteur de la gastronomie ?",
+                options: [
+                    "Une grande usine de fabrication de plats congelés",
+                    "Un professionnel qui fabrique des produits de manière traditionnelle avec un savoir-faire manuel",
+                    "Un serveur travaillant dans un grand hôtel de luxe",
+                    "Un critique gastronomique qui note les restaurants"
+                ],
+                correct: 1,
+                explanation: "Un artisan est un professionnel indépendant maîtrisant un savoir-faire manuel et traditionnel (comme le boulanger, le glacier ou le soccaïor)."
+            },
+            {
+                id: 8,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Quel adjectif qualifie une nourriture dont la surface croque sous la dent ?",
+                options: [
+                    "Croustillante",
+                    "Onctueuse",
+                    "Spacieuse",
+                    "Amère"
+                ],
+                correct: 0,
+                explanation: "« Croustillant(e) » décrit une texture dorée et craquante à la surface (typique de la croûte supérieure de la Socca)."
+            },
+            {
+                id: 9,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Dans la vidéo, que désigne précisément le mot « la blette » (ou poirée) ?",
+                options: [
+                    "Une variété de petits poissons de Méditerranée",
+                    "Un légume à grandes feuilles vertes et à tiges blanches très populaire dans la région niçoise",
+                    "Un fromage à pâte dure de montagne",
+                    "Un outil en bois pour étaler la pâte"
+                ],
+                correct: 1,
+                explanation: "La blette est un légume potager très apprécié à Nice, utilisé aussi bien dans des plats salés (gnocchis, raviolis) que sucrés (tourte de blettes)."
+            },
+            {
+                id: 10,
+                category: 'vocab',
+                categoryName: 'Vocabulaire',
+                question: "Que veut dire l'expression « un savoir-faire » ?",
+                options: [
+                    "Une liste de courses pour le marché",
+                    "La compétence pratique et la maîtrise technique acquises par l'expérience",
+                    "L'obligation de faire sa vaisselle après avoir cuisiné",
+                    "Une formule magique pour réussir un gâteau"
+                ],
+                correct: 1,
+                explanation: "Le « savoir-faire » est l'ensemble de l'expérience, de l'habileté et des connaissances techniques transmises pour réussir une préparation."
+            },
+
+            // --- GRAMMAIRE (5) ---
+            {
+                id: 11,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Complétez la phrase : « Pour réussir la Socca, il faut de la farine de pois chiches et ________ huile d'olive. »",
+                options: [
+                    "du",
+                    "de l'",
+                    "des",
+                    "un"
+                ],
+                correct: 1,
+                explanation: "Devant un nom féminin singulier commençant par une voyelle ('huile'), on utilise l'article partitif « de l' »."
+            },
+            {
+                id: 12,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Identifiez la forme correcte du verbe au présent : « Claire et les artisans ________ la tradition niçoise. »",
+                options: [
+                    "poursuivent",
+                    "poursuis",
+                    "poursuit",
+                    "poursuivez"
+                ],
+                correct: 0,
+                explanation: "Le sujet « Claire et les artisans » correspond à la 3ème personne du pluriel (*ils*), la terminaison du verbe poursuivre au présent est donc « poursuivent »."
+            },
+            {
+                id: 13,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Choisissez le pronom relatif adéquat : « Le restaurant Chez Pipo est un lieu ________ Claire a goûté la Socca. »",
+                options: [
+                    "que",
+                    "dont",
+                    "où",
+                    "lequel"
+                ],
+                correct: 2,
+                explanation: "Le pronom relatif « où » s'emploie pour indiquer un lieu complément de lieu ('dans ce lieu Claire a goûté...')."
+            },
+            {
+                id: 14,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Quelle phrase exprime correctement une obligation impersonnelle ?",
+                options: [
+                    "Il faut cuire les gnocchis dans une eau bien bouillante.",
+                    "Il est cuit les gnocchis dans une eau bouillante.",
+                    "Il doive cuire les gnocchis dans l'eau.",
+                    "Il faut de cuit les gnocchis dans l'eau."
+                ],
+                correct: 0,
+                explanation: "La structure « Il faut + verbe à l'infinitif » exprime une règle ou une obligation de façon générale et impersonnelle."
+            },
+            {
+                id: 15,
+                category: 'gramm',
+                categoryName: 'Grammaire',
+                question: "Choisissez la bonne forme de l'adjectif qualificatif : « Les oignons de la pissaladière sont très ________. »",
+                options: [
+                    "doux",
+                    "douce",
+                    "douces",
+                    "douxes"
+                ],
+                correct: 0,
+                explanation: "Le nom « oignons » est masculin pluriel. L'adjectif « doux » reste invariable au masculin pluriel (un oignon doux / des oignons doux)."
+            },
+
+            // --- PRONONCIATION (5) ---
+            {
+                id: 16,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Comment se prononce la terminaison '-ère' dans le mot niçois « Pissaladière » ?",
+                options: [
+                    "Comme le son fermé [e] (comme dans 'été')",
+                    "Comme le son ouvert [ɛʁ] (avec un 'e' ouvert suivi du 'r' prononcé)",
+                    "Le 'r' final est complètement muet",
+                    "Comme le son nasal [ɑ̃]"
+                ],
+                correct: 1,
+                explanation: "En français, la finale '-ère' se prononce avec un è ouvert [ɛ] suivi de la consonne r : [pi.sa.la.djɛʁ]."
+            },
+            {
+                id: 17,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Dans le mot « Gnocchi » (d'origine italienne très usité à Nice), quelle est la prononciation du groupe de lettres 'gn' ?",
+                options: [
+                    "On prononce séparément le g puis le n : [g-n]",
+                    "On prononce le son palatal [ɲ] (identique au 'ñ' espagnol ou 'gn' de 'gagner')",
+                    "Le 'g' ne se prononce pas du tout",
+                    "Cela se prononce comme un 'k'"
+                ],
+                correct: 1,
+                explanation: "Le digramme 'gn' se prononce [ɲ] en français comme dans *gagner*, *montagne* ou *gnocchi*."
+            },
+            {
+                id: 18,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Comment effectue-t-on la liaison correcte dans la phrase « un grand artisan » ?",
+                options: [
+                    "On ne fait pas de liaison",
+                    "Le 'd' de 'grand' se lie en faisant le son [t] : /œ̃ ɡʁɑ̃ t_aʁtizɑ̃/",
+                    "Le 'd' se lie en faisant le son [d] : /œ̃ ɡʁɑ̃ d_aʁtizɑ̃/",
+                    "On transforme le mot en 'grande artisan'"
+                ],
+                correct: 1,
+                explanation: "Dans la liaison formelle après l'adjectif 'grand' suivi d'une voyelle, la consonne 'd' se prononce traditionnellement [t]."
+            },
+            {
+                id: 19,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Combien de syllabes prononcées comporte le mot « tradition » ?",
+                options: [
+                    "2 syllabes : tra-dition",
+                    "3 syllabes : tra-di-tion [tʁa.di.sjɔ̃]",
+                    "4 syllabes : tra-di-ti-on",
+                    "1 seule syllabe rapide"
+                ],
+                correct: 1,
+                explanation: "Le mot 'tradition' se découpe en 3 syllabes orales : tra - di - tion [tʁa.di.sjɔ̃]."
+            },
+            {
+                id: 20,
+                category: 'prono',
+                categoryName: 'Prononciation',
+                question: "Quelle est la particularité phonétique du son final dans le mot « pois chiche » ?",
+                options: [
+                    "Le mot se termine par le son consonne [ʃ] (ch)",
+                    "Le 'e' final est très accentué comme un [e]",
+                    "C'est un son nasal fermé",
+                    "Le 'ch' se prononce comme un [k]"
+                ],
+                correct: 0,
+                explanation: "Le mot se termine par la consonne fricative chuintante sourde [ʃ] ('chiche')."
+            }
+        ];
+
+        // Données des 10 Expressions Illustrées
+        const expressionsData = [
+            {
+                title: "Avoir l'eau à la bouche",
+                translationEn: "To make one's mouth water",
+                translationEs: "Hacerse la boca agua",
+                definition: "Avoir très envie de manger quelque chose en le voyant ou en le sentant.",
+                example: "« En sentant la bonne odeur de la pissaladière chaude qui sortait du four, Claire avait déjà l'eau à la bouche. »",
+                imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80",
+                icon: "fa-droplet"
+            },
+            {
+                title: "Mettre la main à la pâte",
+                translationEn: "To roll up one's sleeves / Get stuck in",
+                translationEs: "Poner manos a la obra / Arremangarse",
+                definition: "Participer activement à la réalisation d'un travail ou d'une recette.",
+                example: "« Au restaurant Lou Balico, la cuisinière a invité Claire à mettre la main à la pâte pour façonner les gnocchis. »",
+                icon: "fa-hands-holding"
+            },
+            {
+                title: "Se régaler",
+                translationEn: "To thoroughly enjoy one's meal / feast",
+                translationEs: "Darse un festín / Disfrutar de la comida",
+                definition: "Manger quelque chose de délicieux avec un immense plaisir.",
+                example: "« Tous les clients installés chez Pipo se régalent avec des parts de socca bien poivrées. »",
+                icon: "fa-face-smile-beam"
+            },
+            {
+                title: "Garder le meilleur pour la fin",
+                translationEn: "To save the best for last",
+                translationEs: "Guardar lo mejor para el final",
+                definition: "Réserver la chose la plus agréable ou intéressante pour le dernier moment.",
+                example: "« Pour sa tournée culinaire à Nice, Claire a décidé de garder le meilleur pour la fin en goûtant la tourte de blettes sucrée. »",
+                icon: "fa-star"
+            },
+            {
+                title: "Manger sur le pouce",
+                translationEn: "To grab a quick bite / Eat on the go",
+                translationEs: "Comer algo rapide / Comer al paso",
+                definition: "Manger très rapidement, souvent debout ou en marchant.",
+                example: "« La socca se dégustant chaude dans du papier, c'est le plat parfait pour manger sur le pouce en se promenant dans le Vieux-Nice. »",
+                icon: "fa-person-walking"
+            },
+            {
+                title: "Avoir un coup de cœur",
+                translationEn: "To fall in love with something / Have a crush on",
+                translationEs: "Flechazo / Enamorarse de algo",
+                definition: "Ressentir une admiration ou une affection soudaine et très vive pour quelque chose.",
+                example: "« Claire a eu un vrai coup de cœur pour la convivialité des artisans du marché du Cours Saleya. »",
+                icon: "fa-heart"
+            },
+            {
+                title: "Faire baver d'envie",
+                translationEn: "To make someone green with envy / Drool with desire",
+                translationEs: "Hacer la boca agua a alguien / Dar envidia",
+                definition: "Susciter un désir très fort chez quelqu'un qui observe ce que vous possédez ou mangez.",
+                example: "« Les images de la socca croustillante et dorée font baver d'envie tous les spectateurs de la vidéo. »",
+                icon: "fa-face-grin-tongue"
+            },
+            {
+                title: "Être au four et au moulin",
+                translationEn: "To run around doing a million things at once",
+                translationEs: "Estar en todo a la vez / Estar en la misa y en repicando",
+                definition: "Accomplir plusieurs tâches en même temps sans s'arrêter.",
+                example: "« Pendant le coup de feu de midi, le chef cuisinier doit être au four et au moulin pour servir tous les clients à temps. »",
+                icon: "fa-fire-burner"
+            },
+            {
+                title: "Tourner autour du pot",
+                translationEn: "To beat around the bush",
+                translationEs: "Andarse con rodeos",
+                definition: "Hésiter à dire les choses directement ou à passer à l'action.",
+                example: "« Ne tournons pas autour du pot : la cuisine niçoise est tout simplement l'une des meilleures de France ! »",
+                icon: "fa-arrow-rotate-right"
+            },
+            {
+                title: "Prendre de la bouteille",
+                translationEn: "To gain experience / To mature like fine wine",
+                translationEs: "Ganar experiencia / Peinar canas",
+                definition: "Acquérir de la maturité et de l'expérience au fil des années.",
+                example: "« Ce vieux boulanger a pris de la bouteille : il sait exactement quand sa pissaladière est cuite à la perfection. »",
+                icon: "fa-wine-bottle"
+            }
+        ];
+
+        // État de l'application
+        let userAnswers = {};
+        let currentScore = 0;
+
+        // Navigation par onglets
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white', 'font-bold');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeNavBtn = document.getElementById('nav-' + tabId);
+            if (activeNavBtn) {
+                activeNavBtn.classList.add('active', 'text-white', 'font-bold');
+                activeNavBtn.classList.remove('text-slate-300');
+            }
+        }
+
+        // Rendu du QCM
+        function renderQuiz(filterCategory = 'all') {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const filtered = filterCategory === 'all' 
+                ? quizData 
+                : quizData.filter(q => q.category === filterCategory);
+
+            filtered.forEach((q) => {
+                const isAnswered = userAnswers.hasOwnProperty(q.id);
+                const selectedOpt = userAnswers[q.id];
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-orange-100 space-y-4 transition-all";
+                card.id = `q-card-${q.id}`;
+
+                // Badge de catégorie
+                let catBadgeColor = "bg-blue-100 text-azur-dark";
+                if(q.category === 'vocab') catBadgeColor = "bg-amber-100 text-amber-900";
+                if(q.category === 'gramm') catBadgeColor = "bg-purple-100 text-purple-900";
+                if(q.category === 'prono') catBadgeColor = "bg-emerald-100 text-emerald-900";
+
+                let html = `
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${catBadgeColor}">
+                            ${q.categoryName}
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">Question ${q.id} / 20</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 font-serif">${q.question}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                `;
+
+                // Options
+                q.options.forEach((opt, optIdx) => {
+                    let btnStyle = "bg-slate-50 hover:bg-orange-50/50 text-slate-700 border-slate-200 hover:border-orange-200";
+                    let iconHtml = `<span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 font-semibold text-xs flex items-center justify-center mr-2.5 shrink-0">${String.fromCharCode(65 + optIdx)}</span>`;
+
+                    if (isAnswered) {
+                        if (optIdx === q.correct) {
+                            btnStyle = "bg-emerald-50 text-emerald-950 border-emerald-500 font-semibold ring-2 ring-emerald-500/20";
+                            iconHtml = `<i class="fa-solid fa-circle-check text-emerald-600 text-lg mr-2 shrink-0"></i>`;
+                        } else if (selectedOpt === optIdx) {
+                            btnStyle = "bg-red-50 text-red-950 border-red-400 font-semibold";
+                            iconHtml = `<i class="fa-solid fa-circle-xmark text-red-500 text-lg mr-2 shrink-0"></i>`;
+                        } else {
+                            btnStyle = "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
+                        }
+                    }
+
+                    html += `
+                        <button 
+                            onclick="selectOption(${q.id}, ${optIdx})" 
+                            ${isAnswered ? 'disabled' : ''} 
+                            class="option-btn text-left p-3.5 rounded-xl border text-sm flex items-center ${btnStyle} w-full transition-all">
+                            ${iconHtml}
+                            <span class="flex-1">${opt}</span>
+                        </button>
+                    `;
+                });
+
+                html += `</div>`;
+
+                // Explication pédagogique
+                if (isAnswered) {
+                    const isCorrect = selectedOpt === q.correct;
+                    const expBg = isCorrect ? "bg-emerald-50/80 border-emerald-200 text-emerald-900" : "bg-amber-50/80 border-amber-200 text-amber-950";
+                    
+                    html += `
+                        <div class="mt-4 p-4 rounded-xl border ${expBg} text-sm space-y-1 animate-fadeIn">
+                            <div class="font-bold flex items-center gap-2">
+                                ${isCorrect 
+                                    ? '<i class="fa-solid fa-circle-check text-emerald-600"></i> Bravo ! Réponse exacte.' 
+                                    : '<i class="fa-solid fa-lightbulb text-amber-600"></i> Explication Pédagogique :'}
+                            </div>
+                            <p class="text-slate-700 leading-relaxed mt-1">${q.explanation}</p>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        // Sélection d'une option
+        function selectOption(questionId, optionIndex) {
+            if (userAnswers.hasOwnProperty(questionId)) return;
+
+            userAnswers[questionId] = optionIndex;
+            const q = quizData.find(item => item.id === questionId);
+
+            if (q && q.correct === optionIndex) {
+                currentScore++;
+            }
+
+            updateScoreDisplay();
+            
+            const activeFilter = document.querySelector('.cat-filter-btn.bg-azur-dark')?.dataset.cat || 'all';
+            renderQuiz(activeFilter);
+        }
+
+        // Mise à jour du score et de la progression
+        function updateScoreDisplay() {
+            document.getElementById('score-display').textContent = `${currentScore} / 20`;
+            const countAnswered = Object.keys(userAnswers).length;
+            const percentage = (countAnswered / 20) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Filtrer les questions
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                    btn.classList.add('bg-azur-dark', 'text-white', 'shadow-sm');
+                } else {
+                    btn.classList.remove('bg-azur-dark', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                }
+            });
+            renderQuiz(cat);
+        }
+
+        // Réinitialiser le quiz
+        function resetQuiz() {
+            userAnswers = {};
+            currentScore = 0;
+            updateScoreDisplay();
+            const activeFilter = document.querySelector('.cat-filter-btn.bg-azur-dark')?.dataset.cat || 'all';
+            renderQuiz(activeFilter);
+        }
+
+        // Rendu des expressions
+        function renderExpressions() {
+            const container = document.getElementById('expressions-container');
+            container.innerHTML = '';
+
+            expressionsData.forEach((exp) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-orange-100 flex flex-col justify-between hover:shadow-md transition-all";
+                
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-terracotta text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+                                <i class="fa-solid ${exp.icon}"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-extrabold font-serif text-slate-900">${exp.title}</h3>
+                                <div class="flex flex-wrap gap-2 mt-1">
+                                    <span class="text-xs bg-slate-100 text-slate-700 font-medium px-2.5 py-0.5 rounded-md border border-slate-200">
+                                        🇬🇧 ${exp.translationEn}
+                                    </span>
+                                    <span class="text-xs bg-slate-100 text-slate-700 font-medium px-2.5 py-0.5 rounded-md border border-slate-200">
+                                        🇪🇸 ${exp.translationEs}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <p class="text-sm text-slate-700">
+                                <strong class="text-slate-900">Signification :</strong> ${exp.definition}
+                            </p>
+                            <div class="bg-amber-50/60 p-3.5 rounded-xl border border-amber-200/60 italic text-sm text-slate-700 border-l-4 border-l-terracotta">
+                                ${exp.example}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Initialisation générale
+        window.onload = function() {
+            renderQuiz();
+            renderExpressions();
+        };
+    </script>
+</body>
+</html>
