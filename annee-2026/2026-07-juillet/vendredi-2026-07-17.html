@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leçon du Jour - Vendredi 14 Août 2026</title>
+    <title>Session de Français - Leçon du Jour</title>
     <style>
         :root {
-            --primary: #8B5E3C; /* Châtaigne */
-            --primary-dark: #6B4527;
-            --secondary: #C77B2E; /* Feuilles d'automne */
-            --accent: #A8421D;
-            --bg-light: #FBF7F1;
+            --primary: #0055A5; /* Bleu France */
+            --secondary: #E75480; 
+            --accent: #EF4135; /* Rouge France */
+            --bg-light: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #2C2320;
-            --text-muted: #6B6B6B;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
 
         * {
@@ -39,20 +38,15 @@
             text-align: center;
             margin-bottom: 30px;
             padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         header h1 {
             font-size: 2rem;
             margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1rem;
-            opacity: 0.95;
         }
 
         /* Navigation Tabs */
@@ -106,14 +100,15 @@
             margin-bottom: 20px;
         }
 
+        /* Bulles d'aide interactives */
         .highlight {
-            background-color: #FBE3C7;
-            color: #7B3F1D;
+            background-color: #ffe4e6;
+            color: #b91c1c;
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            border-bottom: 2px dashed #7B3F1D;
+            border-bottom: 2px dashed #b91c1c;
             position: relative;
             display: inline-block;
         }
@@ -128,7 +123,7 @@
             color: white;
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             white-space: nowrap;
             opacity: 0;
             visibility: hidden;
@@ -143,10 +138,11 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Bouton et bloc Traduction de l'histoire */
         .translation-toggle {
             background-color: #f1f5f9;
             border: 1px solid #cbd5e1;
-            color: var(--primary-dark);
+            color: var(--primary);
             padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
@@ -171,22 +167,12 @@
             color: #334155;
         }
 
-        .story-translation .story-text {
-            font-size: 1.1rem;
-            color: #334155;
-        }
-
         /* Flashcards Section */
         .cards-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-        }
-
-        .cards-container > p {
-            color: var(--text-muted);
-            text-align: center;
         }
 
         .flashcard-wrapper {
@@ -225,13 +211,13 @@
         }
 
         .card-front {
-            background: linear-gradient(135deg, #ffffff, #FBF3E8);
+            background: linear-gradient(135deg, #ffffff, #f1f5f9);
             border: 3px solid var(--primary);
             color: var(--text-main);
         }
 
         .card-back {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
             color: white;
             transform: rotateY(180deg);
         }
@@ -249,7 +235,7 @@
         }
 
         .card-back .card-subtext {
-            color: #F5E3D3;
+            color: #bfdbfe;
         }
 
         .audio-btn {
@@ -264,9 +250,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(168, 66, 29, 0.4);
+            box-shadow: 0 4px 10px rgba(239, 65, 53, 0.4);
             transition: transform 0.2s;
-            margin-top: 10px;
         }
 
         .audio-btn:hover {
@@ -277,7 +262,6 @@
             display: flex;
             gap: 15px;
             margin-top: 15px;
-            align-items: center;
         }
 
         .control-btn {
@@ -288,16 +272,6 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .control-btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .card-counter {
-            font-weight: bold;
-            color: var(--text-muted);
         }
 
         /* Quiz Section */
@@ -351,7 +325,7 @@
         .quiz-score {
             font-weight: bold;
             font-size: 1.1rem;
-            color: var(--primary-dark);
+            color: var(--primary);
             margin-top: 15px;
         }
 
@@ -375,8 +349,9 @@
 
 <div class="container">
     <header>
-        <h1>Leçon de Français</h1>
-        <p>Vendredi 14 août 2026 · L'automne, les cartes mémoires et la table 🍂🍷</p>
+        <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+        <h1>Session de Français</h1>
+        <p>Maîtrisez les nuances du jour : en fait, croiser, rater, emmener...</p>
     </header>
 
     <!-- Onglets -->
@@ -389,26 +364,26 @@
     <!-- Contenu : Histoire -->
     <section id="histoire" class="tab-content active">
         <div class="story-card">
-            <h2>Un automne à Piégros 🍁🌰</h2>
+            <h2>Une rencontre inattendue 🚶‍♂️☕</h2>
             <br>
             <p class="story-text">
-                C'est l'<span class="highlight" data-translation="autumn / fall" tabIndex="0">automne</span> à Piégros. On <span class="highlight" data-translation="you reap what you sow" tabIndex="0">récolte ce que l'on sème</span> : les <span class="highlight" data-translation="chestnuts" tabIndex="0">châtaignes</span> et les <span class="highlight" data-translation="mushrooms" tabIndex="0">champignons</span> sont partout dans la garrigue. Le matin, le <span class="highlight" data-translation="frost" tabIndex="0">gel</span> blanchit les <span class="highlight" data-translation="chrysanthemums" tabIndex="0">chrysanthèmes</span> du jardin, mais l'après-midi, <span class="highlight" data-translation="the sun hits hard during the afternoon" tabIndex="0">le soleil cogne dur</span> !
+                <span class="highlight" data-translation="By the way" tabIndex="0">Au fait</span>, je dois te raconter ma matinée ! Je voulais aller dans ce nouveau café du centre-ville. <span class="highlight" data-translation="Actually / In fact" tabIndex="0">En fait</span>, je pensais que c'était fermé, mais c'était bien ouvert. En m'y rendant, j'ai couru car je ne voulais pas <span class="highlight" data-translation="to miss the bus" tabIndex="0">rater le bus</span>. Malheureusement, j'ai quand même réussi à le <span class="highlight" data-translation="to miss / to fail" tabIndex="0">rater</span>.
             </p>
             <p class="story-text">
-                Après la promenade, l'<span class="highlight" data-translation="aperitif" tabIndex="0">apéritif</span> attend : un <span class="highlight" data-translation="pastis" tabIndex="0">petit jaune</span>, un <span class="highlight" data-translation="a kir (white wine + blackcurrant liqueur)" tabIndex="0">kir</span> ou un verre de <span class="highlight" data-translation="sweet wine" tabIndex="0">vin moelleux</span> ? L'<span class="highlight" data-translation="atmosphere / ambience" tabIndex="0">ambiance</span> est <span class="highlight" data-translation="warm" tabIndex="0">chaleureuse</span> et <span class="highlight" data-translation="relaxed" tabIndex="0">décontractée</span>. C'est bientôt le 19 novembre : le <span class="highlight" data-translation="Beaujolais Nouveau (new wine), Nov 19 2026" tabIndex="0">Beaujolais nouveau</span> arrive !
+                J'ai donc décidé de <span class="highlight" data-translation="to cross the street" tabIndex="0">traverser la rue</span> et de marcher jusqu'au quartier latin. C'est un endroit magnifique, <span class="highlight" data-translation="one can find students, pubs, and libraries" tabIndex="0">on y croise des étudiants, des bars et des bibliothèques</span>. Soudain, <span class="highlight" data-translation="I've met a friend in the street" tabIndex="0">j'ai croisé un ami dans la rue</span>. On s'est <span class="highlight" data-translation="to look at each other" tabIndex="0">croisés du regard</span> et il m'a dit : « Quelle coïncidence ! Je vais chez Pierre, je dois lui <span class="highlight" data-translation="to bring (an object) to someone" tabIndex="0">apporter</span> son livre. Viens avec moi, je peux t' <span class="highlight" data-translation="to guide/take (someone) along" tabIndex="0">emmener</span> ! »
             </p>
             <p class="story-text">
-                Ce vieux <span class="highlight" data-translation="gruff / gruff fellow" tabIndex="0">bourru</span> du village <span class="highlight" data-translation="to tighten one's belt (budget)" tabIndex="0">se serre la ceinture</span> avant l'hiver. Au dessert, des <span class="highlight" data-translation="apples" tabIndex="0">pommes</span>, des <span class="highlight" data-translation="pears" tabIndex="0">poires</span> et un <span class="highlight" data-translation="custard" tabIndex="0">flan</span>, suivis d'un <span class="highlight" data-translation="digestif" tabIndex="0">digestif</span>. Tout le monde <span class="highlight" data-translation="smiles" tabIndex="0">sourit</span> et parle de la <span class="highlight" data-translation="swimming pool" tabIndex="0">piscine</span> — oui, même en automne, on y pense !
+                J'ai répondu : « Je veux bien t'accompagner, mais <span class="highlight" data-translation="I am not aware of these infos" tabIndex="0">je ne suis pas au fait de ces informations</span> : Pierre a déménagé ? » Mon ami a ri et m'a dit : « Oui, <span class="highlight" data-translation="in fact" tabIndex="0">en fait</span>, il habite juste ici. Je <span class="highlight" data-translation="cross fingers" tabIndex="0">croise les doigts</span> pour qu'il soit chez lui ! »
             </p>
-            <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: 10px;">💡 Astuce : Survolez ou cliquez les mots surlignés pour voir leur traduction en anglais !</p>
-
+            <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: 10px;">💡 Astuce : Cliquez ou survolez les mots surlignés en rouge pour voir leur traduction en anglais !</p>
+            
             <!-- Traduction de l'histoire -->
             <button class="translation-toggle" onclick="toggleTranslation()">🇬🇧 Afficher la traduction anglaise</button>
             <div id="story-en" class="story-translation">
-                <p class="story-text"><strong>Autumn in Piégros 🍁🌰</strong></p>
-                <p class="story-text">It's <strong>autumn</strong> in Piégros. <strong>You reap what you sow</strong>: <strong>chestnuts</strong> and <strong>mushrooms</strong> are everywhere in the scrubland. In the morning, <strong>frost</strong> whitens the garden <strong>chrysanthemums</strong>, but in the afternoon <strong>the sun hits hard</strong>!</p>
-                <p class="story-text">After the walk, the <strong>aperitif</strong> is waiting: a <strong>pastis</strong> ("little yellow"), a <strong>kir</strong>, or a glass of <strong>sweet wine</strong>? The <strong>atmosphere</strong> is <strong>warm</strong> and <strong>relaxed</strong>. November 19 is coming soon: <strong>Beaujolais Nouveau</strong> is on its way!</p>
-                <p class="story-text">That <strong>gruff</strong> old fellow from the village <strong>tightens his belt</strong> before winter. For dessert, <strong>apples</strong>, <strong>pears</strong> and <strong>custard</strong>, followed by a <strong>digestif</strong>. Everyone <strong>smiles</strong> and talks about the <strong>swimming pool</strong> — yes, even in autumn, you still think about it!</p>
+                <p class="story-text"><strong>An unexpected encounter 🚶‍♂️☕</strong></p>
+                <p class="story-text"><strong>By the way</strong>, I have to tell you about my morning! I wanted to go to this new café downtown. <strong>Actually</strong>, I thought it was closed, but it was wide open. On my way there, I ran because I didn't want to <strong>miss the bus</strong>. Unfortunately, I still managed to <strong>miss</strong> it.</p>
+                <p class="story-text">So I decided to <strong>cross the street</strong> and walk to the Latin Quarter. It's a beautiful place, <strong>one can find students, pubs, and libraries there</strong>. Suddenly, <strong>I met a friend in the street</strong>. We <strong>looked at each other (caught each other's eye)</strong> and he said: "What a coincidence! I'm going to Pierre's, I have to <strong>bring</strong> him his book. Come with me, I can <strong>take/guide you along</strong>!"</p>
+                <p class="story-text">I replied: "I'd love to come with you, but <strong>I am not aware of this information</strong>: did Pierre move?" My friend laughed and said: "Yes, <strong>in fact</strong>, he lives right here. I'm <strong>crossing my fingers</strong> that he is home!"</p>
             </div>
         </div>
     </section>
@@ -428,7 +403,7 @@
                     </div>
                     <!-- Verso (Anglais) -->
                     <div class="card-face card-back">
-                        <span style="font-size: 0.8rem; color: #F5E3D3; font-weight: bold; margin-bottom: 5px;">ANGLAIS</span>
+                        <span style="font-size: 0.8rem; color: #93c5fd; font-weight: bold; margin-bottom: 5px;">ANGLAIS</span>
                         <div class="card-text" id="card-en">Loading...</div>
                         <div class="card-subtext" id="card-en-sub"></div>
                     </div>
@@ -436,7 +411,6 @@
             </div>
             <div class="card-controls">
                 <button class="control-btn" onclick="prevCard()">← Précédent</button>
-                <span class="card-counter" id="card-counter">1 / 1</span>
                 <button class="control-btn" onclick="nextCard()">Suivant →</button>
             </div>
         </div>
@@ -456,42 +430,22 @@
             </div>
         </div>
     </section>
+    <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+        
 </div>
 
 <script>
     const vocabulary = [
-        { fr: "sourire", frSub: "(verbe)", en: "to smile", enSub: "" },
-        { fr: "les cartes mémoires", frSub: "(= les flashcards)", en: "flash cards", enSub: "" },
-        { fr: "la châtaigne", frSub: "(fruit d'automne)", en: "the chestnut", enSub: "" },
-        { fr: "le champignon", frSub: "", en: "the mushroom", enSub: "" },
-        { fr: "le printemps", frSub: "", en: "spring", enSub: "" },
-        { fr: "l'automne", frSub: "(= l'fall)", en: "autumn / fall", enSub: "" },
-        { fr: "le chrysanthème", frSub: "(fleur d'automne)", en: "the chrysanthemum", enSub: "" },
-        { fr: "le Beaujolais nouveau", frSub: "(le 19 novembre 2026)", en: "Beaujolais Nouveau", enSub: "young French wine released the 3rd Thursday of November" },
-        { fr: "le vin bourru", frSub: "(jeune vin en fermentation)", en: "young / fermenting wine", enSub: "rough, sweet, freshly fermented" },
-        { fr: "bourru", frSub: "(adjectif)", en: "gruff", enSub: "brusque / rough-mannered" },
-        { fr: "On récolte ce que l'on sème", frSub: "(proverbe)", en: "You reap what you sow", enSub: "" },
-        { fr: "la gourde", frSub: "= courge, ou bouteille d'eau", en: "gourd / squash", enSub: "also: a water bottle" },
-        { fr: "cogner", frSub: "", en: "to hit / to strike", enSub: "" },
-        { fr: "le soleil cogne durant l'après-midi", frSub: "", en: "the sun hits hard during the afternoon", enSub: "" },
-        { fr: "une ambiance chaleureuse", frSub: "", en: "a warm atmosphere", enSub: "cozy / friendly atmosphere" },
-        { fr: "le gel", frSub: "(météo)", en: "frost", enSub: "" },
-        { fr: "le petit jaune", frSub: "(argot)", en: "pastis", enSub: "anise-flavoured apéritif" },
-        { fr: "jeune", frSub: "(adjectif)", en: "young", enSub: "" },
-        { fr: "les pommes", frSub: "(pluriel)", en: "apples", enSub: "" },
-        { fr: "les poires", frSub: "(pluriel)", en: "pears", enSub: "" },
-        { fr: "le digestif", frSub: "(après le repas)", en: "digestif / after-dinner drink", enSub: "" },
-        { fr: "la piscine", frSub: "", en: "swimming pool", enSub: "" },
-        { fr: "le flan", frSub: "(dessert)", en: "custard", enSub: "flan / custard tart" },
-        { fr: "décontracté", frSub: "(adjectif)", en: "relaxed / laid-back", enSub: "" },
-        { fr: "se serrer la ceinture", frSub: "(figuré : économiser)", en: "to tighten one's belt", enSub: "to cut back on spending" },
-        { fr: "l'apéritif", frSub: "(= l'apéro)", en: "aperitif", enSub: "pre-dinner drink" },
-        { fr: "la bière", frSub: "", en: "beer", enSub: "" },
-        { fr: "le vin", frSub: "", en: "wine", enSub: "" },
-        { fr: "le kir", frSub: "(vin blanc + crème de cassis)", en: "kir", enSub: "white wine with blackcurrant liqueur" },
-        { fr: "doux", frSub: "(adjectif)", en: "soft / sweet / gentle", enSub: "" },
-        { fr: "le vin moelleux", frSub: "(= le vin doux)", en: "sweet wine", enSub: "" },
-        { fr: "moelleux", frSub: "(adjectif)", en: "spongy / soft", enSub: "e.g. a moist, tender cake" }
+        { fr: "au fait", frSub: "(= au courant)", en: "by the way / aware of", enSub: "" },
+        { fr: "en fait", frSub: "(= en réalité)", en: "actually / in fact", enSub: "" },
+        { fr: "je ne suis pas au fait de ces informations", frSub: "(= pas au courant)", en: "I am not aware of these infos", enSub: "" },
+        { fr: "croiser", frSub: "(un ami / les doigts)", en: "to cross / to meet", enSub: "to cross fingers / to meet a friend" },
+        { fr: "traverser la rue", frSub: "", en: "to cross the street", enSub: "" },
+        { fr: "croiser du regard", frSub: "", en: "to look at each other / catch eyes", enSub: "" },
+        { fr: "on y croise des étudiants", frSub: "(= on y trouve / on y voit)", en: "one can find / see students there", enSub: "" },
+        { fr: "rater", frSub: "(le bus / un plat / la cible)", en: "to miss / to fail / to screw up", enSub: "" },
+        { fr: "apporter", frSub: "(= apporter un objet à quelqu'un)", en: "to bring (an object)", enSub: "" },
+        { fr: "emmener", frSub: "(= guider quelqu'un, 'ensemble')", en: "to guide / take (someone)", enSub: "" }
     ];
 
     // --- Fonction d'affichage de la traduction de l'histoire ---
@@ -525,7 +479,6 @@
     const cardFrSubEl = document.getElementById('card-fr-sub');
     const cardEnEl = document.getElementById('card-en');
     const cardEnSubEl = document.getElementById('card-en-sub');
-    const cardCounterEl = document.getElementById('card-counter');
 
     function showCard() {
         cardEl.classList.remove('flipped');
@@ -535,7 +488,6 @@
             cardFrSubEl.textContent = item.frSub || "";
             cardEnEl.textContent = item.en;
             cardEnSubEl.textContent = item.enSub || "";
-            cardCounterEl.textContent = `${currentCardIndex + 1} / ${vocabulary.length}`;
         }, 150);
     }
 
@@ -548,7 +500,6 @@
         const text = vocabulary[currentCardIndex].fr;
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'fr-FR';
-        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
     }
 
@@ -569,7 +520,7 @@
     function loadQuizQuestion() {
         document.getElementById('feedback').textContent = "";
         document.getElementById('next-quiz-btn').style.display = "none";
-
+        
         const currentItem = quizData[quizIndex];
         document.getElementById('question').textContent = `Quelle est la traduction de : "${currentItem.fr}" ?`;
 

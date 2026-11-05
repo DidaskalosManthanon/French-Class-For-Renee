@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Découverte de la Corse avec C Jamy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mediterranean: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        maquis: {
+                            500: '#15803d',
+                            600: '#166534',
+                        },
+                        sand: {
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            500: '#f59e0b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #0ea5e9 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .tab-btn.active {
+            border-bottom-color: #0284c7;
+            color: #0284c7;
+            background-color: #f0f9ff;
+        }
+        .correct-anim {
+            animation: pulse-green 0.4s ease-in-out;
+        }
+        .wrong-anim {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes pulse-green {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header & Hero Section -->
+    <header class="gradient-bg text-white shadow-xl relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 text-center md:text-left max-w-2xl">
+                    <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold tracking-wider uppercase border border-white/30">
+                        <i class="fa-solid fa-play-circle mr-1"></i> Basé sur la vidéo de C Jamy
+                    </span>
+                    <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Découverte de la Corse
+                    </h1>
+                    <p class="text-lg text-mediterranean-100 font-light">
+                        Explorez la géographie, le fameux GR20, l'histoire de Pascal Paoli, la libération de 1943 et la culture unique corse avant de tester vos connaissances !
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="#video-section" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition duration-300 shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Voir la Vidéo
+                        </a>
+                        <a href="#themes" class="px-5 py-2.5 bg-sand-500 hover:bg-sand-200 hover:text-slate-900 text-slate-900 font-bold rounded-xl transition duration-300 shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-compass"></i> Explorer les Thèmes
+                        </a>
+                        <a href="#quiz" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl backdrop-blur-sm border border-white/30 transition duration-300 flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap"></i> Passer le Quiz
+                        </a>
+                    </div>
+                </div>
+                <!-- Banner Graphic Card -->
+                <div class="w-full md:w-auto flex justify-center">
+                    <div class="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/20 shadow-2xl text-center max-w-xs">
+                        <div class="w-20 h-20 mx-auto bg-sand-500 text-slate-900 rounded-full flex items-center justify-center text-3xl font-black mb-4 shadow-md">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-white">L'Île de Beauté</h3>
+                        <p class="text-xs text-mediterranean-100 mt-2">Plus de 1 000 km de côtes & Monte Cinto (2 706 m).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Sticky -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14 text-sm font-medium">
+                <div class="flex space-x-6 sm:space-x-8 overflow-x-auto">
+                    <a href="#video-section" class="text-slate-600 hover:text-mediterranean-600 flex items-center gap-2 py-4 transition whitespace-nowrap">
+                        <i class="fa-solid fa-circle-play text-red-600"></i> Vidéo
+                    </a>
+                    <a href="#themes" class="text-slate-600 hover:text-mediterranean-600 flex items-center gap-2 py-4 transition whitespace-nowrap">
+                        <i class="fa-solid fa-book-open"></i> Résumé & Thèmes
+                    </a>
+                    <a href="#quiz" class="text-slate-600 hover:text-mediterranean-600 flex items-center gap-2 py-4 transition whitespace-nowrap">
+                        <i class="fa-solid fa-list-check"></i> QCM (20 Q)
+                    </a>
+                    <a href="#expressions" class="text-slate-600 hover:text-mediterranean-600 flex items-center gap-2 py-4 border-b-2 border-mediterranean-600 font-semibold whitespace-nowrap">
+                        <i class="fa-solid fa-language"></i> 12 Expressions
+                    </a>
+                </div>
+                <div id="quick-score" class="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-700 rounded-full shrink-0">
+                    <span>Score Quiz :</span>
+                    <span id="nav-score-display" class="text-mediterranean-600 font-bold">0 / 20</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- SECTION 0: LECTEUR VIDÉO YOUTUBE INTEGRÉ -->
+        <section id="video-section" class="space-y-4 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-brands fa-youtube mr-1"></i> Vidéo Source - C Jamy
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Visionner l'épisode sur la Corse</h2>
+                <p class="text-slate-600">Regardez la vidéo originale de C Jamy pour enrichir vos connaissances.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-slate-900 p-2 sm:p-4 rounded-3xl shadow-2xl border border-slate-800">
+                <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black">
+                    <iframe 
+                        class="absolute top-0 left-0 w-full h-full border-0" 
+                        src="https://www.youtube.com/embed/JzwyWNhSL2Q" 
+                        title="Vidéo C Jamy - La Corse" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: 5 GRANDES THÉMATIQUES INTERACTIVES -->
+        <section id="themes" class="space-y-6 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-mediterranean-100 text-mediterranean-700 rounded-full text-xs font-bold uppercase tracking-wider">Synthèse Complète</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Résumé de la Vidéo par Thèmes</h2>
+                <p class="text-slate-600">Parcourez les points-clés abordés dans le reportage de C Jamy.</p>
+            </div>
+
+            <!-- Tabs Nav -->
+            <div class="flex overflow-x-auto border-b border-slate-200 justify-start md:justify-center gap-2 pb-1 no-scrollbar">
+                <button onclick="switchTab(0)" class="tab-btn active font-medium text-sm px-4 py-3 rounded-t-xl transition duration-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-water"></i> 1. Géographie & Nature
+                </button>
+                <button onclick="switchTab(1)" class="tab-btn font-medium text-sm px-4 py-3 rounded-t-xl transition duration-200 flex items-center gap-2 text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                    <i class="fa-solid fa-person-hiking"></i> 2. Le Sentier GR20
+                </button>
+                <button onclick="switchTab(2)" class="tab-btn font-medium text-sm px-4 py-3 rounded-t-xl transition duration-200 flex items-center gap-2 text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                    <i class="fa-solid fa-landmark"></i> 3. Histoire & Paoli
+                </button>
+                <button onclick="switchTab(3)" class="tab-btn font-medium text-sm px-4 py-3 rounded-t-xl transition duration-200 flex items-center gap-2 text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                    <i class="fa-solid fa-shield-halved"></i> 4. Seconde Guerre Mondiale
+                </button>
+                <button onclick="switchTab(4)" class="tab-btn font-medium text-sm px-4 py-3 rounded-t-xl transition duration-200 flex items-center gap-2 text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                    <i class="fa-solid fa-music"></i> 5. Culture & Paghjella
+                </button>
+            </div>
+
+            <!-- Tab Panels Content -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <!-- Panel 1 -->
+                <div id="tab-panel-0" class="tab-panel space-y-4">
+                    <div class="flex items-center gap-3 text-mediterranean-700">
+                        <i class="fa-solid fa-water text-2xl"></i>
+                        <h3 class="text-xl font-bold">1. Géographie et Nature de la Corse (0:00 - 2:54)</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        La Corse est la plus grande île de France métropolitaine, offrant des paysages d'une immense variété. Elle compte plus de <strong>1 000 km de littoraux</strong> abritant des plages célèbres comme celle de <em>Palombaggia</em>.
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 mb-1"><i class="fa-solid fa-mountain text-slate-500 mr-2"></i> Reliefs Montagneux</h4>
+                            <p class="text-sm text-slate-600">L'île est une véritable « montagne dans la mer ». Son point culminant est le <strong>Monte Cinto</strong>, qui s'élève à 2 706 mètres d'altitude.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 mb-1"><i class="fa-solid fa-water text-slate-500 mr-2"></i> Paradis de l'eau vive</h4>
+                            <p class="text-sm text-slate-600">La Corse possède de nombreuses rivières tumultueuses, torrents et cascades spectaculaires, en faisant une référence pour les sports d'eau vive.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2 -->
+                <div id="tab-panel-1" class="tab-panel hidden space-y-4">
+                    <div class="flex items-center gap-3 text-mediterranean-700">
+                        <i class="fa-solid fa-person-hiking text-2xl"></i>
+                        <h3 class="text-xl font-bold">2. Le Mythique Sentier du GR20 (3:12 - 5:12)</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        Le <strong>GR20</strong> (Grande Randonnée 20) est reconnu mondialement comme l'un des sentiers de randonnée les plus difficiles et exigeants d'Europe. Il traverse la Corse du nord au sud le long de sa chaîne montagneuse.
+                    </p>
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                        <div class="flex items-center justify-between font-semibold text-amber-900">
+                            <span>Itinéraire : Calenzana (Nord) ➔ Conca (Sud)</span>
+                            <span class="text-xs bg-amber-200 px-2.5 py-1 rounded-full">~180 km</span>
+                        </div>
+                        <p class="text-sm text-amber-800 mt-2">Le parcours s'adresse aux randonneurs aguerris en raison de son relief escarpé, de ses passages rocheux techniques et des brusques variations météorologiques.</p>
+                    </div>
+                </div>
+
+                <!-- Panel 3 -->
+                <div id="tab-panel-2" class="tab-panel hidden space-y-4">
+                    <div class="flex items-center gap-3 text-mediterranean-700">
+                        <i class="fa-solid fa-landmark text-2xl"></i>
+                        <h3 class="text-xl font-bold">3. Contexte Historique & Pascal Paoli (5:19 - 8:03)</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        Pendant plusieurs siècles, la Corse a été sous la domination de la <strong>République de Gênes</strong>. Au XVIIIe siècle, les Corses se révoltent pour réclamer leur souveraineté.
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                            <h4 class="font-bold text-blue-900 mb-1"><i class="fa-solid fa-crown text-blue-600 mr-2"></i> Indépendance & Constitution (1755)</h4>
+                            <p class="text-sm text-blue-800">Sous la conduite de <strong>Pascal Paoli</strong> (« Le Père de la Patrie »), la Corse devient indépendante et adopte une constitution démocratique avant-gardiste accordant le droit de vote (y compris aux femmes chefs de famille).</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <h4 class="font-bold text-slate-900 mb-1"><i class="fa-solid fa-file-contract text-slate-500 mr-2"></i> Rattachement à la France</h4>
+                            <p class="text-sm text-slate-600">En 1768, par le traité de Versailles, Gênes cède ses droits sur la Corse à la France. L'armée française prend définitivement le contrôle de l'île en 1769 après la bataille de Ponte-Novo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 4 -->
+                <div id="tab-panel-3" class="tab-panel hidden space-y-4">
+                    <div class="flex items-center gap-3 text-mediterranean-700">
+                        <i class="fa-solid fa-shield-halved text-2xl"></i>
+                        <h3 class="text-xl font-bold">4. Rôle Stratégique pendant la Seconde Guerre Mondiale (8:17 - 10:48)</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        La Corse occupe une place singulière dans l'histoire moderne de la France : elle a été le <strong>premier département de France métropolitaine libéré</strong> de l'occupation de l'Axe, le 4 octobre 1943.
+                    </p>
+                    <div class="bg-slate-900 text-white p-5 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2 text-sand-500 font-bold">
+                            <i class="fa-solid fa-plane"></i> Surnom stratégique : « USS Corsica »
+                        </div>
+                        <p class="text-sm text-slate-300">
+                            En raison de sa position géographique idéale au cœur de la Méditerranée, les Alliés y ont aménagé de nombreux terrains d'aviation. L'île entière servait de véritable « porte-avions insubmersible » en béton pour préparer le débarquement en Italie et dans le sud de la France.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Panel 5 -->
+                <div id="tab-panel-4" class="tab-panel hidden space-y-4">
+                    <div class="flex items-center gap-3 text-mediterranean-700">
+                        <i class="fa-solid fa-music text-2xl"></i>
+                        <h3 class="text-xl font-bold">5. Patrimoine Culturel & La Paghjella (10:50 - 15:43)</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        Placée au croisement des civilisations méditerranéennes, la Corse possède une identité culturelle forte portée par la langue corse et ses traditions orales uniques.
+                    </p>
+                    <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl space-y-2">
+                        <h4 class="font-bold text-emerald-900 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-emerald-600"></i> La Paghjella (Chant Polyphonique)
+                        </h4>
+                        <p class="text-sm text-emerald-800">
+                            La <em>Paghjella</em> est un chant traditionnel polyphonique masculin à trois voix. Transmis de génération en génération, ce patrimoine oral remarquable est inscrit au <strong>patrimoine culturel immatériel de l'UNESCO</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: QCM INTERACTIF (20 QUESTIONS) -->
+        <section id="quiz" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-sand-500 text-slate-900 rounded-full text-xs font-bold uppercase tracking-wider">Testez vos connaissances</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Grand QCM d'Évaluation</h2>
+                <p class="text-slate-600">20 questions réparties en 4 thèmes : Compréhension, Vocabulaire, Grammaire et Prononciation.</p>
+            </div>
+
+            <!-- Quiz Category Filters -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="filterQuiz('all')" class="quiz-filter-btn px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold">Toutes (20)</button>
+                <button onclick="filterQuiz('comprehension')" class="quiz-filter-btn px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">Compréhension (5)</button>
+                <button onclick="filterQuiz('vocabulaire')" class="quiz-filter-btn px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">Vocabulaire (5)</button>
+                <button onclick="filterQuiz('grammaire')" class="quiz-filter-btn px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">Grammaire (5)</button>
+                <button onclick="filterQuiz('prononciation')" class="quiz-filter-btn px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">Prononciation (5)</button>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="space-y-6 max-w-4xl mx-auto">
+                <!-- Questions injected by JavaScript -->
+            </div>
+
+            <!-- Quiz Result Card -->
+            <div id="quiz-result-card" class="hidden max-w-4xl mx-auto bg-slate-900 text-white p-8 rounded-3xl text-center space-y-4 shadow-2xl">
+                <div class="w-20 h-20 mx-auto bg-sand-500 text-slate-900 rounded-full flex items-center justify-center text-3xl font-black shadow-lg">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Quiz Terminé !</h3>
+                <p class="text-slate-300">Votre score final est de :</p>
+                <div class="text-5xl font-black text-sand-500" id="final-score text-gradient">0 / 20</div>
+                <p id="score-feedback" class="text-sm text-slate-400 max-w-md mx-auto"></p>
+                <button onclick="resetQuiz()" class="px-6 py-3 bg-mediterranean-600 hover:bg-mediterranean-500 text-white font-bold rounded-xl transition shadow-md inline-flex items-center gap-2 mt-2">
+                    <i class="fa-solid fa-rotate-right"></i> Recommencer le Quiz
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 12 EXPRESSIONS COURANTES AVEC TRADUCTION ANGLAISE -->
+        <section id="expressions" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-maquis-500 text-white rounded-full text-xs font-bold uppercase tracking-wider">Lexique Bilingue</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">12 Expressions Courantes</h2>
+                <p class="text-slate-600">Découvrez 12 expressions utiles avec leur illustration, leur traduction en anglais et un exemple d'application.</p>
+            </div>
+
+            <!-- 12 Cards Grid (3x4 columns perfectly balanced) -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="L'Île de Beauté" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=L%27%C3%8Ele+de+Beaute'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">1/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-slate-900 text-lg">L'Île de Beauté</h3>
+                            </div>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "The Island of Beauty"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Surnom poétique désignant la Corse en raison de ses paysages exceptionnels.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Cet été, nous partons en vacances sur l'Île de Beauté. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Prendre le maquis" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/166534/ffffff?text=Prendre+le+maquis'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">2/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Prendre le maquis</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "To take to the bush / to go into hiding"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Se cacher dans la végétation dense du maquis corse, ou s'engager dans la résistance.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Durant la guerre, de nombreux résistants ont pris le maquis. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=600&q=80" alt="Faire de la randonnée" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0369a1/ffffff?text=Faire+de+la+randonnee'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">3/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Faire de la randonnée</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "To go hiking"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Marcher dans la nature sur des sentiers balisés comme le GR20.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Nous faisons de la randonnée tous les matins au bord des montagnes. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Un chant polyphonique" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/f59e0b/ffffff?text=Chant+Polyphonique'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">4/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Un chant polyphonique</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "A polyphonic song"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Un chant traditionnel associant harmonieusement plusieurs voix indépendantes.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Écouter un chant polyphonique dans une église corse est émouvant. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Une base stratégique" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0c4a6e/ffffff?text=Base+Strategique'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">5/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Une base stratégique</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "A strategic base"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Emplacement géographique essentiel pour mener des opérations militaires ou logistiques.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« La Corse servait de base stratégique pour les Alliés en 1943. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80" alt="Eau vive" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0ea5e9/ffffff?text=Eau+Vive'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">6/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Le paradis de l'eau vive</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "The paradise for whitewater"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Désigne un endroit idéal pour la pratique du canyoning et des sports d'eau vive.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Avec ses torrents limpides, l'île est un paradis de l'eau vive. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Une constitution pionnière" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/475569/ffffff?text=Constitution'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">7/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Une constitution pionnière</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "A pioneering constitution"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Un texte fondamental novateur rédigé par Pascal Paoli en 1755.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Pascal Paoli a rédigé une constitution pionnière pour l'époque. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" alt="Traverser du nord au sud" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Traverser+l%27ile'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">8/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Traverser du nord au sud</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "To cross from north to south"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Parcourir toute l'étendue d'un territoire d'une extrémité à l'autre.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Les randonneurs traversent la Corse du nord au sud via le GR20. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Un patrimoine d'exception" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/15803d/ffffff?text=Patrimoine+d%27exception'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">9/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Un patrimoine d'exception</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "An outstanding heritage"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Un ensemble culturel et naturel précieux transmis au cours des siècles.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« L'UNESCO a reconnu ce chant comme un patrimoine d'exception. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 10 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80" alt="Au croisement des cultures" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0c4a6e/ffffff?text=Croisement+des+cultures'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">10/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Au croisement des cultures</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "At the crossroads of cultures"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Désigne un lieu enrichi par l'influence de diverses civilisations au fil du temps.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« Située en Méditerranée, la Corse se trouve au croisement des cultures. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 11 (Nouveau) -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80" alt="Un littoral préservé" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Littoral+Preserve'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">11/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Un littoral préservé</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "A preserved coastline"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Une côte bordée de mer et de plages restée sauvage et protégée des dégradations.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« L'île offre un littoral préservé s'étendant sur plus de mille kilomètres. »</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 12 (Nouveau) -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col">
+                    <div class="h-44 overflow-hidden relative bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Une traversée exigeante" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/f59e0b/ffffff?text=Traversee+Exigeante'">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-2.5 py-1 rounded-full font-semibold">12/12</span>
+                    </div>
+                    <div class="p-5 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Une traversée exigeante</h3>
+                            <p class="text-xs font-semibold text-mediterranean-600 uppercase tracking-wider mt-0.5">
+                                <i class="fa-solid fa-language mr-1"></i> "A demanding crossing"
+                            </p>
+                            <p class="text-xs text-slate-500 mt-2">Un parcours éprouvant nécessitant de la préparation physique et de l'endurance.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs border border-slate-100 mt-3">
+                            <span class="font-semibold text-slate-700">Exemple :</span>
+                            <p class="text-slate-600 italic mt-0.5">« La randonnée en haute montagne est une traversée exigeante pour l'équipe. »</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <p class="text-sm">
+                Application Web Éducative – Basée sur le reportage de <strong class="text-white">C Jamy</strong> (<a href="https://youtu.be/JzwyWNhSL2Q" target="_blank" class="text-mediterranean-500 hover:underline">Voir sur YouTube</a>).
+            </p>
+            <p class="text-xs text-slate-500">
+                Conçu pour l'apprentissage du français, la géographie et l'histoire de la Corse.
+            </p>
+        </div>
+        <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+    </footer>
+
+    <!-- SCRIPT APPLICATION / QCM ENGINE -->
+    <script>
+        // Quiz Data - 20 Questions (5 per category)
+        // Strict rotation of correct answers (A, B, C, D balanced)
+        const quizData = [
+            // --- COMPRÉHENSION (5 Questions) ---
+            {
+                id: 1,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Quelle est la hauteur approximative du sommet le plus élevé de Corse, le Monte Cinto ?",
+                options: [
+                    "2 706 mètres",
+                    "1 850 mètres",
+                    "3 410 mètres",
+                    "4 807 mètres"
+                ],
+                correct: 0, // A
+                explanation: "Le Monte Cinto est le point culminant de la Corse et s'élève à 2 706 mètres d'altitude."
+            },
+            {
+                id: 2,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Entre quels points extrêmes le sentier du GR20 traverse-t-il la Corse ?",
+                options: [
+                    "De Bastia à Bonifacio",
+                    "De Calenzana à Conca",
+                    "D'Ajaccio à Porto-Vecchio",
+                    "De Corte à Propriano"
+                ],
+                correct: 1, // B
+                explanation: "Le GR20 relie Calenzana au nord de l'île à Conca au sud."
+            },
+            {
+                id: 3,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Quelle personnalité corse a rédigé une constitution démocratique en 1755 ?",
+                options: [
+                    "Napoléon Bonaparte",
+                    "Charles Pasqua",
+                    "Pascal Paoli",
+                    "Vincentello d'Istria"
+                ],
+                correct: 2, // C
+                explanation: "Pascal Paoli est considéré comme le père de la patrie corse et a rédigé la constitution de 1755."
+            },
+            {
+                id: 4,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Pourquoi les Alliés ont-ils surnommé la Corse « USS Corsica » pendant la Seconde Guerre Mondiale ?",
+                options: [
+                    "En raison de sa grande flotte de navires en bois",
+                    "Parce qu'elle était totalement entourée d'eau douce",
+                    "Parce qu'elle avait la forme exacte d'un porte-avions militaire",
+                    "Parce qu'elle a servi de porte-avions insubmersible grâce à ses terrains d'aviation"
+                ],
+                correct: 3, // D
+                explanation: "Sa position centrale a permis d'installer de nombreuses bases aériennes pour les Alliés dès sa libération en 1943."
+            },
+            {
+                id: 5,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Quel chant traditionnel corse masculin à trois voix est inscrit au patrimoine immatériel de l'UNESCO ?",
+                options: [
+                    "La Paghjella",
+                    "Le Lamento",
+                    "La Santa Regina",
+                    "Le Fado"
+                ],
+                correct: 0, // A
+                explanation: "La Paghjella est le chant polyphonique emblématique corse reconnu mondialement par l'UNESCO."
+            },
+
+            // --- VOCABULAIRE (5 Questions) ---
+            {
+                id: 6,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Que désigne le terme « maquis » dans le contexte géographique méditerranéen ?",
+                options: [
+                    "Une forêt d'arbres tropicaux à très haute altitude",
+                    "Une végétation dense formée d'arbustes épineux et de buissons odorants",
+                    "Un marais d'eau douce près de la mer",
+                    "Un désert de sable fin au bord du littoral"
+                ],
+                correct: 1, // B
+                explanation: "Le maquis corse est une formation végétale méditerranéenne dense composée d'arbustes (bruyère, myrte, arbutus)."
+            },
+            {
+                id: 7,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Que signifie le mot « polyphonique » quand on parle de chant traditionnel ?",
+                options: [
+                    "Un chant interprété par un seul soliste sans accompagnement",
+                    "Un chant rapide accompagné d'instruments à percussion",
+                    "Un chant qui superpose plusieurs voix différentes et harmonieuses",
+                    "Un chant récité sans mélodie ni musique"
+                ],
+                correct: 2, // C
+                explanation: "Du grec 'plusieurs sons', la polyphonie combine plusieurs lignes mélodiques simultanées."
+            },
+            {
+                id: 8,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Dans l'expression « un paradis de l'eau vive », que signifie « eau vive » ?",
+                options: [
+                    "Une eau stagnante dans un lac de montagne",
+                    "L'eau salée de l'océan",
+                    "L'eau courante et vive des rivières, torrents et cascades",
+                    "L'eau minérale mise en bouteille"
+                ],
+                correct: 2, // C (ajusté pour alternance)
+                explanation: "L'eau vive désigne le courant dynamique et limpide des torrents et cascades de montagne."
+            },
+            {
+                id: 9,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Quel est le synonyme le plus proche du mot « souveraineté » pour un peuple ?",
+                options: [
+                    "Dépendance financière",
+                    "Soumission militaire",
+                    "Isolement géographique",
+                    "Indépendance politique et pouvoir suprême"
+                ],
+                correct: 3, // D
+                explanation: "La souveraineté désigne le droit absolu d'un peuple à exercer son autorité sur son propre territoire."
+            },
+            {
+                id: 10,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Que signifie l'adjectif « avant-gardiste » à propos de la constitution corse de 1755 ?",
+                options: [
+                    "Très en avance sur son temps et novatrice",
+                    "Inspirée du Moyen Âge",
+                    "Identique à celles des pays voisins",
+                    "Appliquée uniquement par la force militaire"
+                ],
+                correct: 0, // A
+                explanation: "Avant-gardiste signifie précurseur, innovant par rapport aux idées et normes de son époque."
+            },
+
+            // --- GRAMMAIRE (5 Questions) ---
+            {
+                id: 11,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Dans la phrase « La Corse est l'île la plus vaste », quel est le degré de l'adjectif « la plus vaste » ?",
+                options: [
+                    "Un comparatif d'égalité",
+                    "Un superlatif relatif de supériorité",
+                    "Un adjectif au COD",
+                    "Un verbe au participe passé"
+                ],
+                correct: 1, // B
+                explanation: "« La plus vaste » est un superlatif relatif exprimant le degré le plus élevé dans un groupe donné."
+            },
+            {
+                id: 12,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Choisissez la bonne forme accordée du participe passé : « Les montagnes que nous avons ______ sont impressionnantes. »",
+                options: [
+                    "traversé",
+                    "traversés",
+                    "traversée",
+                    "traversées"
+                ],
+                correct: 3, // D
+                explanation: "Le COD « que » (remplaçant « les montagnes », féminin pluriel) est placé avant l'auxiliaire avoir, donc le participe passé s'accorde au féminin pluriel (traversées)."
+            },
+            {
+                id: 13,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Dans « Pascal Paoli a rédigé une constitution afin d'établir la démocratie », quelle est la fonction de « afin d'établir la démocratie » ?",
+                options: [
+                    "Complément circonstanciel de but",
+                    "Complément d'objet direct (COD)",
+                    "Sujet de la phrase",
+                    "Attribut du sujet"
+                ],
+                correct: 0, // A
+                explanation: "« Afin de » introduit une proposition complément circonstanciel exprimant l'objectif ou le but."
+            },
+            {
+                id: 14,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Identifiez le temps verbal de la phrase : « La Corse avait été sous la domination de Gênes pendant des siècles. »",
+                options: [
+                    "Passé simple",
+                    "Plus-que-parfait de l'indicatif (forme passive)",
+                    "Futur antérieur",
+                    "Présent du subjonctif"
+                ],
+                correct: 1, // B
+                explanation: "« Avait été » réunit l'auxiliaire avoir à l'imparfait et le participe passé du verbe être (plus-que-parfait)."
+            },
+            {
+                id: 15,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Complétez avec le bon pronom relatif : « Le sentier du GR20, ______ la réputation est mondiale, attire les randonneurs. »",
+                options: [
+                    "auquel",
+                    "dont",
+                    "que",
+                    "lequel"
+                ],
+                correct: 1, // B
+                explanation: "Le pronom relatif « dont » complète « la réputation » (la réputation DE ce sentier)."
+            },
+
+            // --- PRONONCIATION (5 Questions) ---
+            {
+                id: 16,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Comment se prononce correctement le nom de la plage corse de « Palombaggia » en français ?",
+                options: [
+                    "[pa-lom-ba-gia] avec un 'g' dur comme dans 'gâteau'",
+                    "[pa-lom-ba-gia] avec le son 'dj' d'origine italienne ou [dʒa]",
+                    "[pa-lom-ba-ghi-a] en détachant chaque voyelle",
+                    "[pa-lan-ba-ja]"
+                ],
+                correct: 1, // B
+                explanation: "Le nom d'origine corse/italienne 'Palombaggia' se prononce couramment avec la syllabe finale [dʒa] ou [dʒja]."
+            },
+            {
+                id: 17,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Combien de syllabes orales contient le mot « géographie » [ʒe-o-gʁa-fi] ?",
+                options: [
+                    "2 syllabes",
+                    "3 syllabes",
+                    "4 syllabes",
+                    "5 syllabes"
+                ],
+                correct: 2, // C
+                explanation: "Gé-o-gra-phie se découpe en 4 syllabes phonétiques."
+            },
+            {
+                id: 18,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Dans le mot « constitution », comment se prononce la terminaison « -tion » ?",
+                options: [
+                    "Comme dans 'tonton' [tɔ̃]",
+                    "Comme 'sion' avec le son [sjɔ̃]",
+                    "Comme le son 'tion' avec un 't' explosif [tjɔ̃]",
+                    "Comme 'teon' [teɔ̃]"
+                ],
+                correct: 1, // B
+                explanation: "Le groupe '-tion' suivi d'une voyelle se prononce [sjɔ̃] en français standard."
+            },
+            {
+                id: 19,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Quel terme phonétique décrit l'enchaînement de la liaison dans la phrase : « un_archipel » ?",
+                options: [
+                    "Une élision de la voyelle",
+                    "Un accent circonflexe",
+                    "Une liaison consonantique où le 'n' final muet se lie au 'a'",
+                    "Une aliénation phonétique"
+                ],
+                correct: 2, // C
+                explanation: "La liaison fait entendre la consonne finale habituellement muette ('n') devant une voyelle initiale."
+            },
+            {
+                id: 20,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Dans le mot corse « Paghjella », comment se prononce approximativement le groupe 'ghj' ?",
+                options: [
+                    "Comme le son 'ch' [ʃ]",
+                    "Comme un 'r' roulé",
+                    "Comme un 'g' dur [g]",
+                    "Comme un son palatal proche du 'y' ou du 'dy' mouillé [ɟ]"
+                ],
+                correct: 3, // D
+                explanation: "En langue corse, 'ghj' représente une consonne occlusive palatale voisée spécifique (proche de 'dy')."
+            }
+        ];
+
+        let userAnswers = {};
+
+        // Switch Tab Function
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    tab.classList.remove('text-slate-600');
+                } else {
+                    tab.classList.remove('active');
+                    tab.classList.add('text-slate-600');
+                }
+            });
+
+            panels.forEach((panel, i) => {
+                if (i === index) {
+                    panel.classList.remove('hidden');
+                } else {
+                    panel.classList.add('hidden');
+                }
+            });
+        }
+
+        // Render Quiz Questions
+        function renderQuiz(filter = 'all') {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            const filteredData = filter === 'all' 
+                ? quizData 
+                : quizData.filter(q => q.category === filter);
+
+            filteredData.forEach((q, idx) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = `quiz-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 data-cat="${q.category}"`;
+                questionCard.id = `q-card-${q.id}`;
+
+                const letters = ['A', 'B', 'C', 'D'];
+                const isAnswered = userAnswers.hasOwnProperty(q.id);
+                const selectedAns = userAnswers[q.id];
+
+                let optionsHtml = '';
+                q.options.forEach((opt, oIdx) => {
+                    let btnStyle = "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
+                    let badgeStyle = "bg-slate-200 text-slate-700";
+                    let iconHtml = '';
+
+                    if (isAnswered) {
+                        if (oIdx === q.correct) {
+                            btnStyle = "bg-emerald-100 border-emerald-500 text-emerald-900 font-semibold";
+                            badgeStyle = "bg-emerald-600 text-white";
+                            iconHtml = '<i class="fa-solid fa-circle-check text-emerald-600 text-lg ml-auto"></i>';
+                        } else if (oIdx === selectedAns) {
+                            btnStyle = "bg-rose-100 border-rose-400 text-rose-900";
+                            badgeStyle = "bg-rose-600 text-white";
+                            iconHtml = '<i class="fa-solid fa-circle-xmark text-rose-600 text-lg ml-auto"></i>';
+                        } else {
+                            btnStyle = "bg-slate-50 text-slate-400 border-slate-100 opacity-60";
+                        }
+                    }
+
+                    optionsHtml += `
+                        <button 
+                            onclick="selectAnswer(${q.id}, ${oIdx})"
+                            ${isAnswered ? 'disabled' : ''}
+                            class="w-full text-left p-3.5 rounded-xl border text-sm transition flex items-center gap-3 ${btnStyle}"
+                        >
+                            <span class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${badgeStyle}">
+                                ${letters[oIdx]}
+                            </span>
+                            <span class="flex-grow">${opt}</span>
+                            ${iconHtml}
+                        </button>
+                    `;
+                });
+
+                let explanationHtml = '';
+                if (isAnswered) {
+                    explanationHtml = `
+                        <div class="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <span class="font-bold flex items-center gap-1.5 text-mediterranean-700">
+                                <i class="fa-solid fa-circle-info"></i> Explication :
+                            </span>
+                            <p class="leading-relaxed">${q.explanation}</p>
+                        </div>
+                    `;
+                }
+
+                questionCard.innerHTML = `
+                    <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <span class="text-xs font-bold text-mediterranean-600 bg-mediterranean-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            ${q.categoryLabel} - Question ${q.id}/20
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">Rep. attendue : A, B, C ou D</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base leading-snug">${q.question}</h3>
+                    <div class="grid sm:grid-cols-2 gap-2.5 pt-1">
+                        ${optionsHtml}
+                    </div>
+                    ${explanationHtml}
+                `;
+
+                container.appendChild(questionCard);
+            });
+
+            updateScore();
+        }
+
+        // Handle Answer Selection
+        function selectAnswer(questionId, optionIndex) {
+            if (userAnswers.hasOwnProperty(questionId)) return;
+
+            userAnswers[questionId] = optionIndex;
+            
+            // Re-render current view to show state & explanation
+            const currentFilterBtn = document.querySelector('.quiz-filter-btn.bg-slate-900');
+            const currentFilter = currentFilterBtn ? currentFilterBtn.getAttribute('onclick').match(/'([^']+)'/)[1] : 'all';
+            
+            renderQuiz(currentFilter);
+
+            // Add subtle animation to card
+            const q = quizData.find(item => item.id === questionId);
+            const card = document.getElementById(`q-card-${questionId}`);
+            if (card) {
+                if (optionIndex === q.correct) {
+                    card.classList.add('correct-anim');
+                } else {
+                    card.classList.add('wrong-anim');
+                }
+            }
+        }
+
+        // Filter Quiz Questions
+        function filterQuiz(category) {
+            const btns = document.querySelectorAll('.quiz-filter-btn');
+            btns.forEach(btn => {
+                const btnCat = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                if (btnCat === category) {
+                    btn.className = "quiz-filter-btn px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold shadow-sm";
+                } else {
+                    btn.className = "quiz-filter-btn px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold";
+                }
+            });
+
+            renderQuiz(category);
+        }
+
+        // Update Score Display
+        function updateScore() {
+            let correctCount = 0;
+            const totalAnswered = Object.keys(userAnswers).length;
+
+            quizData.forEach(q => {
+                if (userAnswers.hasOwnProperty(q.id) && userAnswers[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            // Nav Score
+            document.getElementById('nav-score-display').innerText = `${correctCount} / 20`;
+
+            // Final Result Card if all 20 answered
+            if (totalAnswered === 20) {
+                const resultCard = document.getElementById('quiz-result-card');
+                resultCard.classList.remove('hidden');
+                document.getElementById('final-score').innerText = `${correctCount} / 20`;
+                
+                let feedback = "";
+                if (correctCount === 20) feedback = "Parfait ! Vous êtes un véritable expert de la Corse et de son histoire !";
+                else if (correctCount >= 15) feedback = "Excellent résultat ! Vous avez très bien compris le sujet.";
+                else if (correctCount >= 10) feedback = "Bon travail ! Quelques notions méritent une petite révision.";
+                else feedback = "N'hésitez pas à relire les fiches explicatives et à revoir la vidéo pour vous améliorer !";
+
+                document.getElementById('score-feedback').innerText = feedback;
+            }
+        }
+
+        // Reset Quiz
+        function resetQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-result-card').classList.add('hidden');
+            filterQuiz('all');
+            window.scrollTo({ top: document.getElementById('quiz').offsetTop - 80, behavior: 'smooth' });
+        }
+
+        // Init on page load
+        window.onload = function() {
+            renderQuiz('all');
+        }
+    </script>
+</body>
+</html>

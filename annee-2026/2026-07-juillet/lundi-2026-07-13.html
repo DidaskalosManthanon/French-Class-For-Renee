@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session de Français - Leçon du Jour</title>
+    <title>Session de Français - Vocabulaire</title>
     <style>
         :root {
             --primary: #0055A5; /* Bleu France */
@@ -100,7 +100,7 @@
             margin-bottom: 20px;
         }
 
-        /* Bulles d'aide interactives */
+        /* Bulles d'aide interactives améliorées */
         .highlight {
             background-color: #ffe4e6;
             color: #b91c1c;
@@ -178,8 +178,8 @@
         .flashcard-wrapper {
             perspective: 1000px;
             width: 100%;
-            max-width: 500px;
-            height: 300px;
+            max-width: 450px;
+            height: 280px;
         }
 
         .flashcard {
@@ -206,7 +206,7 @@
             align-items: center;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 25px;
+            padding: 30px;
             text-align: center;
         }
 
@@ -223,19 +223,9 @@
         }
 
         .card-text {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 15px;
-        }
-
-        .card-subtext {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        .card-back .card-subtext {
-            color: #bfdbfe;
         }
 
         .audio-btn {
@@ -349,8 +339,9 @@
 
 <div class="container">
     <header>
+        <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
         <h1>Session de Français</h1>
-        <p>Maîtrisez les nuances du jour : en fait, croiser, rater, emmener...</p>
+        <p>Apprenez le vocabulaire de façon interactive et ludique !</p>
     </header>
 
     <!-- Onglets -->
@@ -363,26 +354,31 @@
     <!-- Contenu : Histoire -->
     <section id="histoire" class="tab-content active">
         <div class="story-card">
-            <h2>Une rencontre inattendue 🚶‍♂️☕</h2>
+            <h2>Une soirée inoubliable 🎆</h2>
             <br>
             <p class="story-text">
-                <span class="highlight" data-translation="By the way" tabIndex="0">Au fait</span>, je dois te raconter ma matinée ! Je voulais aller dans ce nouveau café du centre-ville. <span class="highlight" data-translation="Actually / In fact" tabIndex="0">En fait</span>, je pensais que c'était fermé, mais c'était bien ouvert. En m'y rendant, j'ai couru car je ne voulais pas <span class="highlight" data-translation="to miss the bus" tabIndex="0">rater le bus</span>. Malheureusement, j'ai quand même réussi à le <span class="highlight" data-translation="to miss / to fail" tabIndex="0">rater</span>.
+                Chaque année, pour la <span class="highlight" data-translation="national day" tabIndex="0">fête nationale</span>, ma ville s'anime d'une énergie incroyable. 
+                <span class="highlight" data-translation="many years ago" tabIndex="0">Il y a de nombreuses années</span>, mon grand-père m'a emmené voir le grand 
+                <span class="highlight" data-translation="fire artwork" tabIndex="0">feu d'artifice</span> pour la première fois. Je m'en souviens encore : les couleurs dans le ciel, 
+                <span class="highlight" data-translation="it's so astonishing" tabIndex="0">c'est à couper le souffle</span> ! 
             </p>
             <p class="story-text">
-                J'ai donc décidé de <span class="highlight" data-translation="to cross the street" tabIndex="0">traverser la rue</span> et de marcher jusqu'au quartier latin. C'est un endroit magnifique, <span class="highlight" data-translation="one can find students, pubs, and libraries" tabIndex="0">on y croise des étudiants, des bars et des bibliothèques</span>. Soudain, <span class="highlight" data-translation="I've met a friend in the street" tabIndex="0">j'ai croisé un ami dans la rue</span>. On s'est <span class="highlight" data-translation="to look at each other" tabIndex="0">croisés du regard</span> et il m'a dit : « Quelle coïncidence ! Je vais chez Pierre, je dois lui <span class="highlight" data-translation="to bring (an object) to someone" tabIndex="0">apporter</span> son livre. Viens avec moi, je peux t' <span class="highlight" data-translation="to guide/take (someone) along" tabIndex="0">emmener</span> ! »
+                Après le spectacle, tout le monde se dirige vers <span class="highlight" data-translation="ball (dance) of the fire fighters" tabIndex="0">le bal des pompiers</span> pour danser jusqu'à l'aube. C'est une ambiance magique qu'on ne trouve 
+                <span class="highlight" data-translation="nowhere else" tabIndex="0">nulle part ailleurs</span>. On y croise des habitants locaux et aussi <span class="highlight" data-translation="people from elsewhere" tabIndex="0">les gens venus d'ailleurs</span> qui découvrent nos traditions. 
             </p>
             <p class="story-text">
-                J'ai répondu : « Je veux bien t'accompagner, mais <span class="highlight" data-translation="I am not aware of these infos" tabIndex="0">je ne suis pas au fait de ces informations</span> : Pierre a déménagé ? » Mon ami a ri et m'a dit : « Oui, <span class="highlight" data-translation="in fact" tabIndex="0">en fait</span>, il habite juste ici. Je <span class="highlight" data-translation="cross fingers" tabIndex="0">croise les doigts</span> pour qu'il soit chez lui ! »
+                Si vous n'aimez pas le bruit, <span class="highlight" data-translation="try to see elsewhere" tabIndex="0">essayez d'aller voir ailleurs</span>, mais vous rateriez une fête légendaire. 
+                <span class="highlight" data-translation="By the way, I have a video to show you" tabIndex="0">D'ailleurs, j'ai une vidéo à te montrer</span> de la fête de l'an dernier !
             </p>
             <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: 10px;">💡 Astuce : Cliquez ou survolez les mots surlignés en rouge pour voir leur traduction en anglais !</p>
             
             <!-- Traduction de l'histoire -->
             <button class="translation-toggle" onclick="toggleTranslation()">🇬🇧 Afficher la traduction anglaise</button>
             <div id="story-en" class="story-translation">
-                <p class="story-text"><strong>An unexpected encounter 🚶‍♂️☕</strong></p>
-                <p class="story-text"><strong>By the way</strong>, I have to tell you about my morning! I wanted to go to this new café downtown. <strong>Actually</strong>, I thought it was closed, but it was wide open. On my way there, I ran because I didn't want to <strong>miss the bus</strong>. Unfortunately, I still managed to <strong>miss</strong> it.</p>
-                <p class="story-text">So I decided to <strong>cross the street</strong> and walk to the Latin Quarter. It's a beautiful place, <strong>one can find students, pubs, and libraries there</strong>. Suddenly, <strong>I met a friend in the street</strong>. We <strong>looked at each other (caught each other's eye)</strong> and he said: "What a coincidence! I'm going to Pierre's, I have to <strong>bring</strong> him his book. Come with me, I can <strong>take/guide you along</strong>!"</p>
-                <p class="story-text">I replied: "I'd love to come with you, but <strong>I am not aware of this information</strong>: did Pierre move?" My friend laughed and said: "Yes, <strong>in fact</strong>, he lives right here. I'm <strong>crossing my fingers</strong> that he is home!"</p>
+                <p class="story-text"><strong>An unforgettable evening 🎆</strong></p>
+                <p class="story-text">Every year, for the <strong>national day</strong>, my town comes alive with an incredible energy. <strong>Many years ago</strong>, my grandfather took me to see the big <strong>fire artwork</strong> for the first time. I still remember it: the colors in the sky, <strong>it's so astonishing</strong>!</p>
+                <p class="story-text">After the show, everyone heads to the <strong>ball (dance) of the fire fighters</strong> to dance until dawn. It's a magical atmosphere that you can find <strong>nowhere else</strong>. We meet local residents and also <strong>people from elsewhere</strong> who are discovering our traditions.</p>
+                <p class="story-text">If you don't like noise, <strong>try to see elsewhere</strong>, but you would miss a legendary party. <strong>By the way, I have a video to show you</strong> of last year's party!</p>
             </div>
         </div>
     </section>
@@ -390,21 +386,19 @@
     <!-- Contenu : Cartes Mémoires -->
     <section id="cartes" class="tab-content">
         <div class="cards-container">
-            <p>Cliquez sur la carte pour voir sa traduction. Utilisez le bouton 🔊 pour l'audio français.</p>
+            <p>Cliquez sur la carte pour la retourner et voir la traduction en anglais.</p>
             <div class="flashcard-wrapper">
                 <div class="flashcard" id="card" onclick="flipCard()">
                     <!-- Recto (Français) -->
                     <div class="card-face card-front">
-                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: bold; margin-bottom: 5px;">FRANÇAIS</span>
+                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: bold; margin-bottom: 10px;">FRANÇAIS</span>
                         <div class="card-text" id="card-fr">Chargement...</div>
-                        <div class="card-subtext" id="card-fr-sub"></div>
                         <button class="audio-btn" onclick="speakFrench(event)" title="Écouter la prononciation">🔊</button>
                     </div>
                     <!-- Verso (Anglais) -->
                     <div class="card-face card-back">
-                        <span style="font-size: 0.8rem; color: #93c5fd; font-weight: bold; margin-bottom: 5px;">ANGLAIS</span>
+                        <span style="font-size: 0.8rem; color: #93c5fd; font-weight: bold; margin-bottom: 10px;">ANGLAIS</span>
                         <div class="card-text" id="card-en">Loading...</div>
-                        <div class="card-subtext" id="card-en-sub"></div>
                     </div>
                 </div>
             </div>
@@ -429,20 +423,22 @@
             </div>
         </div>
     </section>
+    <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+        
 </div>
 
 <script>
     const vocabulary = [
-        { fr: "au fait", frSub: "(= au courant)", en: "by the way / aware of", enSub: "" },
-        { fr: "en fait", frSub: "(= en réalité)", en: "actually / in fact", enSub: "" },
-        { fr: "je ne suis pas au fait de ces informations", frSub: "(= pas au courant)", en: "I am not aware of these infos", enSub: "" },
-        { fr: "croiser", frSub: "(un ami / les doigts)", en: "to cross / to meet", enSub: "to cross fingers / to meet a friend" },
-        { fr: "traverser la rue", frSub: "", en: "to cross the street", enSub: "" },
-        { fr: "croiser du regard", frSub: "", en: "to look at each other / catch eyes", enSub: "" },
-        { fr: "on y croise des étudiants", frSub: "(= on y trouve / on y voit)", en: "one can find / see students there", enSub: "" },
-        { fr: "rater", frSub: "(le bus / un plat / la cible)", en: "to miss / to fail / to screw up", enSub: "" },
-        { fr: "apporter", frSub: "(= apporter un objet à quelqu'un)", en: "to bring (an object)", enSub: "" },
-        { fr: "emmener", frSub: "(= guider quelqu'un, 'ensemble')", en: "to guide / take (someone)", enSub: "" }
+        { fr: "fête nationale", en: "national day" },
+        { fr: "feu d'artifice", en: "fire artwork" },
+        { fr: "il y a de nombreuses années", en: "many years ago" },
+        { fr: "le bal des pompiers", en: "ball (dance) of the fire fighters" },
+        { fr: "c'est à couper le souffle", en: "it's so astonishing" },
+        { fr: "ailleurs", en: "elsewhere" },
+        { fr: "nulle part ailleurs", en: "nowhere else" },
+        { fr: "essayez d'aller voir ailleurs", en: "try to see elsewhere" },
+        { fr: "les gens venus d'ailleurs", en: "people from elsewhere" },
+        { fr: "d'ailleurs j'ai une vidéo à te montrer", en: "By the way, I have a video to show you" }
     ];
 
     // --- Fonction d'affichage de la traduction de l'histoire ---
@@ -473,18 +469,13 @@
     let currentCardIndex = 0;
     const cardEl = document.getElementById('card');
     const cardFrEl = document.getElementById('card-fr');
-    const cardFrSubEl = document.getElementById('card-fr-sub');
     const cardEnEl = document.getElementById('card-en');
-    const cardEnSubEl = document.getElementById('card-en-sub');
 
     function showCard() {
         cardEl.classList.remove('flipped');
         setTimeout(() => {
-            const item = vocabulary[currentCardIndex];
-            cardFrEl.textContent = item.fr;
-            cardFrSubEl.textContent = item.frSub || "";
-            cardEnEl.textContent = item.en;
-            cardEnSubEl.textContent = item.enSub || "";
+            cardFrEl.textContent = vocabulary[currentCardIndex].fr;
+            cardEnEl.textContent = vocabulary[currentCardIndex].en;
         }, 150);
     }
 

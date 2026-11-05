@@ -1,9 +1,9 @@
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Les Incontournables de Provence - Application Web Interactive</title>
+  <title>A slow day in Aix-en-Provence - Application Web Interactive</title>
   <style>
     :root {
       --primary: #4a2e80;
@@ -24,6 +24,10 @@ html_content = """<!DOCTYPE html>
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    a {
+      color: var(--accent);
+    }
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -297,15 +301,17 @@ html_content = """<!DOCTYPE html>
 <body>
 
   <header>
-    <h1>Découvrir la Provence avec Partir.com</h1>
-    <p>Application pédagogique interactive : Vidéo, QCM de langue française et expressions clés</p>
+    <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+        
+    <h1>Une journée tranquille à Aix-en-Provence</h1>
+    <p>Application pédagogique basée sur le French Vlog d'Adeline Talks</p>
   </header>
 
   <main>
     <!-- Section 1 : Vidéo YouTube -->
     <h2 class="section-title">1. Visionnage de la vidéo</h2>
     <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/eTr3w6PVWvw" title="Places not to be missed in Provence - Partir.com" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/VEJm6HD7rQg" title="A slow day in Aix-en-Provence - Adeline Talks" allowfullscreen></iframe>
     </div>
 
     <!-- Section 2 : QCM -->
@@ -313,7 +319,7 @@ html_content = """<!DOCTYPE html>
 
     <div class="score-banner">
       <h3>Votre Score : <span id="score">0</span> / 20</h3>
-      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre niveau de français !</p>
+      <p id="score-msg">Répondez aux questions ci-dessous pour tester votre compréhension et votre français !</p>
     </div>
 
     <div class="quiz-nav">
@@ -329,6 +335,8 @@ html_content = """<!DOCTYPE html>
     <!-- Section 3 : Expressions -->
     <h2 class="section-title">3. Expressions utiles issues de la vidéo</h2>
     <div class="expressions-grid" id="expressions-container"></div>
+    <a href="../../index.html" style="text-decoration: none;">⬅ Retour vers le menu</a>
+        
   </main>
 
   <script>
@@ -338,71 +346,71 @@ html_content = """<!DOCTYPE html>
         id: 1,
         category: 'comprehension',
         catLabel: 'Compréhension',
-        question: "Quel est l'objectif principal de la vidéo produite par Partir.com ?",
+        question: "Pourquoi Adeline se rend-elle en ville le samedi matin au début de la vidéo ?",
         options: [
-          "Présenter une recette de cuisine traditionnelle provençale",
-          "Faire découvrir les lieux et paysages incontournables de la Provence",
-          "Expliquer l'histoire politique de la région Provence-Alpes-Côte d'Azur",
-          "Comparer les prix des hôtels dans le sud de la France"
+          "Pour acheter de nouveaux vêtements de sport",
+          "Pour avancer sur ses achats de cadeaux de Noël",
+          "Pour chercher un appartement à louer",
+          "Pour prendre des cours de peinture dans une galerie"
         ],
         answer: 1,
-        explanation: "La vidéo de Partir.com est un guide de voyage visuel présentant les plus beaux sites touristiques et paysages de Provence."
+        explanation: "Adeline explique dès le début [00:01:01] qu'elle doit se rendre en ville pour faire ses cadeaux de Noël car elle est en retard."
       },
       {
         id: 2,
         category: 'comprehension',
         catLabel: 'Compréhension',
-        question: "Quel paysage emblématique de la Provence est célèbre pour ses fleurs violettes en été ?",
+        question: "Où Adeline conseille-t-elle de se rendre pour trouver des événements gratuits et des bons plans localement ?",
         options: [
-          "Les champs de lavande du plateau de Valensole",
-          "Les rizières de Camargue",
-          "Les forêts de sapins du Mercantour",
-          "Les oliveraies de Nyons"
+          "À la mairie du quartier",
+          "À la gare ferroviaire",
+          "À l'office de tourisme",
+          "Dans les supermarchés"
         ],
-        answer: 0,
-        explanation: "Les champs de lavande du plateau de Valensole et du Luberon sont mondialement connus pour leur floraison estivale."
+        answer: 2,
+        explanation: "Elle explique à [00:02:46] qu'elle s'est arrêtée à l'office de tourisme pour récupérer l'agenda culturel et recommande chaudement d'y passer."
       },
       {
         id: 3,
         category: 'comprehension',
         catLabel: 'Compréhension',
-        question: "Quel grand canyon naturel est souvent présenté comme l'un des plus impressionnants d'Europe dans cette vidéo ?",
+        question: "Qu'a trouvé Adeline dans une 'boîte à livres' au cours de sa promenade ?",
         options: [
-          "Les Gorges du Tarn",
-          "Le Canyon du Colorado provençal",
-          "Les Gorges du Verdon",
-          "La vallée de la Dordogne"
+          "Deux romans policiers contemporains",
+          "Un livre de poésie italienne et un dictionnaire",
+          "Les 'Maximes' de La Rochefoucauld et un livre illustré de Louise de Vilmorin",
+          "Un carnet de recettes provençales anciennes"
         ],
         answer: 2,
-        explanation: "Les Gorges du Verdon, avec leurs eaux turquoise spectaculaires, forment le plus grand canyon d'Europe."
+        explanation: "À [00:07:44], elle montre les 'Maximes' de La Rochefoucauld et un ouvrage illustré de Louise de Vilmorin trouvés gratuitement."
       },
       {
         id: 4,
         category: 'comprehension',
         catLabel: 'Compréhension',
-        question: "Quelle cité historique célèbre pour son palais des Papes figure parmi les étapes phares de la région ?",
+        question: "Quelle habitude Adeline a-t-elle adoptée pour améliorer son bien-être au quotidien ?",
         options: [
-          "Aix-en-Provence",
-          "Avignon",
-          "Arles",
-          "Marseille"
+          "Faire 2 heures de sport tous les matins",
+          "Utiliser un vrai réveil à l'ancienne et bannir le téléphone du lit",
+          "Supprimer complètement tous ses comptes de réseaux sociaux",
+          "Déménager à la campagne près de la montagne"
         ],
         answer: 1,
-        explanation: "Avignon est mondialement connue pour son Palais des Papes et son célèbre pont Saint-Bénézet."
+        explanation: "À [00:11:06], elle explique qu'elle utilise désormais un vrai réveil pour ne plus garder son téléphone près du lit et limiter le 'scrolling'."
       },
       {
         id: 5,
         category: 'comprehension',
         catLabel: 'Compréhension',
-        question: "Quel parc naturel côtier offre des falaises calcaires majestueuses tombant dans la mer Méditerranée ?",
+        question: "Pourquoi l'amie d'Adeline est-elle très enthousiaste en fin de journée ?",
         options: [
-          "Le Parc national des Écrins",
-          "Le Parc naturel régional du Queyras",
-          "Le Parc national des Calanques",
-          "Le Bassin d'Arcachon"
+          "Elle vient d'adopter un chien",
+          "Son fils revient du froid canadien pour les fêtes",
+          "Elle a gagné un voyage en France",
+          "Elle ouvre une nouvelle friperie à Aix"
         ],
-        answer: 2,
-        explanation: "Le Parc national des Calanques, entre Marseille et Cassis, offre des paysages côtiers uniques entre roche blanche et mer turquoise."
+        answer: 1,
+        explanation: "À [00:15:00], Adeline explique que son amie s'est faite belle car son fils rentre du « grand froid canadien »."
       },
 
       // VOCABULAIRE (5)
@@ -410,71 +418,71 @@ html_content = """<!DOCTYPE html>
         id: 6,
         category: 'vocabulaire',
         catLabel: 'Vocabulaire',
-        question: "Que signifie l'expression 'Incontournable' (ex: 'les lieux incontournables') ?",
+        question: "Que signifie la locution familière 'Être à la bourre' (ex: 'Je suis à la bourre') ?",
         options: [
-          "Un endroit difficile d'accès où l'on se perd facilement",
-          "Un site tellement essentiel ou célèbre qu'il faut absolument le visiter",
-          "Un chemin interdit aux touristes",
-          "Un lieu payant réservé aux visites guidées"
+          "Être fatigué après une longue marche",
+          "Être en retard ou très pressé par le temps",
+          "Avoir beaucoup d'argent sur soi",
+          "Être très en colère contre quelqu'un"
         ],
         answer: 1,
-        explanation: "'Incontournable' désigne ce qu'on ne peut pas contourner ou éviter, donc un lieu indispensable à voir."
+        explanation: "En français familier, 'être à la bourre' signifie être en retard ou manquer de temps."
       },
       {
         id: 7,
         category: 'vocabulaire',
         catLabel: 'Vocabulaire',
-        question: "Qu'est-ce qu'une 'Calanque' dans la géographie du Sud de la France ?",
+        question: "Qu'est-ce qu'une 'Friperie' (mentionnée à 04:49) ?",
         options: [
-          "Une petite colline recouverte d'oliviers",
-          "Une baie ou crique étroite et profonde encadrée de falaises calcaires escarpées",
-          "Un marché traditionnel du matin",
-          "Un champ irrigable près d'un fleuve"
+          "Une boulangerie spécialisée dans la brioche",
+          "Un magasin qui vend des vêtements d'occasion ou vintage",
+          "Un atelier de réparation de téléphones",
+          "Une librairie de bandes dessinées"
         ],
         answer: 1,
-        explanation: "Une calanque est une formation géologique caractéristique de la côte méditerranéenne formée d'une vallée encaissée dans de la roche."
+        explanation: "Une friperie est une boutique spécialisée dans la vente d'habits de seconde main."
       },
       {
         id: 8,
         category: 'vocabulaire',
         catLabel: 'Vocabulaire',
-        question: "Que désigne le terme provençal 'Mas' ?",
+        question: "Que désigne une 'Boîte à livres' dans l'espace public ?",
         options: [
-          "Un bateau de pêcheur traditionnel",
-          "Une grande maison de campagne traditionnelle en pierre typique du Sud de la France",
-          "Une fête de village estivale",
-          "Un vêtement en toile de coton"
+          "Une boîte postale réservée aux éditeurs",
+          "Un petit mobilier urbain où chacun peut déposer ou prendre des livres gratuitement",
+          "Un conteneur pour recycler le carton",
+          "Un coffre-fort dans une bibliothèque"
         ],
         answer: 1,
-        explanation: "Le 'mas' est la ferme traditionnelle ou la maison de campagne de Provence."
+        explanation: "Une boîte à livres est une petite armoire publique de partage gratuit de livres entre citoyens."
       },
       {
         id: 9,
         category: 'vocabulaire',
         catLabel: 'Vocabulaire',
-        question: "Que signifie le verbe 'S'émerveiller' ?",
+        question: "Que signifie l'expression populaire 'Enfoncer des portes ouvertes' (mentionnée à 13:34) ?",
         options: [
-          "Ressentir une grande admiration mêlée d'étonnement et de plaisir",
-          "Chercher son chemin sans carte",
-          "Se plaindre de la chaleur de l'été",
-          "Prendre des photos en continu"
+          "Entrer dans un magasin sans payer",
+          "Répéter une vérité évidente que tout le monde sait déjà",
+          "Faire des efforts physiques considérables",
+          "Casser du matériel par maladresse"
         ],
-        answer: 0,
-        explanation: "S'émerveiller signifie éprouver un sentiment d'admiration émerveillée face à la beauté d'un lieu."
+        answer: 1,
+        explanation: "'Enfoncer des portes ouvertes' signifie affirmer une chose évidente ou déjà connue de tous."
       },
       {
         id: 10,
         category: 'vocabulaire',
         catLabel: 'Vocabulaire',
-        question: "Qu'est-ce que la 'Garrigue' ?",
+        question: "Que signifie le mot 'Pépite' au sens figuré quand Adeline dit 'On peut trouver des pépites' ?",
         options: [
-          "Une forêt de grands sapins de montagne",
-          "Une végétation basse et aromatique (thym, romarin, lavande) typique du climat méditerranéen",
-          "Une spécialité culinaire à base de poissons",
-          "Un vent froid qui souffle depuis les Alpes"
+          "Un petit morceau d'or brut",
+          "Une chose exceptionnelle, rare ou très précieuse",
+          "Un gâteau au chocolat",
+          "Une erreur amusante"
         ],
         answer: 1,
-        explanation: "La garrigue est la formation végétale méditerranéenne poussant sur les terrains calcaires."
+        explanation: "Au sens figuré, une 'pépite' est une découverte d'une qualité remarquable ou d'une grande valeur."
       },
 
       // GRAMMAIRE (5)
@@ -482,71 +490,71 @@ html_content = """<!DOCTYPE html>
         id: 11,
         category: 'grammaire',
         catLabel: 'Grammaire',
-        question: "Dans la phrase 'Pour bien profiter de votre séjour, il est conseillé de réserver à l'avance', quelle est la formule 'il est conseillé de' ?",
+        question: "Dans la phrase 'Il faut que je fasse quelques petites choses', à quel mode est conjugué le verbe 'faire' ?",
         options: [
-          "Une tournure impersonnelle suivie d'un infinitif",
-          "Un verbe au futur antérieur",
-          "Un subjonctif présent passif",
-          "Une forme pronominale obligatoire"
+          "Indicatif présent",
+          "Subjonctif présent",
+          "Conditionnel présent",
+          "Impératif"
         ],
-        answer: 0,
-        explanation: "'Il est + adjectif/participe + de + infinitif' est une structure impersonnelle courante pour donner une recommandation."
+        answer: 1,
+        explanation: "La tournure impersonnelle 'Il faut que...' nécessite obligatoirement l'emploi du subjonctif ('que je fasse')."
       },
       {
         id: 12,
         category: 'grammaire',
         catLabel: 'Grammaire',
-        question: "Dans la phrase 'C'est une région dont les paysages sont magnifiques', quel est le rôle du pronom 'dont' ?",
+        question: "Dans la phrase 'J'ai l'impression que ça fait 48 ans que je n'ai pas filmé', quelle est la valeur de 'ne' ?",
         options: [
-          "Pronom relatif complétant un nom introduit par la préposition 'de' ('les paysages de cette région')",
-          "Pronom démonstratif marquant une distance",
-          "Adverbe de lieu désignant la Provence",
-          "Conjonction de subordination exprimant le temps"
+          "Un 'ne' explétif facultatif",
+          "La première partie de la négation 'ne... pas' marquant une durée écoulée",
+          "Un pronom relatif contracté",
+          "Une faute de grammaire"
         ],
-        answer: 0,
-        explanation: "'Dont' remplace un complément précédé de 'de' (les paysages de la région -> une région dont les paysages...)."
+        answer: 1,
+        explanation: "Il s'agit de la structure négative 'ne... pas' au passé composé pour indiquer l'interruption d'une action depuis un moment."
       },
       {
         id: 13,
         category: 'grammaire',
         catLabel: 'Grammaire',
-        question: "Quelle phrase exprime correctement une condition irréelle dans le présent ?",
+        question: "Complétez correctement la phrase de recommandation : 'C'est quelque chose que je vous conseille de ______.'",
         options: [
-          "Si vous visitez la Provence, vous serez content.",
-          "Si j'avais le temps, je visiterais les Gorges du Verdon cet été.",
-          "Si vous viendrez en Provence, appelez-moi.",
-          "Si nous avions réservé, nous serions arrivés hier."
+          "faites",
+          "faire",
+          "faisant",
+          "fait"
         ],
         answer: 1,
-        explanation: "La condition hypothétique dans le présent se forme avec : Si + Imparfait ('avais'), Conditionnel présent ('visiterais')."
+        explanation: "Après la structure 'conseiller de...', on utilise toujours le verbe à l'infinitif ('faire')."
       },
       {
         id: 14,
         category: 'grammaire',
         catLabel: 'Grammaire',
-        question: "Dans la phrase 'Les photos que j'ai prises montrent des champs de lavande', pourquoi 'prises' s'accorde-t-il au féminin pluriel ?",
+        question: "Dans la phrase 'Des choses très simples qui m'ont rendu plus sereine', pourquoi 'sereine' est-il au féminin ?",
         options: [
-          "Parce qu'il s'accorde toujours avec le sujet 'j''",
-          "Parce que le C.O.D. ('que' / 'les photos') est placé avant le verbe composé avec l'auxiliaire 'avoir'",
-          "Parce que le verbe 'prendre' est un verbe d'état",
-          "L'accord est une erreur de frappe"
+          "Parce qu'il s'accorde avec 'choses'",
+          "Parce que le pronom complément 'm'' désigne la youtubeuse (Adeline, une femme)",
+          "Parce qu'il s'accorde avec le verbe 'rendre'",
+          "C'est un adjectif invariable"
         ],
         answer: 1,
-        explanation: "Avec l'auxiliaire 'avoir', le participe passé s'accorde avec le C.O.D. si celui-ci est placé avant le verbe ('les photos que')."
+        explanation: "Le complément d'objet direct 'm'' (Adeline) est placé avant l'attribut de l'objet, qui s'accorde donc au féminin singulier."
       },
       {
         id: 15,
         category: 'grammaire',
         catLabel: 'Grammaire',
-        question: "Quelle préposition doit-on utiliser devant le nom de région 'Provence' (féminin) ?",
+        question: "Quelle tournure exprime une hypothèse non réalisée dans la phrase : 'Si j'avais du temps, je passerai à la librairie' ?",
         options: [
-          "Au (ex: Je vais au Provence)",
-          "En (ex: Je voyage en Provence)",
-          "À la (ex: Je réside à la Provence)",
-          "Dans le (ex: Je suis dans le Provence)"
+          "Correction : 'Si j'avais du temps, je passerais à la librairie' (Conditionnel)",
+          "La phrase d'origine est parfaitement exacte",
+          "Correction : 'Si j'aurais du temps, je passerai'",
+          "Correction : 'Si j'ai du temps, je passerais'"
         ],
-        answer: 1,
-        explanation: "Devant un nom de région ou de pays féminin (se terminant par un 'e'), on utilise la préposition 'en'."
+        answer: 0,
+        explanation: "La règle de l'hypothèse est : Si + Imparfait ('avais') -> Conditionnel présent ('passerais')."
       },
 
       // PRONONCIATION (5)
@@ -554,144 +562,144 @@ html_content = """<!DOCTYPE html>
         id: 16,
         category: 'prononciation',
         catLabel: 'Prononciation',
-        question: "Comment se prononce le nom de la ville provençale 'Aix-en-Provence' ?",
+        question: "Comment se prononce couramment le nom de la ville 'Aix-en-Provence' dans la bouche d'Adeline ?",
         options: [
-          "On prononce 'Aks-en-Provence' avec le son [ks]",
+          "On prononce 'Ex-en-Provence'",
+          "On prononce [ɛks.ɑ̃.pʁɔ.vɑ̃s] ('Aks-en-Provence')",
           "On prononce 'Aish-en-Provence'",
-          "On prononce 'A-en-Provence' (le x est muet)",
-          "On prononce 'Ex-en-Provence'"
+          "Le 'x' est totalement muet"
         ],
-        answer: 0,
-        explanation: "'Aix' dans Aix-en-Provence se prononce [ɛks] (comme 'axe' ou 'eks')."
+        answer: 1,
+        explanation: "'Aix' se prononce [ɛks] en français, faisant entendre distinctement le son 'ks'."
       },
       {
         id: 17,
         category: 'prononciation',
         catLabel: 'Prononciation',
-        question: "Dans l'accent du Sud de la France (accent provençal), quelle est une caractéristique très fréquente ?",
+        question: "Dans le langage parlé relâché, comment est souvent prononcée la phrase 'Je ne sais pas' ?",
         options: [
-          "On ne prononce jamais les consonne finales",
-          "On prononce souvent le 'e' muet final (ex: 'Provence' devient 'Pro-ven-sə')",
-          "On prononce tous les 'r' de manière roulée espagnole",
-          "On supprime toutes les voyelles nasales"
+          "« Chais pas » ou « Chsais pas »",
+          "« Je sais pas » avec accent circonflexe",
+          "« Je ne sais pas » en accentuant le 'ne'",
+          "« Je saura pas »"
         ],
-        answer: 1,
-        explanation: "L'accent du Midi se caractérise notamment par le maintien de la prononciation du 'e' muet final (le schwa)."
+        answer: 0,
+        explanation: "En français oral familier et fluide, le 'je ne' se réduit fréquemment à une élision rapide phonétisée « Chais pas »."
       },
       {
         id: 18,
         category: 'prononciation',
         catLabel: 'Prononciation',
-        question: "Comment se prononce la liaison dans l'expression 'Les_incontournables' ?",
+        question: "Comment se réalise la liaison dans 'Des_achats de Noël' ?",
         options: [
-          "Elle ne se fait pas : 'Les / incontournables'",
-          "On fait une liaison en [z] : 'Les-z-incontournables'",
-          "On fait une liaison en [t] : 'Les-t-incontournables'",
-          "On fait une liaison en [n] : 'Les-n-incontournables'"
+          "Aucune liaison : 'Des / achats'",
+          "Liaison en [z] : 'Des-z-achats'",
+          "Liaison en [t] : 'Des-t-achats'",
+          "Liaison en [n] : 'Des-n-achats'"
         ],
         answer: 1,
-        explanation: "Entre le déterminant 'les' et un adjectif/nom commençant par une voyelle, la liaison en [z] est obligatoire."
+        explanation: "La liaison entre le déterminant pluriel 'des' et le nom commençant par une voyelle 'achats' est une liaison obligatoire en [z]."
       },
       {
         id: 19,
         category: 'prononciation',
         catLabel: 'Prononciation',
-        question: "Comment se prononce le nom du village célèbre 'Roussillon' ?",
+        question: "Comment se prononce le verbe 's'ennuyer' (mentionné à 11:50) ?",
         options: [
-          "On prononce le 'ill' comme un 'l' double dur (Rous-ti-lon)",
-          "On prononce le 'ill' comme un 'y' semi-voyelle [ʁusijɔ̃] (Rous-si-yon)",
-          "On prononce 'Rous-si-gon'",
-          "Le 's' central se prononce comme un [z]"
+          "Le 'en' se prononce nasal [ɑ̃] et le 'ui' comme la semi-voyelle [ɥi]",
+          "On prononce 's-en-nu-yer' avec un 'l' dur",
+          "Le 'en' se prononce 'in'",
+          "Toutes les voyelles sont muettes"
         ],
-        answer: 1,
-        explanation: "Le groupe 'ill' précédé d'une voyelle forme le son mouillé /j/ (comme dans 'famille' ou 'papillon')."
+        answer: 0,
+        explanation: "Le mot combine la voyelle nasale [ɑ̃] ('en') et le groupe [ɥi] ('nuyer')."
       },
       {
         id: 20,
         category: 'prononciation',
         catLabel: 'Prononciation',
-        question: "Dans le mot 'Gorges' (ex: 'les Gorges du Verdon'), comment se prononcent les deux 'g' ?",
+        question: "Dans le mot 'Sereine' [01:11:00], comment se prononce la combinaison 'ei' ?",
         options: [
-          "Le premier est dur [g] et le second est doux [ʒ]",
-          "Les deux 'g' se prononcent de manière douce [ʒ] (comme le 'j' de jour)",
-          "Les deux 'g' sont durs [g] (comme dans gâteau)",
-          "Le premier est muet et le second est dur"
+          "Elle se prononce comme le son ouvert [ɛ] ('è')",
+          "Elle se prononce comme un 'é' fermé [e]",
+          "Elle se prononce comme la voyelle nasale 'in'",
+          "Elle se prononce 'ouille'"
         ],
-        answer: 1,
-        explanation: "Devant la voyelle 'o' suivie de 'r' et 'e', 'g' se prononce [ʒ] (doux) dans 'Gorges'."
+        answer: 0,
+        explanation: "Le graphème 'ei' devant une consonne prononcée forme le son voyelle [ɛ] (comme dans 'reine' ou 'peine')."
       }
     ];
 
     const expressions = [
       {
-        title: "Les lieux incontournables",
-        translation: "Must-see places / Unmissable spots",
-        meaning: "Les endroits essentiels et les plus célèbres qu'il faut absolument visiter lors d'un voyage.",
-        example: "Le Palais des Papes d'Avignon fait partie des lieux incontournables lors d'une visite en Provence.",
-        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80"
+        title: "Être à la bourre",
+        translation: "To be running late / To be in a rush",
+        meaning: "Manquer de temps ou être en retard pour effectuer ses tâches.",
+        example: "Dépêche-toi, le train part dans dix minutes et nous sommes complètement à la bourre !",
+        image: "https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Valoir le détour",
-        translation: "To be worth a detour / Worth visiting",
-        meaning: "Mériter qu'on s'y arrête ou qu'on fasse un petit crochet sur son itinéraire.",
-        example: "Ce petit village perché au sommet de la colline vaut vraiment le détour !",
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+        title: "Se poser dans un café",
+        translation: "To chill / settle down in a cafe",
+        meaning: "S'installer confortablement à une table de café pour se détendre, travailler ou discuter.",
+        example: "Après une longue marche en ville, j'aime bien me poser dans un café avec un bon bouquin.",
+        image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Prendre un bain de soleil",
-        translation: "To sunbathe / To soak up the sun",
-        meaning: "S'exposer au soleil pour se détendre, bronzer et profiter de la chaleur.",
-        example: "En été, les touristes aiment prendre un bain de soleil sur la plage de Cassis.",
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+        title: "Faire un tour",
+        translation: "To take a stroll / To have a look around",
+        meaning: "Se promener brièvement dans un quartier ou visiter rapidement un magasin.",
+        example: "Cet après-midi, je vais faire un tour au marché pour acheter des légumes frais.",
+        image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "À couper le souffle",
-        translation: "Breathtaking / Stunning",
-        meaning: "Qui provoque une immense admiration ou un émerveillement par sa grande beauté.",
-        example: "La vue panoramique depuis le sommet des falaises du Verdon est tout simplement à couper le souffle.",
-        image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80"
+        title: "Dénicher une pépite",
+        translation: "To unearth a gem / a rare find",
+        meaning: "Trouver par hasard un objet, un livre ou un endroit rare et merveilleux.",
+        example: "Dans cette petite librairie d'occasion, j'ai réussi à dénicher une vraie pépite littéraire.",
+        image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Hors des sentiers battus",
-        translation: "Off the beaten path / Off the beaten track",
-        meaning: "Loin des circuits touristiques habituels et des endroits très fréquentés.",
-        example: "Pour découvrir la vraie Provence authentique, nous avons préféré voyager hors des sentiers battus.",
-        image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"
+        title: "C'est Noël avant l'heure",
+        translation: "Christmas came early!",
+        meaning: "Recevoir une excellente surprise ou un beau cadeau de façon inattendue.",
+        example: "Quand mon chef m'a annoncé ma promotion imprévue, c'était vraiment Noël avant l'heure !",
+        image: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Flâner dans les ruelles",
-        translation: "To stroll through narrow streets",
-        meaning: "Se promener lentement, sans but précis, pour le simple plaisir d'observer le paysage.",
-        example: "Nous avons passé l'après-midi à flâner dans les ruelles pavées du village de Gordes.",
-        image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80"
+        title: "Prendre de bonnes résolutions",
+        translation: "To make New Year's resolutions",
+        meaning: "Décider de changer ses habitudes pour améliorer sa vie, souvent au début de l'année.",
+        example: "Chaque mois de janvier, beaucoup de gens prennent de bonnes résolutions comme faire du sport.",
+        image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "En prendre plein les yeux",
-        translation: "To feast one's eyes / To be blown away by the sight",
-        meaning: "Voir des paysages ou des choses magnifiques et très impressionnantes.",
-        example: "Durant notre randonnée dans les Calanques de Marseille, nous en avons pris plein les yeux !",
-        image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80"
+        title: "Prendre du temps pour soi",
+        translation: "To take time for oneself / Me time",
+        meaning: "Réserver des moments dans sa journée pour se reposer loin du stress et des obligations.",
+        example: "Même avec un emploi du temps chargé, il faut penser à prendre du temps pour soi le week-end.",
+        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Se mettre au vert",
-        translation: "To get away from it all in the countryside",
-        meaning: "Quitter la ville encombrée pour aller se reposer à la campagne au contact de la nature.",
-        example: "Après une longue année de travail à Paris, toute la famille part se mettre au vert dans un mas provençal.",
-        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"
+        title: "Enfoncer des portes ouvertes",
+        translation: "To state the obvious",
+        meaning: "Répéter ou affirmer une chose que tout le monde sait déjà parfaitement.",
+        example: "En disant qu'il faut dormir pour être en bonne santé, il ne fait qu'enfoncer des portes ouvertes.",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Prendre son temps",
-        translation: "To take one's time / To slow down",
-        meaning: "Faire les choses tranquillement, sans se presser, en profitant du moment présent.",
-        example: "Ici en Provence, la vie est paisible et il faut savoir prendre son temps.",
-        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80"
+        title: "Se faire tout beau / toute belle",
+        translation: "To doll oneself up / To dress up",
+        meaning: "S'habiller élégamment et se préparer soigneusement pour une occasion spéciale.",
+        example: "Elle s'est faite toute belle ce soir pour accueillir son mari de retour de voyage.",
+        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80"
       },
       {
-        title: "Faire le plein de souvenirs",
-        translation: "To gather memories / To stock up on memories",
-        meaning: "Vivre beaucoup d'expériences mémorables que l'on gardera longtemps en mémoire.",
-        example: "Ce voyage guidé en Méditerranée nous a permis de faire le plein de beaux souvenirs en famille.",
-        image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80"
+        title: "Prendre soin de ses proches",
+        translation: "To take care of one's loved ones",
+        meaning: "Veiller au bien-être et à la santé de sa famille et de ses amis.",
+        example: "Pendant les fêtes de fin d'année, l'important est de se réunir et de prendre soin de ses proches.",
+        image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80"
       }
     ];
 
@@ -785,11 +793,11 @@ html_content = """<!DOCTYPE html>
       const answeredCount = Object.keys(userAnswers).length;
       if (answeredCount === 20) {
         if (currentScore >= 18) {
-          msg.innerText = "Félicitations ! Vous maîtrisez parfaitement le vocabulaire et les connaissances sur la Provence !";
+          msg.innerText = "Félicitations ! Vous avez une excellente compréhension du vlog d'Adeline !";
         } else if (currentScore >= 12) {
-          msg.innerText = "Très bon travail ! Vous avez une bonne compréhension globale.";
+          msg.innerText = "Très bon travail ! Votre niveau de français est solide.";
         } else {
-          msg.innerText = "Bon effort ! Réévisez les questions et réécoutez la vidéo pour progresser.";
+          msg.innerText = "Bonne tentative ! Re-visionnez la vidéo pour réviser le vocabulaire et la grammaire.";
         }
       } else {
         msg.innerText = `${answeredCount} / 20 question(s) répondue(s).`;
