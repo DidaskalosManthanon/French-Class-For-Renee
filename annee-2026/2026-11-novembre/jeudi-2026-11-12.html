@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cette révolte n'est pas politique* — Analyse & Français</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cobalt: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        terracotta: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        slatebrand: {
+                            850: '#172033',
+                            900: '#0f172a',
+                            950: '#080d1a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%);
+        }
+        .tab-btn.active {
+            border-bottom: 3px solid #ea580c;
+            color: #1e3a8a;
+            background-color: #eff6ff;
+            font-weight: 700;
+        }
+        .pulse-correct {
+            animation: pulseGreen 0.45s ease-out;
+        }
+        .shake-wrong {
+            animation: shakeRed 0.4s ease-in-out;
+        }
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.015); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+        .highlight-expr {
+            background-color: #ffedd5;
+            color: #9a3412;
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            border-bottom: 2px solid #f97316;
+            transition: all 0.25s ease;
+        }
+        .highlight-hidden {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-bottom: none;
+            font-weight: inherit;
+        }
+        /* Masquer la barre de défilement sur les onglets mobiles */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased flex flex-col min-h-screen">
+
+    <!-- EN-TÊTE ÉDITORIAL -->
+    <header class="hero-gradient text-white relative overflow-hidden shadow-xl">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+                <div class="space-y-5 text-center lg:text-left max-w-3xl">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold tracking-wider uppercase text-cobalt-100">
+                        <i class="fa-solid fa-chart-line text-terracotta-500"></i>
+                        <span>Analyse Sociopolitique & Langue Française</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                        « Cette révolte n'est pas politique* »
+                    </h1>
+                    <p class="text-base sm:text-lg text-cobalt-100 font-light leading-relaxed">
+                        Comprendre les crises sociales modernes grâce à la <strong>Théorie Structurelle-Démographique</strong> de Peter Turchin, enrichir son vocabulaire analytique et pratiquer le français en contexte.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3 justify-center lg:justify-start">
+                        <a href="#video-section" class="px-5 py-3 bg-terracotta-600 hover:bg-terracotta-500 text-white font-bold rounded-xl transition shadow-lg flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-play"></i> Regarder & Résumé
+                        </a>
+                        <a href="#quiz-section" class="px-5 py-3 bg-white text-slate-900 hover:bg-cobalt-50 font-bold rounded-xl transition shadow-lg flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-list-check text-cobalt-600"></i> QCM (20 Questions)
+                        </a>
+                        <a href="#expressions-section" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/25 transition flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-layer-group"></i> 12 Expressions
+                        </a>
+                        <a href="#dialogue-section" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/25 transition flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-comments"></i> Dialogue Pratique
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Encart Synthèse Visuelle -->
+                <div class="w-full max-w-sm bg-slate-900/60 backdrop-blur-md border border-white/15 p-6 rounded-2xl shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-terracotta-500">Modèle de Peter Turchin</span>
+                        <span class="px-2 py-0.5 bg-amber-500/20 text-amber-300 text-xs rounded-md font-semibold">Voyant Moteur</span>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-200">
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-cobalt-600/40 text-cobalt-200 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
+                            <span><strong>La pompe à richesse :</strong> creusement des inégalités et stagnation des salaires.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-cobalt-600/40 text-cobalt-200 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
+                            <span><strong>La détresse fiscale :</strong> déficits publics et baisse des services de l'État.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-cobalt-600/40 text-cobalt-200 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
+                            <span><strong>La surproduction des élites :</strong> trop de diplômés pour trop peu de postes clés.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BARRE DE NAVIGATION COLLANTE -->
+    <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14 text-sm font-medium">
+                <div class="flex space-x-5 sm:space-x-8 overflow-x-auto no-scrollbar">
+                    <a href="#video-section" class="text-slate-600 hover:text-cobalt-700 flex items-center gap-2 py-4 whitespace-nowrap transition">
+                        <i class="fa-brands fa-youtube text-red-600"></i> Vidéo & Concepts
+                    </a>
+                    <a href="#quiz-section" class="text-slate-600 hover:text-cobalt-700 flex items-center gap-2 py-4 whitespace-nowrap transition">
+                        <i class="fa-solid fa-clipboard-question text-cobalt-600"></i> QCM (20)
+                    </a>
+                    <a href="#expressions-section" class="text-slate-600 hover:text-cobalt-700 flex items-center gap-2 py-4 whitespace-nowrap transition">
+                        <i class="fa-solid fa-grid-2 text-terracotta-600"></i> 12 Expressions
+                    </a>
+                    <a href="#dialogue-section" class="text-slate-600 hover:text-cobalt-700 flex items-center gap-2 py-4 whitespace-nowrap transition">
+                        <i class="fa-solid fa-comments text-emerald-600"></i> Dialogue
+                    </a>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 bg-slate-100 px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-700 shrink-0 border border-slate-200">
+                    <span>Score QCM :</span>
+                    <span id="sticky-score" class="text-cobalt-700 font-extrabold">0 / 20</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20">
+
+        <!-- 1. VIDÉO YOUTUBE & SYNTHÈSE INTERACTIVE -->
+        <section id="video-section" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Support Vidéo & Analyse
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                    Comprendre les ressorts profonds des crises sociales
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Visionnez la vidéo puis explorez les fiches de synthèse pour maîtriser les concepts avant de passer au QCM.
+                </p>
+            </div>
+
+            <!-- Lecteur YouTube Responsive -->
+            <div class="max-w-4xl mx-auto bg-slate-900 p-2.5 sm:p-4 rounded-3xl shadow-2xl border border-slate-800">
+                <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black">
+                    <iframe
+                        class="absolute top-0 left-0 w-full h-full border-0"
+                        src="https://www.youtube.com/embed/-pCJ-TgSpPI"
+                        title="Cette révolte n'est pas politique*"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Onglets de Synthèse -->
+            <div class="max-w-5xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="flex overflow-x-auto border-b border-slate-200 bg-slate-50 no-scrollbar">
+                    <button onclick="openSummaryTab(0)" class="tab-btn active px-5 py-4 text-xs sm:text-sm text-slate-600 whitespace-nowrap transition flex items-center gap-2">
+                        <i class="fa-solid fa-brain"></i> 1. La théorie de Turchin
+                    </button>
+                    <button onclick="openSummaryTab(1)" class="tab-btn px-5 py-4 text-xs sm:text-sm text-slate-600 whitespace-nowrap transition flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 2. Les 3 piliers d'instabilité
+                    </button>
+                    <button onclick="openSummaryTab(2)" class="tab-btn px-5 py-4 text-xs sm:text-sm text-slate-600 whitespace-nowrap transition flex items-center gap-2">
+                        <i class="fa-solid fa-landmark-flag"></i> 3. Le cas de la France & l'Histoire
+                    </button>
+                    <button onclick="openSummaryTab(3)" class="tab-btn px-5 py-4 text-xs sm:text-sm text-slate-600 whitespace-nowrap transition flex items-center gap-2">
+                        <i class="fa-solid fa-fire"></i> 4. Forêt sèche & Voyant moteur
+                    </button>
+                </div>
+
+                <div class="p-6 sm:p-8">
+                    <!-- Onglet 0 -->
+                    <div id="summary-panel-0" class="summary-panel space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900">Au-delà du clivage gauche-droite : l'approche structurelle</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            La vidéo explique que les soulèvements contemporains s'expliquent souvent moins par des querelles idéologiques ponctuelles (gauche contre droite) que par des <strong>pressions structurelles profondes</strong>. En s'appuyant sur la <em>Théorie Structurelle-Démographique (TSD)</em> popularisée par le chercheur <strong>Peter Turchin</strong>, l'analyse montre comment des déséquilibres économiques et démographiques lents finissent par plonger les sociétés dans des cycles d'instabilité.
+                        </p>
+                        <div class="bg-cobalt-50 border-l-4 border-cobalt-600 p-4 rounded-r-xl text-sm text-cobalt-900">
+                            <strong>Idée clé :</strong> Les crises ne surgissent pas par hasard ; elles sont le résultat mathématique et social de tensions accumulées sur plusieurs décennies.
+                        </div>
+                    </div>
+
+                    <!-- Onglet 1 -->
+                    <div id="summary-panel-1" class="summary-panel hidden space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900">Les trois piliers de l'instabilité politique</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                                <div class="w-9 h-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-faucet-drip"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">1. La pompe à richesse</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Les ressources économiques remontent des classes populaires et moyennes vers les plus fortunés. Les salaires stagnent, le niveau de vie recule et la frustration sociale se généralise.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                                <div class="w-9 h-9 rounded-lg bg-red-100 text-red-700 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-scale-unbalanced"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">2. La détresse fiscale de l'État</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    Les déficits budgétaires limitent la capacité des gouvernements à répondre aux besoins publics, entraînant une hausse des impôts ou une dégradation des services publics.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                                <div class="w-9 h-9 rounded-lg bg-cobalt-100 text-cobalt-700 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900 text-sm">3. La surproduction des élites</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    La société forme plus de diplômés et d'aspirants aux postes dirigeants qu'il n'existe de places disponibles. Les déçus deviennent des <strong>« contre-élites »</strong> qui mobilisent la population contre le système.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet 2 -->
+                    <div id="summary-panel-2" class="summary-panel hidden space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900">La France actuelle à la lumière de son histoire</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            Selon l'analyse de la vidéo, la France présente aujourd'hui des signaux préoccupants sur l'ensemble des trois facteurs : hausse de la pauvreté, stagnation du pouvoir d'achat, forte concentration du patrimoine et polarisation politique aiguë.
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-terracotta-50 border border-terracotta-100">
+                                <h4 class="font-bold text-terracotta-700 text-sm mb-1"><i class="fa-solid fa-landmark mr-1"></i> Révolution française (1789)</h4>
+                                <p class="text-xs text-slate-700 leading-relaxed">
+                                    Endettement colossal de la monarchie, misère paysanne et blocage de l'ascension sociale pour une bourgeoisie instruite mais exclue du pouvoir.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-terracotta-50 border border-terracotta-100">
+                                <h4 class="font-bold text-terracotta-700 text-sm mb-1"><i class="fa-solid fa-shield mr-1"></i> Guerres de Religion (XVIe siècle)</h4>
+                                <p class="text-xs text-slate-700 leading-relaxed">
+                                    Au-delà des motifs religieux, une crise démographique et une rivalité intense au sein d'une noblesse trop nombreuse ont alimenté les conflits civils.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet 3 -->
+                    <div id="summary-panel-3" class="summary-panel hidden space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900">La forêt sèche, l'étincelle et le « voyant moteur »</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            L'événement déclencheur d'une révolte — comme une hausse du prix des transports ou une réforme impopulaire — n'est qu'une <strong>étincelle</strong>. Si elle provoque un incendie majeur, c'est parce que les tensions structurelles ont transformé la société en une <strong>forêt sèche</strong> prête à s'embraser.
+                        </p>
+                        <div class="bg-slate-900 text-white p-5 rounded-xl flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-2xl shrink-0">
+                                <i class="fa-solid fa-car-battery"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-bold text-amber-400 text-sm">Un voyant moteur, pas une fatalité</h4>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Le modèle de Turchin n'est pas une boule de cristal prédisant une date précise, mais un <strong>voyant d'alerte</strong>. Éviter l'explosion sociale dépend de la capacité des dirigeants à accepter des compromis et des réformes avant le point de rupture, plutôt que de miser uniquement sur la répression.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QCM INTERACTIF DE 20 QUESTIONS -->
+        <section id="quiz-section" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-cobalt-100 text-cobalt-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Évaluation Interactive
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                    QCM de 20 Questions
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Testez vos acquis en compréhension, vocabulaire, grammaire et prononciation. Une explication s'affiche immédiatement après chaque choix.
+                </p>
+            </div>
+
+            <!-- Tableau de bord du score & Filtres -->
+            <div class="max-w-4xl mx-auto bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="filterQuiz('all')" id="btn-filter-all" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white transition">
+                        Toutes (20)
+                    </button>
+                    <button onclick="filterQuiz('comprehension')" id="btn-filter-comprehension" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                        Compréhension (5)
+                    </button>
+                    <button onclick="filterQuiz('vocabulaire')" id="btn-filter-vocabulaire" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                        Vocabulaire (5)
+                    </button>
+                    <button onclick="filterQuiz('grammaire')" id="btn-filter-grammaire" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                        Grammaire (5)
+                    </button>
+                    <button onclick="filterQuiz('prononciation')" id="btn-filter-prononciation" class="filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                        Prononciation (5)
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0">
+                    <div class="text-xs font-semibold text-slate-600 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
+                        Répondu : <span id="answered-count" class="font-bold text-slate-900">0</span>/20 |
+                        Score : <span id="live-score" class="font-extrabold text-cobalt-600">0</span>/20
+                    </div>
+                    <button onclick="resetQuiz()" class="px-3.5 py-2 bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 rounded-xl text-xs font-bold transition flex items-center gap-1.5" title="Réinitialiser le QCM">
+                        <i class="fa-solid fa-rotate-left"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liste des questions -->
+            <div id="quiz-list" class="max-w-4xl mx-auto space-y-6">
+                <!-- Généré dynamiquement par JS -->
+            </div>
+
+            <!-- Bilan final du QCM -->
+            <div id="quiz-summary-banner" class="hidden max-w-4xl mx-auto bg-gradient-to-r from-slate-900 to-cobalt-900 text-white p-8 rounded-3xl shadow-xl text-center space-y-4">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-terracotta-500 text-white flex items-center justify-center text-3xl shadow-lg">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold">Bilan de votre évaluation</h3>
+                <p class="text-4xl font-black text-amber-400" id="final-score-text">0 / 20</p>
+                <p class="text-sm text-cobalt-100 max-w-lg mx-auto" id="final-feedback-text"></p>
+                <button onclick="resetQuiz()" class="px-6 py-3 bg-white text-slate-900 hover:bg-cobalt-50 font-bold rounded-xl text-sm transition shadow-md inline-flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Recommencer l'exercice
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. GRILLE DE 12 EXPRESSIONS COURANTES (4 LIGNES x 3 COLONNES) -->
+        <section id="expressions-section" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-terracotta-100 text-terracotta-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Lexique & Métaphores
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                    12 Expressions Courantes Illustrées
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Retrouvez 12 expressions imagées liées aux tensions sociales, aux finances et à la recherche d'un accord, accompagnées de leur traduction en anglais et d'un exemple quotidien.
+                </p>
+            </div>
+
+            <!-- Grille strictement configurée en 3 colonnes sur grand écran (4 lignes x 3 colonnes = 12 cartes) -->
+            <div id="expressions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Généré dynamiquement par JS -->
+            </div>
+        </section>
+
+        <!-- 4. DIALOGUE PRATIQUE INSPIRÉ DE LA VIDÉO -->
+        <section id="dialogue-section" class="space-y-8 scroll-mt-20">
+            <div class="text-center max-w-3xl mx-auto space-y-2">
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Mise en Situation & Oral
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                    Dialogue Pratique : Discussion dans un café à Paris
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Camille (jeune diplômée) et Thomas (enseignant) débattent de la vidéo autour d'un café. Écoutez la prononciation et repérez les expressions clés.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                <!-- Barre d'outils du dialogue -->
+                <div class="bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                        <span class="text-xs sm:text-sm font-semibold">Scène : Terrasse d'un café, quartier Latin, Paris</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="toggleHighlights()" id="btn-toggle-highlights" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold transition flex items-center gap-2 border border-white/15">
+                            <i class="fa-solid fa-highlighter text-amber-400"></i>
+                            <span>Masquer les expressions</span>
+                        </button>
+                        <button onclick="playFullDialogue()" id="btn-play-dialogue" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Écouter le dialogue</span>
+                        </button>
+                        <button onclick="stopSpeech()" class="px-3 py-2 bg-rose-600/80 hover:bg-rose-600 text-white rounded-xl text-xs font-bold transition" title="Arrêter l'audio">
+                            <i class="fa-solid fa-stop"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Répliques du dialogue -->
+                <div id="dialogue-lines" class="p-6 sm:p-8 space-y-5 bg-slate-50/60">
+                    <!-- Généré dynamiquement par JS -->
+                </div>
+
+                <!-- Atelier de mise en pratique pour l'élève -->
+                <div class="p-6 sm:p-8 bg-white border-t border-slate-200 space-y-5">
+                    <div class="flex items-center gap-2.5 text-slate-900">
+                        <i class="fa-solid fa-pen-to-square text-cobalt-600 text-lg"></i>
+                        <h3 class="font-bold text-lg">Atelier de pratique orale et écrite</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600">
+                        Entraînez-vous à réutiliser le vocabulaire et les expressions de la leçon en répondant aux questions ci-dessous (à l'oral ou par écrit dans la zone prévue) :
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-2xl bg-cobalt-50/70 border border-cobalt-100 space-y-1.5">
+                            <span class="font-bold text-cobalt-900">Question 1 (Analyse) :</span>
+                            <p class="text-slate-700">Selon vous, pourquoi la « surproduction des élites » crée-t-elle des tensions dans une société moderne ? Utilisez l'expression <em>« changer la donne »</em>.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-terracotta-50/70 border border-terracotta-100 space-y-1.5">
+                            <span class="font-bold text-terracotta-800">Question 2 (Opinion) :</span>
+                            <p class="text-slate-700">Comment un gouvernement peut-il éviter que la situation n'atteigne un point de rupture ? Utilisez <em>« trouver un terrain d'entente »</em> ou <em>« faire la sourde oreille »</em>.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="student-practice" class="block text-xs font-bold uppercase tracking-wider text-slate-500">
+                            Votre espace de rédaction (brouillon personnel) :
+                        </label>
+                        <textarea id="student-practice" rows="3" placeholder="Rédigez ici votre réponse en français en intégrant une ou deux expressions du cours..." class="w-full rounded-2xl border border-slate-300 p-4 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-cobalt-500 focus:border-transparent"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIED DE PAGE -->
+    <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="text-sm text-slate-300">
+                Application pédagogique interactive inspirée de la vidéo <strong class="text-white">« Cette révolte n'est pas politique* »</strong>.
+            </p>
+            <p class="text-xs text-slate-500">
+                Conçue pour l'étude des sciences sociales et le perfectionnement en français langue étrangère.
+            </p>
+        </div>
+    </footer>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        // =========================================================================
+        // 1. GESTION DES ONGLETS DE SYNTHÈSE
+        // =========================================================================
+        function openSummaryTab(index) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const panels = document.querySelectorAll('.summary-panel');
+
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            panels.forEach((panel, i) => {
+                if (i === index) {
+                    panel.classList.remove('hidden');
+                } else {
+                    panel.classList.add('hidden');
+                }
+            });
+        }
+
+        // =========================================================================
+        // 2. DONNÉES DU QCM (20 QUESTIONS — DISTRIBUTION ÉQUILIBRÉE A, B, C, D)
+        // =========================================================================
+        // Répartition des bonnes réponses (index 0=A, 1=B, 2=C, 3=D) :
+        // Bloc 1 (Compréhension) : Q1:A(0), Q2:D(3), Q3:C(2), Q4:B(1), Q5:A(0)
+        // Bloc 2 (Vocabulaire)   : Q6:C(2), Q7:A(0), Q8:D(3), Q9:B(1), Q10:C(2)
+        // Bloc 3 (Grammaire)     : Q11:B(1), Q12:D(3), Q13:A(0), Q14:C(2), Q15:D(3)
+        // Bloc 4 (Prononciation) : Q16:D(3), Q17:B(1), Q18:A(0), Q19:C(2), Q20:B(1)
+        // Total exact : A = 5 fois, B = 5 fois, C = 5 fois, D = 5 fois (25 % chacun).
+
+        const quizQuestions = [
+            // --- BLOC 1 : COMPRÉHENSION (5 questions) ---
+            {
+                id: 1,
+                category: "comprehension",
+                categoryName: "Compréhension",
+                question: "Selon la vidéo, quelle est la cause principale des révoltes modernes analysées par Peter Turchin ?",
+                options: [
+                    "Des pressions structurelles profondes (économiques et démographiques) plutôt que de simples idéologies",
+                    "Uniquement l'apparition des réseaux sociaux au XXIe siècle",
+                    "La disparition totale des partis politiques traditionnels",
+                    "Le manque de ressources naturelles dans les pays européens"
+                ],
+                correct: 0, // A
+                explanation: "La Théorie Structurelle-Démographique montre que les crises naissent de déséquilibres profonds accumulés dans la structure de la société, au-delà du clivage gauche-droite."
+            },
+            {
+                id: 2,
+                category: "comprehension",
+                categoryName: "Compréhension",
+                question: "Comment la vidéo définit-elle le phénomène appelé « la pompe à richesse » ?",
+                options: [
+                    "Une aide financière versée par l'État aux jeunes diplômés",
+                    "Un système permettant de réduire automatiquement les déficits publics",
+                    "La création massive d'emplois très bien rémunérés dans l'industrie",
+                    "Le transfert croissant des ressources des classes modestes vers les plus riches, faisant stagner le niveau de vie"
+                ],
+                correct: 3, // D
+                explanation: "La « pompe à richesse » désigne le mécanisme par lequel les inégalités se creusent : les richesses affluent vers le sommet tandis que les salaires réels stagnent."
+            },
+            {
+                id: 3,
+                category: "comprehension",
+                categoryName: "Compréhension",
+                question: "Qu'entraîne la « surproduction des élites » dans une société ?",
+                options: [
+                    "Une baisse immédiate du nombre d'universités et d'étudiants",
+                    "Une entente parfaite entre tous les responsables politiques",
+                    "L'apparition de « contre-élites » frustrées qui mobilisent le public contre l'ordre établi",
+                    "La disparition complète du chômage chez les jeunes diplômés"
+                ],
+                correct: 2, // C
+                explanation: "Lorsqu'il y a beaucoup plus de diplômés ambitieux que de postes prestigieux disponibles, les exclus du système deviennent des contre-élites contestataires."
+            },
+            {
+                id: 4,
+                category: "comprehension",
+                categoryName: "Compréhension",
+                question: "Dans la métaphore utilisée par le narrateur, que représentent la « forêt sèche » et l'« étincelle » ?",
+                options: [
+                    "La forêt sèche est la police et l'étincelle est le gouvernement",
+                    "La forêt sèche correspond aux tensions structurelles accumulées, et l'étincelle à l'événement déclencheur ponctuel",
+                    "La forêt sèche désigne l'économie mondiale et l'étincelle les élections présidentielles",
+                    "La forêt sèche est le passé historique et l'étincelle le progrès technologique"
+                ],
+                correct: 1, // B
+                explanation: "Une hausse de taxe ou un incident mineur (l'étincelle) ne provoque une explosion que parce que la société est déjà fragilisée (la forêt sèche)."
+            },
+            {
+                id: 5,
+                category: "comprehension",
+                categoryName: "Compréhension",
+                question: "À quoi le narrateur compare-t-il finalement le modèle de Peter Turchin en conclusion ?",
+                options: [
+                    "À un « voyant moteur » qui alerte les dirigeants sur la nécessité de réformer avant la rupture",
+                    "À une boule de cristal capable de prédire le jour exact d'une révolution",
+                    "À une loi physique immuable que personne ne peut influencer",
+                    "À un manuel militaire destiné à renforcer la répression"
+                ],
+                correct: 0, // A
+                explanation: "Le modèle n'est pas un oracle infaillible, mais un signal d'alerte permettant d'éviter la crise grâce au compromis et aux réformes."
+            },
+
+            // --- BLOC 2 : VOCABULAIRE (5 questions) ---
+            {
+                id: 6,
+                category: "vocabulaire",
+                categoryName: "Vocabulaire",
+                question: "Que signifie l'expression « la détresse fiscale de l'État » dans le contexte de la vidéo ?",
+                options: [
+                    "Un excédent financier permettant de supprimer tous les impôts",
+                    "Une réforme visant à simplifier les déclarations de revenus",
+                    "Une situation de déficits budgétaires graves qui réduit la capacité d'action des pouvoirs publics",
+                    "La création d'une nouvelle monnaie nationale"
+                ],
+                correct: 2, // C
+                explanation: "La détresse fiscale désigne l'asphyxie budgétaire d'un État endetté qui peine à financer ses services publics."
+            },
+            {
+                id: 7,
+                category: "vocabulaire",
+                categoryName: "Vocabulaire",
+                question: "Dans l'analyse sociopolitique, que désigne la « polarisation » ?",
+                options: [
+                    "La division d'une société en deux camps opposés et radicalisés, rendant le compromis difficile",
+                    "Le regroupement de tous les citoyens autour d'un seul parti modéré",
+                    "La baisse des températures hivernales en Europe",
+                    "L'augmentation des échanges commerciaux entre régions"
+                ],
+                correct: 0, // A
+                explanation: "La polarisation politique décrit l'éloignement des opinions vers les extrêmes et l'affaiblissement du consensus."
+            },
+            {
+                id: 8,
+                category: "vocabulaire",
+                categoryName: "Vocabulaire",
+                question: "Quel terme désigne un accord obtenu grâce à des concessions mutuelles entre deux parties en désaccord ?",
+                options: [
+                    "Une répression",
+                    "Un déficit",
+                    "Un catalyseur",
+                    "Un compromis"
+                ],
+                correct: 3, // D
+                explanation: "Un compromis consiste à faire chacun un pas vers l'autre pour résoudre un conflit sans aller jusqu'à la rupture."
+            },
+            {
+                id: 9,
+                category: "vocabulaire",
+                categoryName: "Vocabulaire",
+                question: "Que signifie le verbe « stagner » lorsqu'on parle des salaires ou du niveau de vie ?",
+                options: [
+                    "Augmenter très rapidement chaque année",
+                    "Rester immobile, ne plus progresser ni s'améliorer",
+                    "Être versé deux fois par mois",
+                    "Disparaître complètement du budget"
+                ],
+                correct: 1, // B
+                explanation: "Quand les salaires stagnent, le pouvoir d'achat n'évolue plus alors que le coût de la vie continue souvent de monter."
+            },
+            {
+                id: 10,
+                category: "vocabulaire",
+                categoryName: "Vocabulaire",
+                question: "Dans le texte, quel mot désigne l'élément qui déclenche ou accélère brusquement une réaction ou une crise ?",
+                options: [
+                    "Un oracle",
+                    "Un patrimoine",
+                    "Un catalyseur (ou une étincelle)",
+                    "Un statut"
+                ],
+                correct: 2, // C
+                explanation: "Un catalyseur est un facteur qui précipite un événement ou une transformation dans une situation déjà tendue."
+            },
+
+            // --- BLOC 3 : GRAMMAIRE (5 questions) ---
+            {
+                id: 11,
+                category: "grammaire",
+                categoryName: "Grammaire",
+                question: "Complétez la phrase au mode qui convient : « Il est indispensable que les dirigeants ______ des réformes avant le point de rupture. »",
+                options: [
+                    "acceptent (indicatif)",
+                    "acceptent (subjonctif présent)",
+                    "accepteront (futur simple)",
+                    "acceptaient (imparfait)"
+                ],
+                correct: 1, // B
+                explanation: "La tournure impersonnelle « Il est indispensable que » exprime la nécessité et exige l'emploi du subjonctif."
+            },
+            {
+                id: 12,
+                category: "grammaire",
+                categoryName: "Grammaire",
+                question: "Choisissez le bon pronom relatif : « C'est une crise structurelle ______ les causes remontent à plusieurs décennies. »",
+                options: [
+                    "que",
+                    "qui",
+                    "où",
+                    "dont"
+                ],
+                correct: 3, // D
+                explanation: "On utilise « dont » car il remplace un complément introduit par la préposition « de » (les causes DE cette crise)."
+            },
+            {
+                id: 13,
+                category: "grammaire",
+                categoryName: "Grammaire",
+                question: "Quel connecteur logique exprime correctement la cause dans cette phrase : « L'État réduit certains services ______ son déficit budgétaire. » ?",
+                options: [
+                    "en raison de",
+                    "afin de",
+                    "malgré",
+                    "par conséquent"
+                ],
+                correct: 0, // A
+                explanation: "« En raison de » suivi d'un groupe nominal introduit la cause objective d'un fait."
+            },
+            {
+                id: 14,
+                category: "grammaire",
+                categoryName: "Grammaire",
+                question: "Complétez cette phrase hypothétique : « Si le pouvoir acceptait le dialogue, la société ______ une explosion sociale. »",
+                options: [
+                    "évite",
+                    "évitera",
+                    "éviterait",
+                    "a évité"
+                ],
+                correct: 2, // C
+                explanation: "Dans une hypothèse sur le présent/futur (Si + imparfait), la proposition principale se conjugue au conditionnel présent (éviterait)."
+            },
+            {
+                id: 15,
+                category: "grammaire",
+                categoryName: "Grammaire",
+                question: "Accordez correctement le participe passé : « Les tensions que cette politique a ______ sont désormais visibles. »",
+                options: [
+                    "provoqué",
+                    "provoqués",
+                    "provoquée",
+                    "provoquées"
+                ],
+                correct: 3, // D
+                explanation: "Le COD « que » (qui reprend « les tensions », féminin pluriel) est placé avant l'auxiliaire « avoir » : on accorde donc au féminin pluriel."
+            },
+
+            // --- BLOC 4 : PRONONCIATION & PHONÉTIQUE (5 questions) ---
+            {
+                id: 16,
+                category: "prononciation",
+                categoryName: "Prononciation",
+                question: "Dans le groupe nominal « les_élites », quelle règle de liaison s'applique ?",
+                options: [
+                    "La liaison est interdite entre un article et un nom",
+                    "Le « s » se prononce comme un [s] sourd comme dans « serpent »",
+                    "Le « s » reste totalement muet",
+                    "La liaison est obligatoire et le « s » se prononce [z]"
+                ],
+                correct: 3, // D
+                explanation: "Entre un déterminant pluriel (les, des, ces) et un nom commençant par une voyelle ou un h muet, la liaison en [z] est obligatoire."
+            },
+            {
+                id: 17,
+                category: "prononciation",
+                categoryName: "Prononciation",
+                question: "Parmi ces mots issus de la vidéo, lequel ne contient AUCUNE voyelle nasale ([ɑ̃], [ɔ̃], [ɛ̃]) ?",
+                options: [
+                    "tension",
+                    "révolte",
+                    "financement",
+                    "instabilité"
+                ],
+                correct: 1, // B
+                explanation: "« Révolte » [ʁe.vɔlt] ne contient que des voyelles orales, contrairement à tension [tɑ̃.sjɔ̃], financement [fi.nɑ̃s.mɑ̃] et instabilité [ɛ̃.sta.bi.li.te]."
+            },
+            {
+                id: 18,
+                category: "prononciation",
+                categoryName: "Prononciation",
+                question: "Dans le mot « déficit », comment se prononce la consonne finale « t » ?",
+                options: [
+                    "Elle se prononce clairement : [de.fi.sit]",
+                    "Elle est toujours muette comme dans « petit »",
+                    "Elle se prononce comme un [s]",
+                    "Elle nasalise la voyelle « i »"
+                ],
+                correct: 0, // A
+                explanation: "« Déficit » fait partie des mots français où le « t » final est sonore [de.fi.sit], tout comme « granit » ou « transit »."
+            },
+            {
+                id: 19,
+                category: "prononciation",
+                categoryName: "Prononciation",
+                question: "Quelle opposition vocalique distingue la première syllabe de « structure » et celle de « ressource » ?",
+                options: [
+                    "Le son [e] fermé contre le son [ɛ] ouvert",
+                    "Le son [o] contre le son [ɔ]",
+                    "Le son [y] (u français) dans « structure » contre le son [u] (ou) dans « ressource »",
+                    "Il n'y a aucune différence de voyelle"
+                ],
+                correct: 2, // C
+                explanation: "« Structure » se prononce [stʁyk.tyʁ] avec le son [y], tandis que « ressource » se prononce [ʁə.suʁs] avec le son [u]."
+            },
+            {
+                id: 20,
+                category: "prononciation",
+                categoryName: "Prononciation",
+                question: "Dans l'expression « le voyant moteur », comment se prononce le groupe final « -eur » ?",
+                options: [
+                    "Comme le « u » de « mur » [yʁ]",
+                    "Avec la voyelle ouverte arrondie [œʁ] comme dans « sœur » ou « fleur »",
+                    "Le « r » final est muet",
+                    "Comme une voyelle nasale [œ̃]"
+                ],
+                correct: 1, // B
+                explanation: "La terminaison « -eur » devant un « r » prononcé s'articule avec le son ouvert [œʁ] : [mɔ.tœʁ]."
+            }
+        ];
+
+        let userResponses = {};
+        let activeCategory = 'all';
+
+        function renderQuiz() {
+            const listContainer = document.getElementById('quiz-list');
+            listContainer.innerHTML = '';
+
+            const filtered = activeCategory === 'all'
+                ? quizQuestions
+                : quizQuestions.filter(q => q.category === activeCategory);
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            filtered.forEach(q => {
+                const answered = Object.prototype.hasOwnProperty.call(userResponses, q.id);
+                const chosenIndex = userResponses[q.id];
+
+                const card = document.createElement('div');
+                card.id = `quiz-card-${q.id}`;
+                card.className = 'bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4 transition';
+
+                let badgeColor = 'bg-cobalt-50 text-cobalt-700';
+                if (q.category === 'vocabulaire') badgeColor = 'bg-terracotta-50 text-terracotta-700';
+                if (q.category === 'grammaire') badgeColor = 'bg-emerald-50 text-emerald-700';
+                if (q.category === 'prononciation') badgeColor = 'bg-purple-50 text-purple-700';
+
+                let optionsMarkup = '';
+                q.options.forEach((optText, idx) => {
+                    let buttonClass = 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800';
+                    let letterClass = 'bg-white border border-slate-300 text-slate-700';
+                    let statusIcon = '';
+
+                    if (answered) {
+                        if (idx === q.correct) {
+                            buttonClass = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold';
+                            letterClass = 'bg-emerald-600 border-emerald-600 text-white';
+                            statusIcon = '<i class="fa-solid fa-circle-check text-emerald-600 text-lg ml-auto shrink-0"></i>';
+                        } else if (idx === chosenIndex) {
+                            buttonClass = 'bg-rose-50 border-rose-400 text-rose-950';
+                            letterClass = 'bg-rose-600 border-rose-600 text-white';
+                            statusIcon = '<i class="fa-solid fa-circle-xmark text-rose-600 text-lg ml-auto shrink-0"></i>';
+                        } else {
+                            buttonClass = 'bg-slate-50 border-slate-100 text-slate-400 opacity-65';
+                        }
+                    }
+
+                    optionsMarkup += `
+                        <button
+                            type="button"
+                            onclick="answerQuestion(${q.id}, ${idx})"
+                            ${answered ? 'disabled' : ''}
+                            class="w-full text-left p-3.5 rounded-xl border transition flex items-center gap-3 text-sm ${buttonClass}"
+                        >
+                            <span class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${letterClass}">
+                                ${letters[idx]}
+                            </span>
+                            <span class="leading-snug">${optText}</span>
+                            ${statusIcon}
+                        </button>
+                    `;
+                });
+
+                let explanationMarkup = '';
+                if (answered) {
+                    const isRight = chosenIndex === q.correct;
+                    explanationMarkup = `
+                        <div class="p-4 rounded-xl border ${isRight ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900' : 'bg-amber-50/80 border-amber-200 text-slate-800'} text-xs sm:text-sm space-y-1">
+                            <div class="font-bold flex items-center gap-2 ${isRight ? 'text-emerald-700' : 'text-amber-800'}">
+                                <i class="fa-solid ${isRight ? 'fa-check-double' : 'fa-lightbulb'}"></i>
+                                <span>${isRight ? 'Bonne réponse !' : 'Réponse correcte : ' + letters[q.correct]}</span>
+                            </div>
+                            <p class="leading-relaxed text-slate-700">${q.explanation}</p>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${badgeColor}">
+                            ${q.categoryName}
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Question ${q.id} / 20</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base leading-snug">${q.question}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        ${optionsMarkup}
+                    </div>
+                    ${explanationMarkup}
+                `;
+
+                listContainer.appendChild(card);
+            });
+
+            updateQuizMetrics();
+        }
+
+        function answerQuestion(questionId, optionIdx) {
+            if (Object.prototype.hasOwnProperty.call(userResponses, questionId)) return;
+
+            userResponses[questionId] = optionIdx;
+            renderQuiz();
+
+            const qObj = quizQuestions.find(item => item.id === questionId);
+            const cardEl = document.getElementById(`quiz-card-${questionId}`);
+            if (cardEl && qObj) {
+                cardEl.classList.add(optionIdx === qObj.correct ? 'pulse-correct' : 'shake-wrong');
+            }
+        }
+
+        function filterQuiz(category) {
+            activeCategory = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = 'filter-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+            });
+            const activeBtn = document.getElementById(`btn-filter-${category}`);
+            if (activeBtn) {
+                activeBtn.className = 'filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white transition';
+            }
+            renderQuiz();
+        }
+
+        function updateQuizMetrics() {
+            const answeredKeys = Object.keys(userResponses);
+            const totalAnswered = answeredKeys.length;
+            let score = 0;
+
+            quizQuestions.forEach(q => {
+                if (userResponses[q.id] === q.correct) {
+                    score++;
+                }
+            });
+
+            document.getElementById('answered-count').textContent = totalAnswered;
+            document.getElementById('live-score').textContent = score;
+            document.getElementById('sticky-score').textContent = `${score} / 20`;
+
+            const banner = document.getElementById('quiz-summary-banner');
+            if (totalAnswered === 20) {
+                banner.classList.remove('hidden');
+                document.getElementById('final-score-text').textContent = `${score} / 20`;
+                let msg = '';
+                if (score >= 18) {
+                    msg = 'Félicitations ! Vous maîtrisez parfaitement les concepts sociopolitiques de la vidéo ainsi que les nuances de la langue française.';
+                } else if (score >= 13) {
+                    msg = 'Très bon résultat ! Vous avez bien saisi les mécanismes décrits par Peter Turchin et les règles grammaticales.';
+                } else {
+                    msg = 'Bon début ! N’hésitez pas à relire les onglets de synthèse et les explications de chaque question pour progresser.';
+                }
+                document.getElementById('final-feedback-text').textContent = msg;
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function resetQuiz() {
+            userResponses = {};
+            filterQuiz('all');
+        }
+
+        // =========================================================================
+        // 3. GRILLE DE 12 EXPRESSIONS COURANTES (4 LIGNES x 3 COLONNES)
+        // =========================================================================
+        const expressionsList = [
+            {
+                num: 1,
+                french: "C'est la goutte d'eau qui fait déborder le vase",
+                english: "The straw that broke the camel's back",
+                meaning: "Le petit événement de trop qui déclenche une réaction violente après une longue accumulation.",
+                example: "Après trois ans sans augmentation, la hausse du prix des transports a été la goutte d'eau qui a fait déborder le vase.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#bfdbfe"/></linearGradient></defs>
+                        <rect width="240" height="120" fill="url(#g1)"/>
+                        <path d="M85 45 L95 102 L145 102 L155 45 Z" fill="#ffffff" stroke="#1d4ed8" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M88 53 L152 53 L145 100 L95 100 Z" fill="#3b82f6" opacity="0.75"/>
+                        <path d="M120 16 C120 16 128 27 128 32 C128 36.4 124.4 40 120 40 C115.6 40 112 36.4 112 32 C112 27 120 16 120 16 Z" fill="#2563eb"/>
+                        <path d="M75 62 Q82 55 88 65" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M165 62 Q158 55 152 65" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                num: 2,
+                french: "Mettre le feu aux poudres",
+                english: "To spark a powder keg / To trigger an explosion",
+                meaning: "Déclencher brusquement une crise ou un conflit dans une situation déjà très tendue.",
+                example: "L'annonce de cette taxe supplémentaire a mis le feu aux poudres dans tout le pays.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#ffedd5"/>
+                        <rect x="88" y="48" width="64" height="54" rx="8" fill="#7c2d12"/>
+                        <rect x="88" y="60" width="64" height="6" fill="#f97316"/>
+                        <rect x="88" y="84" width="64" height="6" fill="#f97316"/>
+                        <path d="M120 48 Q125 32 142 28" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+                        <polygon points="145,16 148,24 156,24 150,29 152,37 145,32 138,37 140,29 134,24 142,24" fill="#ea580c"/>
+                      </svg>`
+            },
+            {
+                num: 3,
+                french: "Un bras de fer",
+                english: "A standoff / A trial of strength",
+                meaning: "Une confrontation directe et obstinée entre deux camps qui refusent de céder.",
+                example: "Un véritable bras de fer s'est engagé entre les syndicats et le ministère.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#e2e8f0"/>
+                        <line x1="35" y1="68" x2="205" y2="68" stroke="#334155" stroke-width="5" stroke-linecap="round"/>
+                        <polygon points="120,68 112,86 128,86" fill="#ea580c"/>
+                        <circle cx="65" cy="48" r="12" fill="#1d4ed8"/>
+                        <path d="M50 96 L65 62 L85 68" fill="none" stroke="#1d4ed8" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="175" cy="48" r="12" fill="#c2410c"/>
+                        <path d="M190 96 L175 62 L155 68" fill="none" stroke="#c2410c" stroke-width="6" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                num: 4,
+                french: "Se serrer la ceinture",
+                english: "To tighten one's belt",
+                meaning: "Réduire ses dépenses et vivre avec moins d'argent par nécessité économique.",
+                example: "Avec l'inflation et les factures qui augmentent, beaucoup de familles doivent se serrer la ceinture.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#fef3c7"/>
+                        <rect x="35" y="48" width="170" height="24" rx="6" fill="#92400e"/>
+                        <rect x="98" y="42" width="44" height="36" rx="6" fill="none" stroke="#f59e0b" stroke-width="5"/>
+                        <line x1="120" y1="42" x2="120" y2="60" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="65" cy="60" r="2.5" fill="#fef3c7"/>
+                        <circle cx="80" cy="60" r="2.5" fill="#fef3c7"/>
+                        <circle cx="160" cy="60" r="2.5" fill="#fef3c7"/>
+                        <circle cx="175" cy="60" r="2.5" fill="#fef3c7"/>
+                      </svg>`
+            },
+            {
+                num: 5,
+                french: "Un voyant qui s'allume",
+                english: "A warning light coming on",
+                meaning: "Un signal d'alarte indiquant qu'un problème grave risque de survenir si l'on n'agit pas.",
+                example: "La baisse du pouvoir d'achat est un voyant rouge qui s'allume sur le tableau de bord social.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#0f172a"/>
+                        <circle cx="120" cy="60" r="36" fill="#f59e0b" opacity="0.2"/>
+                        <rect x="86" y="44" width="68" height="38" rx="6" fill="none" stroke="#f59e0b" stroke-width="3.5"/>
+                        <line x1="98" y1="36" x2="110" y2="36" stroke="#f59e0b" stroke-width="4"/>
+                        <line x1="130" y1="36" x2="142" y2="36" stroke="#f59e0b" stroke-width="4"/>
+                        <text x="102" y="68" fill="#fbbf24" font-size="18" font-weight="bold">+</text>
+                        <text x="132" y="68" fill="#fbbf24" font-size="18" font-weight="bold">-</text>
+                      </svg>`
+            },
+            {
+                num: 6,
+                french: "Trouver un terrain d'entente",
+                english: "To find common ground",
+                meaning: "Parvenir à un accord acceptable pour toutes les parties après une négociation.",
+                example: "Après plusieurs heures de discussion, les représentants ont fini par trouver un terrain d'entente.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#dcfce7"/>
+                        <path d="M30 85 Q75 65 120 75 Q165 85 210 65 L210 120 L30 120 Z" fill="#16a34a" opacity="0.3"/>
+                        <circle cx="95" cy="54" r="18" fill="#2563eb" opacity="0.8"/>
+                        <circle cx="145" cy="54" r="18" fill="#ea580c" opacity="0.8"/>
+                        <path d="M113 54 L127 54" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                num: 7,
+                french: "Avoir le dos au mur",
+                english: "To have one's back against the wall",
+                meaning: "Être dans une situation critique sans échappatoire, obligé de réagir immédiatement.",
+                example: "Face à la crise budgétaire, le gouvernement a le dos au mur et doit prendre des décisions difficiles.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#f1f5f9"/>
+                        <rect x="145" y="18" width="55" height="86" fill="#64748b"/>
+                        <line x1="145" y1="40" x2="200" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+                        <line x1="145" y1="62" x2="200" y2="62" stroke="#cbd5e1" stroke-width="2"/>
+                        <line x1="145" y1="84" x2="200" y2="84" stroke="#cbd5e1" stroke-width="2"/>
+                        <circle cx="122" cy="42" r="11" fill="#1e3a8a"/>
+                        <rect x="112" y="56" width="20" height="36" rx="6" fill="#1e3a8a"/>
+                        <path d="M62 64 L96 64" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                        <polygon points="102,64 90,57 90,71" fill="#ea580c"/>
+                      </svg>`
+            },
+            {
+                num: 8,
+                french: "Faire la sourde oreille",
+                english: "To turn a deaf ear",
+                meaning: "Refuser volontairement d'écouter des demandes, des avertissements ou des critiques.",
+                example: "Si les responsables font la sourde oreille aux revendications, la colère risque de grandir.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#ede9fe"/>
+                        <path d="M115 32 C138 32 146 54 136 74 C130 85 118 90 112 82" fill="none" stroke="#5b21b6" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M118 48 C128 48 130 60 122 68" fill="none" stroke="#5b21b6" stroke-width="3.5" stroke-linecap="round"/>
+                        <line x1="88" y1="36" x2="152" y2="88" stroke="#dc2626" stroke-width="4.5" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                num: 9,
+                french: "Jeter de l'huile sur le feu",
+                english: "To add fuel to the fire",
+                meaning: "Aggraver volontairement ou maladroitement une tension ou une dispute déjà vive.",
+                example: "Ses déclarations provocatrices en pleine grève n'ont fait que jeter de l'huile sur le feu.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#fee2e2"/>
+                        <path d="M120 38 C136 56 144 72 136 88 C130 98 110 98 104 88 C96 72 104 56 120 38 Z" fill="#ea580c"/>
+                        <path d="M120 56 C128 66 131 76 126 86 C123 91 117 91 114 86 C109 76 112 66 120 56 Z" fill="#facc15"/>
+                        <path d="M75 26 L98 36 L94 44 L71 34 Z" fill="#475569"/>
+                        <circle cx="105" cy="44" r="3" fill="#f59e0b"/>
+                        <circle cx="111" cy="50" r="3" fill="#f59e0b"/>
+                      </svg>`
+            },
+            {
+                num: 10,
+                french: "Être au bord du gouffre",
+                english: "To be on the brink of collapse / the abyss",
+                meaning: "Se trouver tout près d'une catastrophe financière, politique ou sociale.",
+                example: "Sans réforme rapide des finances publiques, l'institution se retrouvera au bord du gouffre.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#e0f2fe"/>
+                        <polygon points="0,68 128,68 112,120 0,120" fill="#334155"/>
+                        <polygon points="168,68 240,68 240,120 182,120" fill="#334155"/>
+                        <circle cx="122" cy="42" r="8" fill="#dc2626"/>
+                        <line x1="122" y1="50" x2="122" y2="68" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                num: 11,
+                french: "Changer la donne",
+                english: "To be a game-changer / To change the situation",
+                meaning: "Modifier profondément les conditions d'une situation ou l'équilibre des forces.",
+                example: "L'arrivée de nouveaux acteurs politiques indépendants pourrait bien changer la donne lors du scrutin.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#dbeafe"/>
+                        <rect x="68" y="34" width="44" height="58" rx="6" fill="#ffffff" stroke="#1e40af" stroke-width="3" transform="rotate(-10 90 63)"/>
+                        <rect x="126" y="30" width="46" height="60" rx="6" fill="#2563eb" stroke="#1e3a8a" stroke-width="3" transform="rotate(10 149 60)"/>
+                        <polygon points="149,47 153,56 162,56 155,62 157,70 149,65 141,70 143,62 136,56 145,56" fill="#fbbf24"/>
+                      </svg>`
+            },
+            {
+                num: 12,
+                french: "Remettre les pendules à l'heure",
+                english: "To set the record straight",
+                meaning: "Rétablir la vérité, clarifier une situation confuse ou recadrer un débat.",
+                example: "Cette étude économique permet de remettre les pendules à l'heure sur les vraies causes du malaise social.",
+                svg: `<svg viewBox="0 0 240 120" class="w-full h-full">
+                        <rect width="240" height="120" fill="#f8fafc"/>
+                        <circle cx="120" cy="60" r="38" fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+                        <line x1="120" y1="60" x2="120" y2="34" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="120" y1="60" x2="142" y2="60" stroke="#1d4ed8" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="120" cy="60" r="4" fill="#0f172a"/>
+                      </svg>`
+            }
+        ];
+
+        function renderExpressionsGrid() {
+            const grid = document.getElementById('expressions-grid');
+            grid.innerHTML = '';
+
+            expressionsList.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col';
+
+                card.innerHTML = `
+                    <div class="h-36 w-full relative overflow-hidden border-b border-slate-100">
+                        ${item.svg}
+                        <span class="absolute top-3 left-3 bg-slate-900/85 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                            ${item.num} / 12
+                        </span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <div class="space-y-1.5">
+                            <h3 class="font-bold text-slate-900 text-base leading-snug">
+                                ${item.french}
+                            </h3>
+                            <p class="text-xs font-semibold text-cobalt-700 bg-cobalt-50 inline-block px-2.5 py-1 rounded-md">
+                                <i class="fa-solid fa-language mr-1"></i> ${item.english}
+                            </p>
+                            <p class="text-xs text-slate-600 leading-relaxed pt-1">
+                                ${item.meaning}
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-3 text-xs space-y-1">
+                            <span class="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Exemple concret :</span>
+                            <p class="text-slate-600 italic leading-relaxed">« ${item.example} »</p>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // =========================================================================
+        // 4. DIALOGUE PRATIQUE & SYNTHÈSE VOCALE (WEB SPEECH API)
+        // =========================================================================
+        const dialogueScript = [
+            {
+                speaker: "Camille",
+                role: "Jeune diplômée en droit",
+                avatarColor: "bg-cobalt-600",
+                align: "left",
+                html: `Salut Thomas ! Tu as regardé la vidéo sur les révoltes et le modèle de Peter Turchin ? Franchement, ça permet de <span class="expr-mark highlight-expr">remettre les pendules à l'heure</span> sur ce qui se passe en ce moment.`,
+                plain: "Salut Thomas ! Tu as regardé la vidéo sur les révoltes et le modèle de Peter Turchin ? Franchement, ça permet de remettre les pendules à l'heure sur ce qui se passe en ce moment."
+            },
+            {
+                speaker: "Thomas",
+                role: "Professeur d'histoire",
+                avatarColor: "bg-terracotta-600",
+                align: "right",
+                html: `Oui, je l'ai trouvée fascinante. Ce que j'aime dans son approche, c'est qu'il montre que la crise n'est pas juste une dispute entre deux partis : la société ressemble à une forêt sèche, et la moindre mesure impopulaire peut <span class="expr-mark highlight-expr">mettre le feu aux poudres</span>.`,
+                plain: "Oui, je l'ai trouvée fascinante. Ce que j'aime dans son approche, c'est qu'il montre que la crise n'est pas juste une dispute entre deux partis : la société ressemble à une forêt sèche, et la moindre mesure impopulaire peut mettre le feu aux poudres."
+            },
+            {
+                speaker: "Camille",
+                role: "Jeune diplômée en droit",
+                avatarColor: "bg-cobalt-600",
+                align: "left",
+                html: `Exactement ! Et son concept de « surproduction des élites » me parle énormément. Dans ma promotion, on a tous fait cinq ans d'études, mais il n'y a pas assez de postes qualifiés. Beaucoup ont l'impression d'<span class="expr-mark highlight-expr">avoir le dos au mur</span> et doivent accepter des emplois précaires.`,
+                plain: "Exactement ! Et son concept de surproduction des élites me parle énormément. Dans ma promotion, on a tous fait cinq ans d'études, mais il n'y a pas assez de postes qualifiés. Beaucoup ont l'impression d'avoir le dos au mur et doivent accepter des emplois précaires."
+            },
+            {
+                speaker: "Thomas",
+                role: "Professeur d'histoire",
+                avatarColor: "bg-terracotta-600",
+                align: "right",
+                html: `C'est ce qu'il appelle la fabrique des « contre-élites ». En parallèle, avec la pompe à richesse, les ménages modestes doivent <span class="expr-mark highlight-expr">se serrer la ceinture</span>. Pour beaucoup de gens, la dernière hausse des prix a été <span class="expr-mark highlight-expr">la goutte d'eau qui a fait déborder le vase</span>.`,
+                plain: "C'est ce qu'il appelle la fabrique des contre-élites. En parallèle, avec la pompe à richesse, les ménages modestes doivent se serrer la ceinture. Pour beaucoup de gens, la dernière hausse des prix a été la goutte d'eau qui a fait déborder le vase."
+            },
+            {
+                speaker: "Camille",
+                role: "Jeune diplômée en droit",
+                avatarColor: "bg-cobalt-600",
+                align: "left",
+                html: `Et comme l'État souffre lui-même d'une détresse fiscale, on assiste à un <span class="expr-mark highlight-expr">bras de fer</span> permanent. Si les dirigeants continuent de <span class="expr-mark highlight-expr">faire la sourde oreille</span>, on risque de se retrouver <span class="expr-mark highlight-expr">au bord du gouffre</span>.`,
+                plain: "Et comme l'État souffre lui-même d'une détresse fiscale, on assiste à un bras de fer permanent. Si les dirigeants continuent de faire la sourde oreille, on risque de se retrouver au bord du gouffre."
+            },
+            {
+                speaker: "Thomas",
+                role: "Professeur d'histoire",
+                avatarColor: "bg-terracotta-600",
+                align: "right",
+                html: `Heureusement, la conclusion reste nuancée : le modèle est <span class="expr-mark highlight-expr">un voyant qui s'allume</span>, pas une fatalité. Si les responsables acceptent de négocier pour <span class="expr-mark highlight-expr">trouver un terrain d'entente</span> et engager des réformes justes, cela peut encore <span class="expr-mark highlight-expr">changer la donne</span> !`,
+                plain: "Heureusement, la conclusion reste nuancée : le modèle est un voyant qui s'allume, pas une fatalité. Si les responsables acceptent de négocier pour trouver un terrain d'entente et engager des réformes justes, cela peut encore changer la donne !"
+            }
+        ];
+
+        let highlightsVisible = true;
+
+        function renderDialogue() {
+            const container = document.getElementById('dialogue-lines');
+            container.innerHTML = '';
+
+            dialogueScript.forEach((line, index) => {
+                const isRight = line.align === 'right';
+                const wrapper = document.createElement('div');
+                wrapper.className = `flex items-start gap-3.5 ${isRight ? 'flex-row-reverse' : ''}`;
+
+                wrapper.innerHTML = `
+                    <div class="w-10 h-10 rounded-full ${line.avatarColor} text-white flex items-center justify-center font-bold text-sm shrink-0 shadow">
+                        ${line.speaker.charAt(0)}
+                    </div>
+                    <div class="max-w-2xl bg-white border border-slate-200 rounded-2xl p-4 shadow-sm space-y-1.5 ${isRight ? 'rounded-tr-none' : 'rounded-tl-none'}">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-900 text-sm">${line.speaker}</span>
+                                <span class="text-[11px] text-slate-400">(${line.role})</span>
+                            </div>
+                            <button onclick="speakLine(${index})" class="text-slate-400 hover:text-cobalt-600 transition text-xs flex items-center gap-1" title="Écouter cette réplique">
+                                <i class="fa-solid fa-volume-low"></i> Écouter
+                            </button>
+                        </div>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            ${line.html}
+                        </p>
+                    </div>
+                `;
+
+                container.appendChild(wrapper);
+            });
+        }
+
+        function toggleHighlights() {
+            highlightsVisible = !highlightsVisible;
+            const marks = document.querySelectorAll('.expr-mark');
+            const btnText = document.querySelector('#btn-toggle-highlights span');
+
+            marks.forEach(el => {
+                if (highlightsVisible) {
+                    el.classList.remove('highlight-hidden');
+                    el.classList.add('highlight-expr');
+                } else {
+                    el.classList.remove('highlight-expr');
+                    el.classList.add('highlight-hidden');
+                }
+            });
+
+            if (btnText) {
+                btnText.textContent = highlightsVisible ? 'Masquer les expressions' : 'Surligner les expressions';
+            }
+        }
+
+        function speakLine(index) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(dialogueScript[index].plain);
+            utterance.lang = 'fr-FR';
+            utterance.rate = 0.96;
+            utterance.pitch = index % 2 === 0 ? 1.08 : 0.92;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playFullDialogue() {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            dialogueScript.forEach((line, idx) => {
+                const utterance = new SpeechSynthesisUtterance(line.plain);
+                utterance.lang = 'fr-FR';
+                utterance.rate = 0.96;
+                utterance.pitch = idx % 2 === 0 ? 1.08 : 0.92;
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        function stopSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            renderQuiz();
+            renderExpressionsGrid();
+            renderDialogue();
+        };
+    </script>
+</body>
+</html>
