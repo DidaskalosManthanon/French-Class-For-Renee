@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Mornings avec Elisa : La Tarte Tatin</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Police Google Fonts : Inter & Playfair Display pour une touche éditoriale française -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- Icônes Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        caramel: {
+                            50: '#FFFBEB',
+                            100: '#FEF3C7',
+                            200: '#FDE68A',
+                            300: '#FCD34D',
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                            600: '#D97706', // Accent principal doré/caramel
+                            700: '#B45309',
+                            800: '#92400E',
+                            900: '#78350F',
+                        },
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#FAF5EB',
+                            200: '#F3E8D2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Transitions douces et barre de défilement personnalisée */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(217, 119, 6, 0.4);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(217, 119, 6, 0.7);
+        }
+        .expression-highlight {
+            background: linear-gradient(120deg, rgba(217, 119, 6, 0.25) 0%, rgba(245, 158, 11, 0.35) 100%);
+            border-bottom: 2px solid #D97706;
+            padding: 0.1rem 0.35rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .expression-highlight:hover {
+            background: rgba(217, 119, 6, 0.45);
+        }
+        .no-highlight .expression-highlight {
+            background: transparent;
+            border-bottom: none;
+            padding: 0;
+            font-weight: inherit;
+            cursor: text;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-cream-50 text-stone-800 dark:bg-stone-950 dark:text-stone-100 min-h-screen flex flex-col transition-colors duration-300 selection:bg-caramel-600 selection:text-white">
+
+    <!-- Barre de Navigation Fixe en Haut -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-cream-50/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+                <!-- Logo / Titre -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-caramel-500 to-caramel-700 flex items-center justify-center text-white shadow-md shadow-caramel-600/20">
+                        <i class="ph-fill ph-cooking-pot text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-serif font-bold text-base sm:text-lg leading-tight text-stone-900 dark:text-cream-100">
+                            French Mornings <span class="text-caramel-600">avec Elisa</span>
+                        </h1>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 hidden sm:block">Immersion culinaire : La Tarte Tatin</p>
+                    </div>
+                </div>
+
+                <!-- Navigation principale (Desktop & Tablette) -->
+                <nav class="hidden md:flex items-center bg-stone-200/70 dark:bg-stone-800/80 p-1.5 rounded-2xl gap-1" aria-label="Sections principales">
+                    <button onclick="switchTab('video')" id="nav-video" class="nav-btn active flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all">
+                        <i class="ph-fill ph-play-circle text-lg"></i>
+                        <span>Vidéo & Recette</span>
+                    </button>
+                    <button onclick="switchTab('qcm')" id="nav-qcm" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all">
+                        <i class="ph-fill ph-exam text-lg"></i>
+                        <span>QCM (20)</span>
+                        <span id="nav-score-badge" class="ml-1 px-2 py-0.5 text-xs rounded-full bg-caramel-600/20 text-caramel-600 dark:text-caramel-400 font-semibold">0/20</span>
+                    </button>
+                    <button onclick="switchTab('expressions')" id="nav-expressions" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all">
+                        <i class="ph-fill ph-chat-teardrop-text text-lg"></i>
+                        <span>12 Expressions</span>
+                    </button>
+                    <button onclick="switchTab('dialogue')" id="nav-dialogue" class="nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all">
+                        <i class="ph-fill ph-users-three text-lg"></i>
+                        <span>Dialogue</span>
+                    </button>
+                </nav>
+
+                <!-- Bouton Thème Clair / Sombre -->
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleTheme()" aria-label="Changer le thème" class="p-2.5 rounded-xl bg-stone-200/80 dark:bg-stone-800 hover:bg-caramel-600/15 dark:hover:bg-caramel-600/20 text-stone-700 dark:text-cream-100 border border-stone-300/60 dark:border-stone-700 transition-all">
+                        <i id="theme-icon" class="ph-fill ph-sun text-xl text-caramel-500"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Mobile (Scrollable horizontalement) -->
+            <div class="flex md:hidden items-center gap-1.5 pb-2.5 overflow-x-auto no-scrollbar">
+                <button onclick="switchTab('video')" id="mob-video" class="mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="ph-fill ph-play-circle text-base"></i>
+                    <span>Vidéo & Recette</span>
+                </button>
+                <button onclick="switchTab('qcm')" id="mob-qcm" class="mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="ph-fill ph-exam text-base"></i>
+                    <span>QCM</span>
+                    <span id="mob-score-badge" class="px-1.5 py-0.2 text-[11px] rounded-full bg-caramel-600/20 text-caramel-600 dark:text-caramel-400">0/20</span>
+                </button>
+                <button onclick="switchTab('expressions')" id="mob-expressions" class="mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="ph-fill ph-chat-teardrop-text text-base"></i>
+                    <span>12 Expressions</span>
+                </button>
+                <button onclick="switchTab('dialogue')" id="mob-dialogue" class="mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all">
+                    <i class="ph-fill ph-users-three text-base"></i>
+                    <span>Dialogue</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="flex-grow pt-28 md:pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- =========================================================
+             SECTION 1 : LA VIDÉO & RECETTE
+             ========================================================= -->
+        <section id="section-video" class="tab-section animate-fade-in space-y-8">
+            <!-- En-tête de section -->
+            <div class="bg-gradient-to-r from-stone-900 via-stone-800 to-amber-950 dark:from-stone-900 dark:via-stone-900 dark:to-amber-950/60 text-cream-50 rounded-3xl p-6 sm:p-8 border border-caramel-600/30 shadow-xl">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div class="space-y-2 max-w-3xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-caramel-600/25 border border-caramel-500/40 text-caramel-300 text-xs font-semibold tracking-wide uppercase">
+                            <i class="ph-fill ph-youtube-logo text-base text-red-400"></i>
+                            <span>French mornings with Elisa • 11 novembre 2026</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
+                            Cuisine une tarte Tatin en français avec moi
+                        </h2>
+                        <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+                            Rejoins Elisa et son équipe en cuisine pour préparer ce grand classique de la pâtisserie française : une tarte aux pommes caramélisées renversée, préparée avec bonne humeur, quelques astuces improbables et beaucoup de gourmandise.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
+                        <div class="bg-stone-950/60 border border-stone-700/80 rounded-2xl px-4 py-3 text-center min-w-[100px]">
+                            <span class="block text-xs text-stone-400">Cuisson</span>
+                            <span class="font-bold text-caramel-400 text-lg">180 °C</span>
+                        </div>
+                        <div class="bg-stone-950/60 border border-stone-700/80 rounded-2xl px-4 py-3 text-center min-w-[110px]">
+                            <span class="block text-xs text-stone-400">Durée au four</span>
+                            <span class="font-bold text-caramel-400 text-lg">35 - 40 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille Vidéo + Repères Temporels -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Colonne Lecteur Vidéo -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border border-stone-300 dark:border-stone-800 bg-black">
+                        <iframe 
+                            id="youtube-player"
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/E7yckFkSozk?rel=0" 
+                            title="Cuisine une tarte tatin en français avec moi - French cooking vlog"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-stone-900 p-4 rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm">
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-stone-600 dark:text-stone-400">
+                            <i class="ph-fill ph-info text-caramel-600 text-lg"></i>
+                            <span>Clique sur une étape à droite pour lancer la vidéo au moment précis !</span>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=E7yckFkSozk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-caramel-600 hover:text-caramel-500 transition-colors">
+                            <span>Ouvrir sur YouTube</span>
+                            <i class="ph-bold ph-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colonne Étapes Clés & Navigation Temporelle -->
+                <div class="lg:col-span-5 bg-white dark:bg-stone-900 rounded-3xl p-5 sm:p-6 border border-stone-200 dark:border-stone-800 shadow-lg space-y-4">
+                    <div class="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">
+                        <h3 class="font-serif font-bold text-xl text-stone-900 dark:text-cream-100 flex items-center gap-2">
+                            <i class="ph-fill ph-clock-countdown text-caramel-600"></i>
+                            <span>Les étapes clés du vlog</span>
+                        </h3>
+                        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-caramel-600/15 text-caramel-600 dark:text-caramel-400">6 chapitres</span>
+                    </div>
+
+                    <div id="video-chapters" class="space-y-2.5">
+                        <!-- Généré dynamiquement par JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fiche Mémo Recette en 3 Pôles -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-md hover:border-caramel-600/50 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-caramel-600 flex items-center justify-center mb-4">
+                        <i class="ph-fill ph-fire text-2xl"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-lg mb-2 text-stone-900 dark:text-cream-100">1. Le Caramel au Beurre Salé</h4>
+                    <p class="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Un ingrédient « capricieux » qui demande de la patience : feu moyen, surveillance constante pour éviter qu'il ne brûle, puis versé directement au fond du moule.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-md hover:border-caramel-600/50 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-red-500/15 text-red-500 flex items-center justify-center mb-4">
+                        <i class="ph-fill ph-apple-logo text-2xl"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-lg mb-2 text-stone-900 dark:text-cream-100">2. Les Pommes Bien Serrées</h4>
+                    <p class="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Épluchées, coupées en deux et épépinées avec soin. On les dispose bien serrées par-dessus le caramel car elles vont réduire à la cuisson.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-md hover:border-caramel-600/50 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center mb-4">
+                        <i class="ph-fill ph-sparkle text-2xl"></i>
+                    </div>
+                    <h4 class="font-serif font-bold text-lg mb-2 text-stone-900 dark:text-cream-100">3. L'Astuce de la Bouteille</h4>
+                    <p class="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                        Pas de rouleau à pâtisserie ? Pas de souci ! L'équipe utilise une bouteille de Perrier pour étaler la pâte avant de recouvrir les pommes et d'enfourner.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 2 : QCM INTERACTIF (20 QUESTIONS)
+             ========================================================= -->
+        <section id="section-qcm" class="tab-section hidden animate-fade-in space-y-6">
+            <!-- Tableau de bord du score -->
+            <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 border border-stone-200 dark:border-stone-800 shadow-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-cream-100">
+                            Quiz d'Immersion : Teste tes connaissances
+                        </h2>
+                        <p class="text-sm text-stone-600 dark:text-stone-400 mt-1">
+                            20 questions réparties en 4 compétences. Clique sur une réponse pour afficher immédiatement la correction et l'explication.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="bg-caramel-600/10 border border-caramel-600/30 rounded-2xl px-4 py-2.5 flex items-center gap-3">
+                            <i class="ph-fill ph-trophy text-2xl text-caramel-600"></i>
+                            <div>
+                                <span class="block text-xs text-stone-500 dark:text-stone-400">Score global</span>
+                                <span id="global-score-display" class="font-bold text-lg text-caramel-600 dark:text-caramel-400">0 / 20</span>
+                            </div>
+                        </div>
+
+                        <button onclick="resetQuiz()" class="inline-flex items-center gap-2 px-4 py-3 rounded-2xl bg-stone-200/80 dark:bg-stone-800 hover:bg-red-500/15 hover:text-red-500 text-stone-700 dark:text-stone-300 text-sm font-semibold transition-all">
+                            <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                            <span>Réinitialiser</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filtres par catégorie avec compteurs -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mt-6 pt-6 border-t border-stone-200 dark:border-stone-800">
+                    <button onclick="filterQuiz('all')" id="qcat-all" class="qcat-btn active px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-between">
+                        <span>Toutes (20)</span>
+                        <span id="score-cat-all" class="text-xs opacity-80">0/20</span>
+                    </button>
+                    <button onclick="filterQuiz('comprehension')" id="qcat-comprehension" class="qcat-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-between">
+                        <span>Compréhension</span>
+                        <span id="score-cat-comprehension" class="text-xs opacity-80">0/5</span>
+                    </button>
+                    <button onclick="filterQuiz('vocabulaire')" id="qcat-vocabulaire" class="qcat-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-between">
+                        <span>Vocabulaire</span>
+                        <span id="score-cat-vocabulaire" class="text-xs opacity-80">0/5</span>
+                    </button>
+                    <button onclick="filterQuiz('grammaire')" id="qcat-grammaire" class="qcat-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-between">
+                        <span>Grammaire</span>
+                        <span id="score-cat-grammaire" class="text-xs opacity-80">0/5</span>
+                    </button>
+                    <button onclick="filterQuiz('prononciation')" id="qcat-prononciation" class="qcat-btn col-span-2 sm:col-span-1 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all flex items-center justify-between">
+                        <span>Prononciation</span>
+                        <span id="score-cat-prononciation" class="text-xs opacity-80">0/5</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liste des questions -->
+            <div id="quiz-container" class="space-y-5">
+                <!-- Généré dynamiquement par JS -->
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 3 : 12 EXPRESSIONS ISSUES DE LA VIDÉO
+             ========================================================= -->
+        <section id="section-expressions" class="tab-section hidden animate-fade-in space-y-6">
+            <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-cream-100">
+                        12 Expressions Authentiques de la Vidéo
+                    </h2>
+                    <p class="text-sm text-stone-600 dark:text-stone-400 mt-1">
+                        Maîtrise les tournures naturelles utilisées par Elisa et son équipe, avec leur traduction en anglais et un exemple du quotidien.
+                    </p>
+                </div>
+                <div class="relative w-full sm:w-64 shrink-0">
+                    <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                    <input type="text" id="expression-search" oninput="filterExpressions(this.value)" placeholder="Rechercher une expression..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-sm focus:outline-none focus:border-caramel-600">
+                </div>
+            </div>
+
+            <div id="expressions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Généré dynamiquement par JS -->
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECTION 4 : DIALOGUE INSPIRÉ DE LA VIDÉO
+             ========================================================= -->
+        <section id="section-dialogue" class="tab-section hidden animate-fade-in space-y-6">
+            <div class="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200 dark:border-stone-800 shadow-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-stone-200 dark:border-stone-800">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-caramel-600/15 text-caramel-600 dark:text-caramel-400 text-xs font-semibold mb-2">
+                            <i class="ph-fill ph-chats-circle"></i>
+                            <span>Mise en situation • Dimanche après-midi en cuisine</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-cream-100">
+                            Un dimanche autour d'une tarte Tatin
+                        </h2>
+                        <p class="text-sm text-stone-600 dark:text-stone-400 mt-1">
+                            Camille, Lucas et Inès préparent ensemble une tarte Tatin en réutilisant les 12 expressions de la vidéo.
+                        </p>
+                    </div>
+
+                    <!-- Contrôles interactifs du dialogue -->
+                    <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                        <button onclick="toggleDialogueTranslation()" id="btn-toggle-en" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-caramel-600 hover:bg-caramel-700 text-white text-sm font-semibold shadow-md shadow-caramel-600/20 transition-all">
+                            <i class="ph-bold ph-translate"></i>
+                            <span id="btn-toggle-en-text">Afficher la traduction anglaise</span>
+                        </button>
+                        <button onclick="toggleExpressionHighlight()" id="btn-toggle-hl" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-stone-200/80 dark:bg-stone-800 hover:bg-caramel-600/20 text-stone-800 dark:text-cream-100 text-sm font-semibold border border-stone-300 dark:border-stone-700 transition-all">
+                            <i class="ph-fill ph-highlighter-circle text-caramel-600"></i>
+                            <span id="btn-toggle-hl-text">Surlignage : Activé</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Légende des personnages -->
+                <div class="flex flex-wrap items-center gap-4 py-4 text-xs sm:text-sm">
+                    <span class="font-semibold text-stone-500 dark:text-stone-400">Personnages :</span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 font-medium">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Camille (l'hôte)
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/15 text-sky-700 dark:text-sky-300 font-medium">
+                        <span class="w-2 h-2 rounded-full bg-sky-500"></span> Lucas (responsable du caramel)
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Inès (responsable de la pâte)
+                    </span>
+                </div>
+
+                <!-- Conteneur des répliques -->
+                <div id="dialogue-container" class="space-y-4 mt-2">
+                    <!-- Généré dynamiquement par JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="border-t border-stone-200 dark:border-stone-800 bg-white/60 dark:bg-stone-900/60 py-6 px-4 text-center text-xs sm:text-sm text-stone-500 dark:text-stone-400">
+        <p>
+            Application pédagogique d'immersion en français inspirée de la vidéo <strong class="text-caramel-600">« Cuisine une tarte tatin en français avec moi »</strong> par <em>French mornings with Elisa</em>.
+        </p>
+    </footer>
+
+    <!-- Boîte modale / Toast d'information pour les expressions cliquées dans le dialogue -->
+    <div id="expression-toast" class="fixed bottom-5 right-5 left-5 sm:left-auto sm:w-96 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-stone-900 dark:bg-stone-800 text-white p-4 rounded-2xl shadow-2xl border border-caramel-600/50 flex items-start justify-between gap-3">
+            <div>
+                <span class="text-[11px] uppercase tracking-wider text-caramel-400 font-bold">Expression de la vidéo</span>
+                <h4 id="toast-fr" class="font-bold text-base text-white mt-0.5"></h4>
+                <p id="toast-en" class="text-xs italic text-caramel-300 mt-0.5"></p>
+                <p id="toast-desc" class="text-xs text-stone-300 mt-1.5"></p>
+            </div>
+            <button onclick="hideToast()" class="text-stone-400 hover:text-white p-1">
+                <i class="ph-bold ph-x"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         DONNÉES & LOGIQUE JAVASCRIPT
+         ========================================================= -->
+    <script>
+        // 1. CHAPITRES DE LA VIDÉO
+        const videoChapters = [
+            {
+                time: "0:00",
+                seconds: 0,
+                title: "Introduction & répartition en 3 équipes",
+                desc: "Elisa présente la recette de la tarte Tatin et divise l'équipe en trois pôles : caramel, pommes et pâte.",
+                icon: "ph-users"
+            },
+            {
+                time: "0:55",
+                seconds: 55,
+                title: "Préparation des pommes",
+                desc: "Épluchage, découpe en deux et retrait des pépins avant la mise en place dans le moule.",
+                icon: "ph-knife"
+            },
+            {
+                time: "2:30",
+                seconds: 150,
+                title: "Le caramel au beurre salé",
+                desc: "Patience et feu doux : le caramel est capricieux et peut brûler très vite ! Versé au fond du moule à 3:41.",
+                icon: "ph-fire"
+            },
+            {
+                time: "5:16",
+                seconds: 316,
+                title: "La pâte & l'astuce de la bouteille de Perrier",
+                desc: "Sans rouleau à pâtisserie, l'équipe improvise avec une bouteille pour étaler la pâte sur les pommes.",
+                icon: "ph-sparkle"
+            },
+            {
+                time: "6:18",
+                seconds: 378,
+                title: "Cuisson (180°C) & anecdote sur l'avion",
+                desc: "Enfourner 35 à 40 min. En attendant que ça cuise, discussion sur la peur de prendre l'avion.",
+                icon: "ph-airplane-tilt"
+            },
+            {
+                time: "7:12",
+                seconds: 432,
+                title: "Le démoulage à l'envers & dégustation",
+                desc: "Le moment décisif : on retourne la tarte sur le plat et on savoure le résultat !",
+                icon: "ph-smiley-wink"
+            }
+        ];
+
+        // 2. QUESTIONS DU QCM (20 QUESTIONS AVEC RÉPONSES VARIÉES)
+        const quizData = [
+            // --- CATÉGORIE 1 : COMPRÉHENSION (Q1 à Q5) ---
+            {
+                id: 1,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Pourquoi la préparation de la tarte Tatin est-elle divisée en trois équipes au début de la vidéo ?",
+                options: [
+                    "Parce qu'il y a trois éléments distincts à préparer : le caramel, les pommes et la pâte.",
+                    "Parce que la cuisine d'Elisa est trop petite pour que tout le monde travaille au même endroit.",
+                    "Parce qu'elles font un concours chronométré pour savoir qui cuisine le plus vite.",
+                    "Parce que chacune prépare une tarte différente pour comparer les recettes."
+                ],
+                correctIndex: 0, // A
+                explanation: "Dès le début (0:30-0:54), Elisa explique que la recette se divise en trois parties bien distinctes : faire le caramel, préparer les pommes et façonner la pâte."
+            },
+            {
+                id: 2,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Quel conseil personnel Elisa donne-t-elle pour réussir le caramel sans le brûler ?",
+                options: [
+                    "Ajouter beaucoup d'eau froide dès que le sucre commence à dorer.",
+                    "Remuer constamment avec un fouet métallique à feu maximum.",
+                    "Utiliser uniquement du sucre roux et retirer la casserole toutes les dix secondes.",
+                    "Garder le feu pas trop fort et faire preuve de patience car le caramel peut brûler très vite."
+                ],
+                correctIndex: 3, // D
+                explanation: "Entre 2:30 et 3:14, Elisa insiste sur le fait que le caramel demande de la patience et un feu modéré, car il peut passer de doré à brûlé en quelques secondes."
+            },
+            {
+                id: 3,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Comment l'équipe parvient-elle à étaler la pâte malgré l'absence d'un ustensile essentiel ?",
+                options: [
+                    "Elles aplatissent la pâte uniquement avec la paume de leurs mains.",
+                    "Elles utilisent une bouteille de Perrier en guise de rouleau à pâtisserie.",
+                    "Elles utilisent une boîte de conserve cylindrique trouvée dans le placard.",
+                    "Elles décident d'acheter une pâte déjà étalée au supermarché."
+                ],
+                correctIndex: 1, // B
+                explanation: "N'ayant pas de rouleau à pâtisserie sous la main (5:16-5:55), elles ont l'idée créative d'utiliser une bouteille en verre de Perrier bien lisse."
+            },
+            {
+                id: 4,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "Quelle particularité de montage de la tarte Tatin Elisa rappelle-t-elle au moment de verser le caramel ?",
+                options: [
+                    "On met toujours la pâte au fond du moule avant les fruits.",
+                    "On verse le caramel froid après la sortie du four.",
+                    "La tarte Tatin se prépare à l'envers, avec le caramel et les pommes au fond du moule.",
+                    "Il faut cuire les pommes séparément pendant une heure avant de les mettre dans le moule."
+                ],
+                correctIndex: 2, // C
+                explanation: "La tarte Tatin est célèbre parce qu'elle est montée à l'envers : caramel au fond, pommes par-dessus, puis la pâte sur le dessus avant d'être retournée après cuisson."
+            },
+            {
+                id: 5,
+                category: "comprehension",
+                categoryLabel: "Compréhension",
+                question: "De quelle peur personnelle Elisa et son équipe discutent-elles pendant que la tarte cuit au four ?",
+                options: [
+                    "La peur de prendre l'avion (l'aviophobie).",
+                    "La peur de rater le démoulage devant la caméra.",
+                    "La peur des araignées et des insectes en été.",
+                    "La peur de parler une langue étrangère en public."
+                ],
+                correctIndex: 0, // A
+                explanation: "Pendant la cuisson au four (6:33-6:46), Elisa partage une anecdote personnelle sur la peur de prendre l'avion."
+            },
+
+            // --- CATÉGORIE 2 : VOCABULAIRE (Q6 à Q10) ---
+            {
+                id: 6,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Dans la vidéo, que signifie le verbe « éplucher » utilisé pour préparer les pommes ?",
+                options: [
+                    "Couper les fruits en tout petits dés réguliers.",
+                    "Écraser les pommes pour en faire une compote lisse.",
+                    "Enlever la peau des pommes à l'aide d'un couteau ou d'un économe.",
+                    "Laver les fruits sous l'eau froide avant la cuisson."
+                ],
+                correctIndex: 2, // C
+                explanation: "« Éplucher » un fruit ou un légume signifie retirer sa peau (on utilise aussi le synonyme « peler »)."
+            },
+            {
+                id: 7,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Lorsque l'équipe enlève « les pépins » des pommes, de quoi s'agit-il ?",
+                options: [
+                    "Des feuilles vertes attachées à la tige.",
+                    "Des petites graines situées au cœur du fruit.",
+                    "Des taches brunes sur la peau extérieure.",
+                    "Des morceaux de sucre cristallisé dans la poêle."
+                ],
+                correctIndex: 1, // B
+                explanation: "Les pépins sont les petites graines que l'on trouve au centre des pommes, des poires, des raisins ou des agrumes."
+            },
+            {
+                id: 8,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Elisa dit que le caramel est « capricieux ». Que veut dire cet adjectif dans ce contexte culinaire ?",
+                options: [
+                    "Qu'il a un goût très sucré et vanillé.",
+                    "Qu'il demande des ingrédients extrêmement rares.",
+                    "Qu'il reste toujours liquide même après refroidissement.",
+                    "Qu'il est imprévisible, délicat à réussir et peut rater ou brûler soudainement."
+                ],
+                correctIndex: 3, // D
+                explanation: "Dire qu'une préparation est « capricieuse » signifie qu'elle est instable, sensible aux variations de température et difficile à maîtriser."
+            },
+            {
+                id: 9,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Que désigne « un tablier » mentionné par Elisa lorsqu'elle plaisante sur le fait de ressembler à une ménagère des années 60 ?",
+                options: [
+                    "Le vêtement de protection que l'on attache devant soi pour ne pas se tacher en cuisinant.",
+                    "Le gant épais utilisé pour sortir un plat brûlant du four.",
+                    "Le torchon propre servant à essuyer la vaisselle.",
+                    "Le moule rond à bords hauts utilisé pour les tartes."
+                ],
+                correctIndex: 0, // A
+                explanation: "Un tablier (apron en anglais) se noue autour de la taille et du cou pour protéger ses vêtements des éclaboussures en cuisine."
+            },
+            {
+                id: 10,
+                category: "vocabulaire",
+                categoryLabel: "Vocabulaire",
+                question: "Que signifie l'expression familière « je n'ai pas capté » entendue pendant la préparation de la pâte ?",
+                options: [
+                    "Je n'ai pas réussi à attraper la bouteille au vol.",
+                    "Je n'ai pas trouvé de réseau internet sur mon téléphone.",
+                    "Je n'ai pas compris ou pas remarqué ce qui se passait.",
+                    "Je n'ai pas eu le temps de goûter la préparation."
+                ],
+                correctIndex: 2, // C
+                explanation: "Dans le langage courant en français, « capter » signifie comprendre, saisir une information ou remarquer quelque chose."
+            },
+
+            // --- CATÉGORIE 3 : GRAMMAIRE (Q11 à Q15) ---
+            {
+                id: 11,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Dans la phrase d'Elisa « C'est grâce à elles que tout ce que je vous propose est possible », quel est le rôle de la structure « C'est ... que » ?",
+                options: [
+                    "Exprimer une condition irréelle dans le passé.",
+                    "Poser une question formelle avec inversion du sujet.",
+                    "Marquer une opposition entre deux idées contradictoires.",
+                    "Mettre en relief (insister sur) le complément « grâce à elles »."
+                ],
+                correctIndex: 3, // D
+                explanation: "La tournure présentative « C'est ... que » permet de mettre en emphase un élément de la phrase pour attirer l'attention dessus."
+            },
+            {
+                id: 12,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Dans « En attendant que ça cuise, on discute un peu », pourquoi le verbe « cuire » est-il conjugué au subjonctif présent (« cuise ») ?",
+                options: [
+                    "Parce que le sujet « ça » impose toujours le subjonctif.",
+                    "Parce que la locution conjonctive « en attendant que » est toujours suivie du subjonctif.",
+                    "Parce que l'action est déjà terminée au moment où Elisa parle.",
+                    "Parce qu'il s'agit d'un ordre donné à l'impératif."
+                ],
+                correctIndex: 1, // B
+                explanation: "Les locutions exprimant l'attente ou l'antériorité comme « en attendant que », « jusqu'à ce que » ou « avant que » exigent toujours le mode subjonctif."
+            },
+            {
+                id: 13,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Quelle est la fonction grammaticale du pronom « en » dans « On va en mettre plein » (en parlant des pommes dans le moule) ?",
+                options: [
+                    "Il remplace un nom introduit par un article partitif ou indéfini (« des pommes »).",
+                    "Il remplace un complément de lieu introduit par « dans ».",
+                    "Il remplace une personne introduite par la préposition « à ».",
+                    "Il sert uniquement à renforcer la négation dans la phrase."
+                ],
+                correctIndex: 0, // A
+                explanation: "Le pronom « en » remplace ici « des pommes » (quantité indéfinie) et se place juste avant le verbe à l'infinitif « mettre »."
+            },
+            {
+                id: 14,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Elisa explique « Tu n'as qu'à cliquer sur le lien en description ». Que signifie la tournure grammaticale « ne ... que » ici ?",
+                options: [
+                    "Une interdiction absolue de cliquer sur le lien.",
+                    "Une hésitation entre plusieurs choix possibles.",
+                    "Une restriction signifiant « seulement » ou « il te suffit de ».",
+                    "Une action qui s'est produite dans un passé lointain."
+                ],
+                correctIndex: 2, // C
+                explanation: "« Ne ... que » n'est pas une négation totale mais une restriction : « n'avoir qu'à + infinitif » signifie « il suffit de »."
+            },
+            {
+                id: 15,
+                category: "grammaire",
+                categoryLabel: "Grammaire",
+                question: "Dans « Je te conseille vraiment de la reproduire », à quoi renvoie le pronom complément d'objet direct « la » ?",
+                options: [
+                    "À la vidéo YouTube d'Elisa.",
+                    "À la recette (ou la tarte Tatin), nom féminin singulier.",
+                    "À la bouteille de Perrier utilisée pour la pâte.",
+                    "À la peur de prendre l'avion."
+                ],
+                correctIndex: 1, // B
+                explanation: "« La » est un pronom COD féminin singulier qui reprend l'antécédent « la recette » ou « la tarte Tatin » afin d'éviter la répétition."
+            },
+
+            // --- CATÉGORIE 4 : PRONONCIATION (Q16 à Q20) ---
+            {
+                id: 16,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Comment prononce-t-on correctement le mot « Tatin » dans « tarte Tatin » ?",
+                options: [
+                    "En prononçant le « t » final comme dans « sept » [tatɛ̃t].",
+                    "Avec le son « on » à la fin comme dans « mouton » [tatɔ̃].",
+                    "En prononçant le « in » comme dans « fine » [tatin].",
+                    "Avec la voyelle nasale [ɛ̃] et un « t » final muet : [tatɛ̃]."
+                ],
+                correctIndex: 3, // D
+                explanation: "La graphie « in » en fin de mot (sans « e » après) produit la voyelle nasale [ɛ̃] comme dans « matin » ou « jardin », et le « t » final de Tatin est muet."
+            },
+            {
+                id: 17,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Dans « Là ça bout, du verbe bouillir », comment se prononce le verbe « bouillir » ?",
+                options: [
+                    "Avec le son semi-vocalique [j] (comme dans « famille ») : [bujiʁ], sans prononcer le « l ».",
+                    "En prononçant clairement la lettre « l » : [buliʁ].",
+                    "Comme le mot anglais « boil » : [bɔjl].",
+                    "En supprimant le son « ou » au début : [bjiʁ]."
+                ],
+                correctIndex: 0, // A
+                explanation: "Après la voyelle « i », le groupe « ill » se prononce généralement [j] (yod), comme dans « fille », « bille » ou « bouillir » [bujiʁ]."
+            },
+            {
+                id: 18,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Quelle particularité de prononciation entend-on souvent à l'oral chez les francophones dans « il faut vraiment les serrer » ?",
+                options: [
+                    "Le « t » final de « faut » est toujours prononcé devant « vraiment ».",
+                    "Le « s » de « les » fait une liaison en [z] devant « serrer ».",
+                    "Le « l » de « il » est souvent élidé à l'oral familier, donnant « i' faut » [ifo].",
+                    "Le son « ai » de « vraiment » se prononce [a]."
+                ],
+                correctIndex: 2, // C
+                explanation: "Dans le français parlé naturel, le pronom impersonnel « il » devant une consonne perd très fréquemment son [l] : « il faut » devient [ifo]."
+            },
+            {
+                id: 19,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Comment se prononce le mot « pépins » (dans « enlever les pépins ») ?",
+                options: [
+                    "[pəpin] avec un « e » muet et un « i » oral.",
+                    "[pepɛ̃] avec un « é » fermé, la voyelle nasale [ɛ̃] et un « s » final muet.",
+                    "[pepɛ̃s] en faisant entendre le « s » final.",
+                    "[pɛpɑ̃] avec le son nasal « an » à la fin."
+                ],
+                correctIndex: 1, // B
+                explanation: "Le « é » accent aigu est fermé [e], « in » forme la voyelle nasale [ɛ̃], et le « s » du pluriel reste totalement muet."
+            },
+            {
+                id: 20,
+                category: "prononciation",
+                categoryLabel: "Prononciation",
+                question: "Comment prononce-t-on exactement la locution « à peu près » entendue pour indiquer le temps de cuisson (« à peu près 35-40 minutes ») ?",
+                options: [
+                    "[a pø pʁɛ] : le « s » final de « près » est muet et « peu » se prononce avec la voyelle arrondie [ø].",
+                    "[a pu pʁɛs] : « peu » se prononce [pu] et le « s » de « près » s'entend.",
+                    "[a pø pʁe] : avec un « é » très fermé à la fin et le « s » prononcé.",
+                    "[a pɔ pʁɛ] : avec un « o » ouvert dans « peu »."
+                ],
+                correctIndex: 0, // A
+                explanation: "« Peu » contient la voyelle antérieure arrondie fermée [ø] (comme dans « deux »), « près » a un « è » ouvert [ɛ], et son « s » final est muet."
+            }
+        ];
+
+        // 3. LES 12 EXPRESSIONS AVEC ILLUSTRATIONS SVG PERSONNALISÉES
+        const expressionsData = [
+            {
+                id: 1,
+                fr: "Tu es au bon endroit",
+                en: "You're in the right place",
+                meaning: "Expression accueillante utilisée pour confirmer à quelqu'un qu'il a trouvé exactement ce qu'il cherche.",
+                exampleFr: "Si tu cherches des conseils pour améliorer ton français naturellement, tu es au bon endroit !",
+                exampleEn: "If you're looking for tips to improve your French naturally, you're in the right place!",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <defs>
+                            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#B45309"/></linearGradient>
+                        </defs>
+                        <rect width="120" height="80" rx="14" fill="url(#g1)" opacity="0.15"/>
+                        <circle cx="60" cy="40" r="24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-dasharray="4 3"/>
+                        <path d="M60 18 C50 18 43 25 43 34 C43 46 60 60 60 60 C60 60 77 46 77 34 C77 25 70 18 60 18 Z" fill="#D97706"/>
+                        <circle cx="60" cy="34" r="6" fill="#FEF3C7"/>
+                        <path d="M56 34 L59 37 L65 31" stroke="#92400E" stroke-width="2" fill="none" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                id: 2,
+                fr: "C'est parti !",
+                en: "Let's go! / Here we go!",
+                meaning: "Formule dynamique pour lancer une activité, un projet ou le début d'une recette.",
+                exampleFr: "Tout le monde a attaché sa ceinture ? Alors c'est parti pour trois heures de route !",
+                exampleEn: "Has everyone fastened their seatbelt? Then let's go for a three-hour drive!",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#10B981" opacity="0.14"/>
+                        <path d="M35 55 L55 25 L85 40 L45 62 Z" fill="#10B981"/>
+                        <path d="M32 58 L22 65 M40 62 L32 70 M28 50 L18 55" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="72" cy="36" r="4" fill="#ECFDF5"/>
+                      </svg>`
+            },
+            {
+                id: 3,
+                fr: "Faire preuve de patience / Il faut de la patience",
+                en: "It takes patience / To be patient",
+                meaning: "Savoir attendre calmement sans se précipiter, notamment quand une tâche demande du temps.",
+                exampleFr: "Apprendre une nouvelle langue ne se fait pas en un jour, il faut de la patience.",
+                exampleEn: "Learning a new language doesn't happen in a day, it takes patience.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#8B5CF6" opacity="0.14"/>
+                        <path d="M44 18 H76 M44 62 H76" stroke="#7C3AED" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M48 18 C48 34 60 38 60 40 C60 42 48 46 48 62 H72 C72 46 60 42 60 40 C60 38 72 34 72 18 Z" fill="#A78BFA" opacity="0.35" stroke="#7C3AED" stroke-width="2"/>
+                        <path d="M52 58 H68 L60 48 Z" fill="#F59E0B"/>
+                      </svg>`
+            },
+            {
+                id: 4,
+                fr: "C'est capricieux",
+                en: "It's temperamental / finicky / unpredictable",
+                meaning: "Se dit d'une chose (un appareil, une recette, la météo) qui réagit de manière imprévisible.",
+                exampleFr: "Mon vieil ordinateur est un peu capricieux : parfois il s'allume tout de suite, parfois il met dix minutes.",
+                exampleEn: "My old computer is a bit finicky: sometimes it turns on right away, sometimes it takes ten minutes.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#EF4444" opacity="0.14"/>
+                        <path d="M38 48 C30 48 26 42 28 35 C30 28 38 26 44 29 C48 20 62 18 70 25 C78 22 88 28 88 37 C92 42 88 48 80 48 Z" fill="#F87171"/>
+                        <path d="M58 46 L52 58 L61 58 L56 68" stroke="#F59E0B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>`
+            },
+            {
+                id: 5,
+                fr: "En mode...",
+                en: "In ... mode / acting like...",
+                meaning: "Expression très courante à l'oral pour décrire une attitude, une ambiance ou un état d'esprit.",
+                exampleFr: "Le dimanche matin, je suis complètement en mode détente avec un bon café.",
+                exampleEn: "On Sunday mornings, I'm completely in relaxation mode with a good coffee.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#EC4899" opacity="0.14"/>
+                        <rect x="30" y="28" width="60" height="24" rx="12" fill="#F472B6" opacity="0.3" stroke="#DB2777" stroke-width="2.5"/>
+                        <circle cx="76" cy="40" r="8" fill="#DB2777"/>
+                        <path d="M42 40 H58" stroke="#DB2777" stroke-width="2.5" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                id: 6,
+                fr: "Préparer quelque chose à l'envers",
+                en: "To make / put something upside down",
+                meaning: "Mettre le dessus dessous ou inverser l'ordre habituel d'un objet ou d'une préparation.",
+                exampleFr: "Oups, j'ai mis mon pull à l'envers ce matin sans m'en rendre compte !",
+                exampleEn: "Oops, I put my sweater on inside out/upside down this morning without realizing it!",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#D97706" opacity="0.15"/>
+                        <path d="M40 34 A22 22 0 0 1 80 34" fill="none" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M76 28 L81 35 L73 36" fill="none" stroke="#D97706" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M80 46 A22 22 0 0 1 40 46" fill="none" stroke="#0284C7" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M44 52 L39 45 L47 44" fill="none" stroke="#0284C7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>`
+            },
+            {
+                id: 7,
+                fr: "Comment se débrouille... ?",
+                en: "How is ... managing / doing?",
+                meaning: "Demander comment quelqu'un s'en sort face à une tâche ou une situation nouvelle.",
+                exampleFr: "Comment se débrouille ton frère dans son nouveau travail à Lyon ?",
+                exampleEn: "How is your brother doing in his new job in Lyon?",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#0EA5E9" opacity="0.14"/>
+                        <circle cx="52" cy="40" r="16" fill="#38BDF8" opacity="0.35" stroke="#0284C7" stroke-width="2.5"/>
+                        <text x="52" y="46" text-anchor="middle" font-size="18" font-weight="bold" fill="#0284C7">?</text>
+                        <path d="M74 34 L82 42 L94 28" stroke="#10B981" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>`
+            },
+            {
+                id: 8,
+                fr: "Il n'y a pas de souci",
+                en: "No problem / No worries",
+                meaning: "Expression rassurante et amicale pour dire que tout va bien et qu'il ne faut pas s'inquiéter.",
+                exampleFr: "Tu as cinq minutes de retard ? Il n'y a pas de souci, je viens juste d'arriver.",
+                exampleEn: "You're five minutes late? No worries, I just got here.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#14B8A6" opacity="0.14"/>
+                        <circle cx="60" cy="40" r="20" fill="#14B8A6"/>
+                        <path d="M51 40 L57 46 L70 33" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>`
+            },
+            {
+                id: 9,
+                fr: "Je n'ai pas capté",
+                en: "I didn't catch that / I didn't get it",
+                meaning: "Expression familière pour dire qu'on n'a pas compris, entendu ou remarqué quelque chose.",
+                exampleFr: "Tu peux répéter ce que tu viens de dire ? Il y avait du bruit et je n'ai pas capté.",
+                exampleEn: "Can you repeat what you just said? It was noisy and I didn't catch it.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#F97316" opacity="0.14"/>
+                        <path d="M36 45 C36 32 46 22 60 22 C74 22 84 32 84 45" stroke="#EA580C" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <path d="M44 45 C44 37 51 30 60 30 C69 30 76 37 76 45" stroke="#EA580C" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <line x1="35" y1="22" x2="85" y2="60" stroke="#EF4444" stroke-width="3.5" stroke-linecap="round"/>
+                      </svg>`
+            },
+            {
+                id: 10,
+                fr: "En attendant que...",
+                en: "While waiting for... / Until...",
+                meaning: "Locution temporelle (suivie du subjonctif) indiquant ce que l'on fait pendant un délai.",
+                exampleFr: "En attendant que le dîner soit prêt, on peut prendre un verre sur la terrasse.",
+                exampleEn: "While waiting for dinner to be ready, we can have a drink on the terrace.",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#6366F1" opacity="0.14"/>
+                        <circle cx="60" cy="40" r="20" fill="none" stroke="#4F46E5" stroke-width="3"/>
+                        <path d="M60 28 V40 L68 45" stroke="#4F46E5" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <circle cx="88" cy="26" r="3" fill="#F59E0B"/>
+                        <circle cx="94" cy="34" r="2" fill="#F59E0B"/>
+                      </svg>`
+            },
+            {
+                id: 11,
+                fr: "Pas mal du tout !",
+                en: "Not bad at all! / Pretty good!",
+                meaning: "Litote française très positive qui signifie en réalité que le résultat est vraiment réussi.",
+                exampleFr: "Pour une première tentative de peinture à l'aquarelle, ton tableau n'est pas mal du tout !",
+                exampleEn: "For a first attempt at watercolor painting, your picture is pretty good!",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#EAB308" opacity="0.15"/>
+                        <polygon points="60,16 66,32 84,32 70,42 75,58 60,48 45,58 50,42 36,32 54,32" fill="#F59E0B"/>
+                        <circle cx="32" cy="22" r="2.5" fill="#F59E0B"/>
+                        <circle cx="88" cy="22" r="2.5" fill="#F59E0B"/>
+                      </svg>`
+            },
+            {
+                id: 12,
+                fr: "Ça y est, c'est la fin !",
+                en: "That's it, it's the end! / There we go, we're done!",
+                meaning: "Marque l'achèvement d'une activité ou l'arrivée au résultat final tant attendu.",
+                exampleFr: "Ça y est, j'ai enfin terminé tous mes examens de fin d'année !",
+                exampleEn: "That's it, I've finally finished all my end-of-year exams!",
+                svg: `<svg viewBox="0 0 120 80" class="w-full h-full">
+                        <rect width="120" height="80" rx="14" fill="#22C55E" opacity="0.14"/>
+                        <line x1="42" y1="18" x2="42" y2="64" stroke="#15803D" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M42 20 H82 L74 31 L82 42 H42 Z" fill="#22C55E"/>
+                        <circle cx="88" cy="54" r="4" fill="#F59E0B"/>
+                      </svg>`
+            }
+        ];
+
+        // 4. DIALOGUE INSPIRÉ DE LA VIDÉO (AVEC SURLIGNAGE DES 12 EXPRESSIONS)
+        const dialogueLines = [
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "Bienvenue dans ma cuisine ! Si tu as envie d'apprendre à faire une vraie tarte Tatin maison aujourd'hui, <span class='expression-highlight' data-exp='1'>tu es au bon endroit</span>. Lucas, Inès, vous avez mis vos tabliers ?",
+                en: "Welcome to my kitchen! If you want to learn how to make a real homemade tarte Tatin today, you're in the right place. Lucas, Inès, did you put your aprons on?"
+            },
+            {
+                speaker: "Inès",
+                role: "ines",
+                fr: "Oui, je suis complètement <span class='expression-highlight' data-exp='5'>en mode</span> pâtissière professionnelle ! On commence par quoi ?",
+                en: "Yes, I'm completely in professional pastry chef mode! What do we start with?"
+            },
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "Alors <span class='expression-highlight' data-exp='2'>c'est parti !</span> On se partage le travail : j'épluche et j'épépine les pommes, Lucas s'occupe du caramel au beurre salé, et Inès prépare la pâte.",
+                en: "Then let's go! We'll split the work: I'll peel and core the apples, Lucas will handle the salted butter caramel, and Inès will prepare the dough."
+            },
+            {
+                speaker: "Lucas",
+                role: "lucas",
+                fr: "Attention avec le caramel, <span class='expression-highlight' data-exp='4'>c'est capricieux</span> ! Il ne faut pas mettre le feu trop fort, sinon ça brûle en dix secondes. Il faut vraiment <span class='expression-highlight' data-exp='3'>faire preuve de patience</span>.",
+                en: "Careful with the caramel, it's temperamental! You mustn't turn the heat up too high, otherwise it burns in ten seconds. You really have to be patient."
+            },
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "Tu as raison. Et n'oubliez pas le principe de la tarte Tatin : il faut <span class='expression-highlight' data-exp='6'>préparer quelque chose à l'envers</span> ! On verse le caramel au fond du moule, puis on serre bien les pommes par-dessus.",
+                en: "You're right. And don't forget the principle of tarte Tatin: you have to prepare something upside down! We pour the caramel into the bottom of the mold, then pack the apples tightly on top."
+            },
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "Au fait, <span class='expression-highlight' data-exp='7'>comment se débrouille</span> Inès avec la pâte brisée ?",
+                en: "By the way, how is Inès managing with the shortcrust pastry?"
+            },
+            {
+                speaker: "Inès",
+                role: "ines",
+                fr: "Euh, petit problème technique : je ne trouve pas ton rouleau à pâtisserie ! Attends... pardon, tu as dit quoi sur le placard de gauche ? Il y avait le bruit de la hotte, <span class='expression-highlight' data-exp='9'>je n'ai pas capté</span>.",
+                en: "Uh, slight technical problem: I can't find your rolling pin! Wait... sorry, what did you say about the left cupboard? The extractor hood was noisy, I didn't catch that."
+            },
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "Je disais que je n'en ai pas ! Mais <span class='expression-highlight' data-exp='8'>il n'y a pas de souci</span>, prends cette bouteille en verre bien lisse sur la table, ça marche à merveille pour étaler la pâte !",
+                en: "I was saying I don't have one! But no worries, take that smooth glass bottle on the table, it works wonders for rolling out the dough!"
+            },
+            {
+                speaker: "Lucas",
+                role: "lucas",
+                fr: "Génial ! Le caramel est doré, les pommes sont rangées et la pâte recouvre le tout. On enfourne à 180 degrés. <span class='expression-highlight' data-exp='10'>En attendant que</span> ça cuise pendant quarante minutes, on se fait un thé ?",
+                en: "Awesome! The caramel is golden, the apples are arranged, and the dough covers everything. Into the oven at 180 degrees. While waiting for it to bake for forty minutes, shall we make some tea?"
+            },
+            {
+                speaker: "Inès",
+                role: "ines",
+                fr: "(Quarante minutes plus tard) Regardez quand on la retourne sur l'assiette... Oh ! Le caramel brille et les pommes sont fondantes. Franchement, <span class='expression-highlight' data-exp='11'>pas mal du tout !</span>",
+                en: "(Forty minutes later) Look when we flip it onto the plate... Oh! The caramel is shining and the apples are tender. Honestly, not bad at all!"
+            },
+            {
+                speaker: "Camille",
+                role: "camille",
+                fr: "<span class='expression-highlight' data-exp='12'>Ça y est, c'est la fin !</span> À table tout le monde, on déguste tant que c'est encore tiède !",
+                en: "That's it, it's the end! Everyone to the table, let's dig in while it's still warm!"
+            }
+        ];
+
+        // ÉTAT DE L'APPLICATION
+        let userAnswers = {}; // { questionId: selectedOptionIndex }
+        let currentQuizCategory = 'all';
+        let showEnglishDialogue = false;
+        let highlightExpressions = true;
+
+        // INITIALISATION AU CHARGEMENT
+        window.onload = function() {
+            renderChapters();
+            renderQuiz();
+            renderExpressions(expressionsData);
+            renderDialogue();
+            updateNavStyles('video');
+            setupExpressionClicks();
+        };
+
+        // GESTION DES ONGLETS PRINCIPAUX
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(`section-${tabId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+            updateNavStyles(tabId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNavStyles(activeTab) {
+            const tabs = ['video', 'qcm', 'expressions', 'dialogue'];
+            tabs.forEach(t => {
+                const deskBtn = document.getElementById(`nav-${t}`);
+                const mobBtn = document.getElementById(`mob-${t}`);
+                if (t === activeTab) {
+                    deskBtn.className = "nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-caramel-600 text-white shadow-md shadow-caramel-600/25 transition-all";
+                    mobBtn.className = "mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-caramel-600 text-white shadow-sm transition-all";
+                } else {
+                    deskBtn.className = "nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-stone-600 dark:text-stone-300 hover:bg-stone-300/50 dark:hover:bg-stone-700/60 transition-all";
+                    mobBtn.className = "mob-nav-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium bg-stone-200/70 dark:bg-stone-800 text-stone-700 dark:text-stone-300 transition-all";
+                }
+            });
+        }
+
+        // THÈME SOMBRE / CLAIR
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'ph-fill ph-moon text-xl text-stone-700';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'ph-fill ph-sun text-xl text-caramel-500';
+            }
+        }
+
+        // SECTION 1 : RENDU DES CHAPITRES ET SAUT TEMPOREL YOUTUBE
+        function renderChapters() {
+            const container = document.getElementById('video-chapters');
+            container.innerHTML = videoChapters.map(chap => `
+                <button onclick="seekVideo(${chap.seconds})" class="w-full text-left group p-3.5 rounded-2xl bg-stone-100/80 dark:bg-stone-800/70 hover:bg-caramel-600/15 dark:hover:bg-caramel-600/20 border border-transparent hover:border-caramel-600/40 transition-all flex items-start gap-3.5">
+                    <div class="shrink-0 flex flex-col items-center gap-1">
+                        <span class="px-2.5 py-1 rounded-lg bg-caramel-600 text-white font-mono text-xs font-bold shadow-sm group-hover:scale-105 transition-transform">
+                            ${chap.time}
+                        </span>
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <h4 class="font-semibold text-sm text-stone-900 dark:text-cream-100 group-hover:text-caramel-600 dark:group-hover:text-caramel-400 transition-colors flex items-center gap-1.5">
+                            <i class="ph-fill ${chap.icon} text-caramel-600 shrink-0"></i>
+                            <span class="truncate">${chap.title}</span>
+                        </h4>
+                        <p class="text-xs text-stone-600 dark:text-stone-400 mt-1 leading-relaxed">
+                            ${chap.desc}
+                        </p>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function seekVideo(seconds) {
+            const iframe = document.getElementById('youtube-player');
+            iframe.src = `https://www.youtube.com/embed/E7yckFkSozk?start=${seconds}&autoplay=1&rel=0`;
+        }
+
+        // SECTION 2 : RENDU ET LOGIQUE DU QCM
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const filtered = currentQuizCategory === 'all' 
+                ? quizData 
+                : quizData.filter(q => q.category === currentQuizCategory);
+
+            const letters = ['A', 'B', 'C', 'D'];
+
+            container.innerHTML = filtered.map(q => {
+                const answeredIdx = userAnswers[q.id];
+                const isAnswered = answeredIdx !== undefined;
+                const isCorrect = answeredIdx === q.correctIndex;
+
+                return `
+                    <div class="bg-white dark:bg-stone-900 rounded-3xl p-5 sm:p-7 border ${isAnswered ? (isCorrect ? 'border-emerald-500/50' : 'border-red-500/50') : 'border-stone-200 dark:border-stone-800'} shadow-md transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-caramel-600/15 text-caramel-600 dark:text-caramel-400">
+                                Question ${q.id} • ${q.categoryLabel}
+                            </span>
+                            ${isAnswered ? `
+                                <span class="inline-flex items-center gap-1 text-xs font-bold ${isCorrect ? 'text-emerald-500' : 'text-red-500'}">
+                                    <i class="ph-fill ${isCorrect ? 'ph-check-circle' : 'ph-x-circle'} text-base"></i>
+                                    ${isCorrect ? 'Bonne réponse !' : 'Réponse incorrecte'}
+                                </span>
+                            ` : ''}
+                        </div>
+
+                        <h3 class="font-semibold text-base sm:text-lg text-stone-900 dark:text-cream-100 mb-4 leading-snug">
+                            ${q.question}
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${q.options.map((opt, idx) => {
+                                let btnStyle = "bg-stone-100/80 dark:bg-stone-800/80 hover:bg-caramel-600/15 dark:hover:bg-caramel-600/20 border-stone-200 dark:border-stone-700 text-stone-800 dark:text-stone-200";
+                                let badgeStyle = "bg-white dark:bg-stone-700 text-stone-700 dark:text-stone-200";
+                                let iconHtml = "";
+
+                                if (isAnswered) {
+                                    if (idx === q.correctIndex) {
+                                        btnStyle = "bg-emerald-500/15 border-emerald-500 text-emerald-900 dark:text-emerald-100 font-medium";
+                                        badgeStyle = "bg-emerald-500 text-white";
+                                        iconHtml = `<i class="ph-bold ph-check text-emerald-500 text-lg ml-auto shrink-0"></i>`;
+                                    } else if (idx === answeredIdx) {
+                                        btnStyle = "bg-red-500/15 border-red-500 text-red-900 dark:text-red-100";
+                                        badgeStyle = "bg-red-500 text-white";
+                                        iconHtml = `<i class="ph-bold ph-x text-red-500 text-lg ml-auto shrink-0"></i>`;
+                                    } else {
+                                        btnStyle = "bg-stone-100/40 dark:bg-stone-800/40 border-stone-200/50 dark:border-stone-800 text-stone-400 dark:text-stone-500 opacity-65";
+                                    }
+                                }
+
+                                return `
+                                    <button onclick="selectAnswer(${q.id}, ${idx})" ${isAnswered ? 'disabled' : ''} class="w-full text-left p-3.5 rounded-2xl border transition-all flex items-center gap-3 ${btnStyle} ${!isAnswered ? 'cursor-pointer active:scale-[0.99]' : 'cursor-default'}">
+                                        <span class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 shadow-sm ${badgeStyle}">
+                                            ${letters[idx]}
+                                        </span>
+                                        <span class="text-sm leading-snug">${opt}</span>
+                                        ${iconHtml}
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        ${isAnswered ? `
+                            <div class="mt-4 p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-500/10 border border-caramel-600/30 flex items-start gap-3 animate-fade-in">
+                                <i class="ph-fill ph-lightbulb text-xl text-caramel-600 shrink-0 mt-0.5"></i>
+                                <div class="text-xs sm:text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
+                                    <strong class="text-caramel-700 dark:text-caramel-400">Explication (Réponse ${letters[q.correctIndex]}) :</strong> ${q.explanation}
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            updateScores();
+        }
+
+        function selectAnswer(questionId, optionIdx) {
+            if (userAnswers[questionId] !== undefined) return;
+            userAnswers[questionId] = optionIdx;
+            renderQuiz();
+        }
+
+        function filterQuiz(category) {
+            currentQuizCategory = category;
+            document.querySelectorAll('.qcat-btn').forEach(btn => {
+                btn.className = "qcat-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-stone-200 dark:border-stone-700 bg-stone-100/70 dark:bg-stone-800/70 text-stone-700 dark:text-stone-300 hover:border-caramel-600/50 transition-all flex items-center justify-between";
+            });
+            const activeBtn = document.getElementById(`qcat-${category}`);
+            if (activeBtn) {
+                activeBtn.className = "qcat-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-caramel-600 bg-caramel-600 text-white shadow-sm transition-all flex items-center justify-between";
+            }
+            renderQuiz();
+        }
+
+        function updateScores() {
+            let totalCorrect = 0;
+            const catScores = { comprehension: 0, vocabulaire: 0, grammaire: 0, prononciation: 0 };
+
+            quizData.forEach(q => {
+                if (userAnswers[q.id] === q.correctIndex) {
+                    totalCorrect++;
+                    catScores[q.category]++;
+                }
+            });
+
+            document.getElementById('global-score-display').textContent = `${totalCorrect} / 20`;
+            document.getElementById('nav-score-badge').textContent = `${totalCorrect}/20`;
+            document.getElementById('mob-score-badge').textContent = `${totalCorrect}/20`;
+            document.getElementById('score-cat-all').textContent = `${totalCorrect}/20`;
+            document.getElementById('score-cat-comprehension').textContent = `${catScores.comprehension}/5`;
+            document.getElementById('score-cat-vocabulaire').textContent = `${catScores.vocabulaire}/5`;
+            document.getElementById('score-cat-grammaire').textContent = `${catScores.grammaire}/5`;
+            document.getElementById('score-cat-prononciation').textContent = `${catScores.prononciation}/5`;
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            renderQuiz();
+        }
+
+        // SECTION 3 : RENDU DES 12 EXPRESSIONS
+        function renderExpressions(list) {
+            const grid = document.getElementById('expressions-grid');
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500">Aucune expression ne correspond à ta recherche.</div>`;
+                return;
+            }
+            grid.innerHTML = list.map(exp => `
+                <article class="bg-white dark:bg-stone-900 rounded-3xl overflow-hidden border border-stone-200 dark:border-stone-800 shadow-md hover:shadow-xl hover:border-caramel-600/50 transition-all flex flex-col">
+                    <!-- Illustration SVG -->
+                    <div class="h-32 w-full p-3 bg-stone-50 dark:bg-stone-950/60 border-b border-stone-200/70 dark:border-stone-800 flex items-center justify-center relative">
+                        <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-stone-200/80 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
+                            #${exp.id}
+                        </span>
+                        <div class="w-40 h-24">
+                            ${exp.svg}
+                        </div>
+                    </div>
+
+                    <!-- Contenu textuel -->
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 dark:text-cream-100 leading-snug">
+                                ${exp.fr}
+                            </h3>
+                            <p class="text-xs font-semibold italic text-caramel-600 dark:text-caramel-400 mt-1">
+                                ${exp.en}
+                            </p>
+                            <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mt-2.5 leading-relaxed">
+                                ${exp.meaning}
+                            </p>
+                        </div>
+
+                        <!-- Exemple du quotidien -->
+                        <div class="p-3.5 rounded-2xl bg-cream-100/70 dark:bg-stone-800/80 border border-stone-200/80 dark:border-stone-700/80 space-y-1.5">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-caramel-700 dark:text-caramel-400 flex items-center gap-1">
+                                <i class="ph-fill ph-chat-circle-dots"></i> Exemple du quotidien
+                            </span>
+                            <p class="text-xs sm:text-sm font-medium text-stone-800 dark:text-stone-200 leading-relaxed">
+                                « ${exp.exampleFr} »
+                            </p>
+                            <p class="text-xs italic text-stone-500 dark:text-stone-400">
+                                "${exp.exampleEn}"
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterExpressions(query) {
+            const q = query.toLowerCase().trim();
+            const filtered = expressionsData.filter(e => 
+                e.fr.toLowerCase().includes(q) || 
+                e.en.toLowerCase().includes(q) || 
+                e.meaning.toLowerCase().includes(q)
+            );
+            renderExpressions(filtered);
+        }
+
+        // SECTION 4 : RENDU ET INTERACTIVITÉ DU DIALOGUE
+        function renderDialogue() {
+            const container = document.getElementById('dialogue-container');
+            const roleColors = {
+                camille: {
+                    bg: "bg-amber-500/10 border-amber-500/30",
+                    badge: "bg-amber-500 text-white",
+                    align: "mr-auto"
+                },
+                lucas: {
+                    bg: "bg-sky-500/10 border-sky-500/30",
+                    badge: "bg-sky-600 text-white",
+                    align: "ml-auto"
+                },
+                ines: {
+                    bg: "bg-emerald-500/10 border-emerald-500/30",
+                    badge: "bg-emerald-600 text-white",
+                    align: "mr-auto"
+                }
+            };
+
+            container.innerHTML = dialogueLines.map(line => {
+                const style = roleColors[line.role];
+                return `
+                    <div class="max-w-3xl ${style.align} p-4 sm:p-5 rounded-3xl border ${style.bg} transition-all">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${style.badge}">
+                                ${line.speaker}
+                            </span>
+                        </div>
+                        <p class="text-sm sm:text-base text-stone-900 dark:text-stone-100 leading-relaxed ${!highlightExpressions ? 'no-highlight' : ''}">
+                            ${line.fr}
+                        </p>
+                        ${showEnglishDialogue ? `
+                            <p class="mt-2.5 pt-2.5 border-t border-stone-300/50 dark:border-stone-700/70 text-xs sm:text-sm italic text-stone-600 dark:text-stone-400 animate-fade-in">
+                                <span class="font-semibold not-italic text-caramel-600 dark:text-caramel-400 mr-1">EN:</span> ${line.en}
+                            </p>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleDialogueTranslation() {
+            showEnglishDialogue = !showEnglishDialogue;
+            const btnText = document.getElementById('btn-toggle-en-text');
+            btnText.textContent = showEnglishDialogue ? "Masquer la traduction anglaise" : "Afficher la traduction anglaise";
+            renderDialogue();
+        }
+
+        function toggleExpressionHighlight() {
+            highlightExpressions = !highlightExpressions;
+            const btnText = document.getElementById('btn-toggle-hl-text');
+            btnText.textContent = highlightExpressions ? "Surlignage : Activé" : "Surlignage : Désactivé";
+            renderDialogue();
+        }
+
+        // DÉLÉGATION D'ÉVÉNEMENT POUR CLIQUER SUR UNE EXPRESSION DANS LE DIALOGUE
+        function setupExpressionClicks() {
+            document.getElementById('dialogue-container').addEventListener('click', function(e) {
+                if (!highlightExpressions) return;
+                const target = e.target.closest('.expression-highlight');
+                if (target) {
+                    const expId = parseInt(target.getAttribute('data-exp'), 10);
+                    const exp = expressionsData.find(item => item.id === expId);
+                    if (exp) {
+                        showToast(exp);
+                    }
+                }
+            });
+        }
+
+        let toastTimeout;
+        function showToast(exp) {
+            const toast = document.getElementById('expression-toast');
+            document.getElementById('toast-fr').textContent = exp.fr;
+            document.getElementById('toast-en').textContent = exp.en;
+            document.getElementById('toast-desc').textContent = exp.meaning;
+
+            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(hideToast, 6000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('expression-toast');
+            toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+    </script>
+</body>
+</html>
